@@ -4,7 +4,7 @@ using BussinessObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace DataAccessObjects
+namespace Repositories
 {
     public class DrugUsePreventionDBContext : DbContext
     {
