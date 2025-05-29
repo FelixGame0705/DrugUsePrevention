@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Repositories.IRepository;
+using Repositories.Repository;
 
 namespace DrugUsePrevention
 {
@@ -15,6 +17,8 @@ namespace DrugUsePrevention
                     builder.Configuration.GetConnectionString("DefaultConnectionString")
                 )
             );
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();

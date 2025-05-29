@@ -22,4 +22,8 @@
     <ProjectReference Include="..\BussinessObject\BussinessObjects.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapping\" />
+  </ItemGroup>
+
 </Project>
