@@ -12,6 +12,7 @@ namespace BussinessObjects
         [Key]
         public int UserID { get; set; }
         public string FullName { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Phone { get; set; }
@@ -20,6 +21,13 @@ namespace BussinessObjects
         public string Role { get; set; } = "Guest";
         public string Status { get; set; } = "Active"; // Active, Inactive, Banned
         public DateTime CreatedAt { get; set; }
+
+        public string? VerificationToken { get; set; } // Token xác thực email
+        public bool IsEmailVerified { get; set; } = false; // Trạng thái xác thực email
+
+        // Thuộc tính mới cho chức năng quên mật khẩu
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordExpiry { get; set; }
         public virtual Consultant? ConsultantProfile { get; set; }
 
         public virtual ICollection<Course> CreatedCourses { get; set; }
