@@ -2,7 +2,9 @@
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.IRepository;
+using Repositories.IRepository.Courses;
 using Repositories.Repository;
+using Repositories.Repository.Courses;
 using Services.IService;
 using Services.Service; // Thêm dòng này ở đầu file
 
@@ -26,6 +28,8 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
+            builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
             builder.Services.AddControllers();
 
             // Thêm Swagger
