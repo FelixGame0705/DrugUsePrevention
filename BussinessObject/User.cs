@@ -18,6 +18,7 @@ namespace BussinessObjects
         public DateTime? DateOfBirth { get; set; }
         public string Gender { get; set; } // Male, Female, Other
         public string Role { get; set; } = "Guest";
+        public string Status { get; set; } = "Active"; // Active, Inactive, Banned
         public DateTime CreatedAt { get; set; }
         public virtual Consultant? ConsultantProfile { get; set; }
 

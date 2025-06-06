@@ -55,3 +55,7 @@ nunit-*.xml
 /.vs/DrugUsePrevention/CopilotIndices/17.13.444.19527
 /.vs/DrugUsePrevention/FileContentIndex
 /.vs/DrugUsePrevention/copilot-chat/d7f7902b/sessions
+/.vs/DrugUsePrevention/DesignTimeBuild/.dtbcache.v2
+*.v2
+*.json
+*.suo
