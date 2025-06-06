@@ -1,8 +1,10 @@
 ﻿using BussinessObjects;
 using Repositories.Paging;
 using Services.DTOs;
-using Services.DTOs.Course;
 using Services.DTOs.CourseContent;
+using Services.DTOs.Courses;
+using Services.DTOs.Dashboard;
+using Services.DTOs.Registration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +39,11 @@ namespace Services.IService
         Task<CourseRegistrationResponseDto> RegisterForCourseAsync(int courseId, int userId);
         Task UnregisterFromCourseAsync(int courseId, int userId);
         Task<CourseRegistrationResponseDto> GetRegistrationAsync(int courseId, int userId);
-        //Task<BasePaginatedList<RegistrationListDto>> GetCourseRegistrationsAsync(int courseId, RegistrationFilterDto filter);
-        //Task<BasePaginatedList<RegistrationListDto>> GetUserRegistrationsAsync(int userId, RegistrationFilterDto filter);
-        //Task<UserLearningDashboardDto> GetUserDashboardAsync(int userId);
-        //Task<CourseEnrollmentStatsDto> GetCourseEnrollmentStatsAsync(int courseId);
-        //Task<CourseRegistrationResponseDto> UpdateProgressAsync(UpdateProgressDto updateDto, int userId);
+        Task<BasePaginatedList<RegistrationListDto>> GetCourseRegistrationsAsync(int courseId, RegistrationFilterDto filter);
+        Task<BasePaginatedList<RegistrationListDto>> GetUserRegistrationsAsync(int userId, RegistrationFilterDto filter);
+        Task<UserLearningDashboardDto> GetUserDashboardAsync(int userId);
+        Task<CourseEnrollmentStatsDto> GetCourseEnrollmentStatsAsync(int courseId);
+        Task<CourseRegistrationResponseDto> UpdateProgressAsync(UpdateProgressDto updateDto, int userId);
 
         // Registration validation
         Task<bool> IsUserRegisteredAsync(int courseId, int userId);

@@ -3,6 +3,66 @@
   "WorkspaceRootPath": "D:\\DrugUsePrevention\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\iservice\\icourseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\iservice\\icourseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\common\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\common\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\common\\paginatedapiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\common\\paginatedapiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\service\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\service\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\courseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\courses\\courseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\dashboard\\userlearningdashboarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\dashboard\\userlearningdashboarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\registration\\registrationlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\registration\\registrationlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\updatecoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\courses\\updatecoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\createregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\courses\\createregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\createcoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\courses\\createcoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\courses\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\repository\\courses\\coursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\courses\\coursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icoursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icoursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\repository\\courses\\courserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\courses\\courserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,72 +71,68 @@
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\courses\\courseregistrationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\pagingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\pagingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\repository\\courses\\coursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\courses\\coursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\dashboard\\courseenrollmentstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\dashboard\\courseenrollmentstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icourseregistrationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icourseregistrationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\registration\\updateprogressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\registration\\updateprogressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icoursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icoursecontentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\createregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\createregistrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\registration\\registrationfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\registration\\registrationfilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\coursefilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\coursefilterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\updatecoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\updatecoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\createcoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\createcoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\courses\\icourseregistrationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\courses\\icourseregistrationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\coursecontentresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\coursecontentresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\updatecoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\updatecoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\createcoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\createcoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\createcoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\createcoursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\coursecontent\\updatecoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\coursecontent\\updatecoursecontentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\courseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\courseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\file\\fileuploadresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\file\\fileuploadresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\service\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\service\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\basepaginationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\basepaginationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\iservice\\icourseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\iservice\\icourseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\paging\\basepaginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\paging\\basepaginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -87,16 +143,8 @@
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\file\\fileuploadresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\file\\fileuploadresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\coursecontent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -109,10 +157,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\courseregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -135,24 +179,8 @@
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\paging\\basepaginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\paging\\basepaginatedlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\pagingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\pagingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\course\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\course\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\druguseprevention\\repositories\\migrations\\20250606080900_fixcourse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -181,10 +209,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\druguseprevention.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -243,7 +267,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 268,
-          "SelectedChildIndex": 24,
+          "SelectedChildIndex": 23,
           "Children": [
             {
               "$type": "Bookmark",
@@ -331,7 +355,306 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PaginatedApiResponse.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Common\\PaginatedApiResponse.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Common\\PaginatedApiResponse.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Common\\PaginatedApiResponse.cs",
+              "RelativeToolTip": "Services\\DTOs\\Common\\PaginatedApiResponse.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAYwC0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T16:09:15.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CourseService.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\Service\\CourseService.cs",
+              "RelativeDocumentMoniker": "Services\\Service\\CourseService.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\Service\\CourseService.cs",
+              "RelativeToolTip": "Services\\Service\\CourseService.cs",
+              "ViewState": "AgIAAG8CAAAAAAAAAAAawNwCAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T10:18:24.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\CourseController.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "DrugUsePrevention\\Controllers\\CourseController.cs",
+              "ViewState": "AgIAAHYBAAAAAAAAAADgvxACAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T10:32:34.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ICourseService.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\IService\\ICourseService.cs",
+              "RelativeDocumentMoniker": "Services\\IService\\ICourseService.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\IService\\ICourseService.cs",
+              "RelativeToolTip": "Services\\IService\\ICourseService.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAA6wCsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T10:13:29.371Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserLearningDashboardDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Dashboard\\UserLearningDashboardDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Dashboard\\UserLearningDashboardDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Dashboard\\UserLearningDashboardDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Dashboard\\UserLearningDashboardDto.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAArwBMAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T14:53:37.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RegistrationListDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\RegistrationListDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Registration\\RegistrationListDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\RegistrationListDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Registration\\RegistrationListDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T14:50:17.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CourseResponseDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CourseResponseDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Courses\\CourseResponseDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CourseResponseDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Courses\\CourseResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBEAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:48:20.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Course.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Course.cs",
+              "RelativeDocumentMoniker": "BussinessObject\\Course.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\Course.cs",
+              "RelativeToolTip": "BussinessObject\\Course.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBUAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T09:21:24.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ApiResponse.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Common\\ApiResponse.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Common\\ApiResponse.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Common\\ApiResponse.cs",
+              "RelativeToolTip": "Services\\DTOs\\Common\\ApiResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:51:34.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UpdateCourseDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\UpdateCourseDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Courses\\UpdateCourseDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\UpdateCourseDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Courses\\UpdateCourseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:48:45.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CreateRegistrationDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CreateRegistrationDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Courses\\CreateRegistrationDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CreateRegistrationDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Courses\\CreateRegistrationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:23:17.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CreateCourseDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CreateCourseDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Courses\\CreateCourseDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CreateCourseDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Courses\\CreateCourseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:48:30.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CourseListDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CourseListDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Courses\\CourseListDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Courses\\CourseListDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Courses\\CourseListDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:52:35.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CourseContentRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseContentRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseContentRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseContentRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseContentRepository.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwCwAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T10:18:56.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ICourseContentRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T10:16:36.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CourseRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T10:12:32.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CourseRegistrationRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAwwGIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T10:20:43.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PagingRequest.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\PagingRequest.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\PagingRequest.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\PagingRequest.cs",
+              "RelativeToolTip": "Services\\DTOs\\PagingRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T15:39:49.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CourseEnrollmentStatsDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Dashboard\\CourseEnrollmentStatsDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Dashboard\\CourseEnrollmentStatsDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Dashboard\\CourseEnrollmentStatsDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Dashboard\\CourseEnrollmentStatsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T14:54:01.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UpdateProgressDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\UpdateProgressDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Registration\\UpdateProgressDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\UpdateProgressDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Registration\\UpdateProgressDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T15:37:45.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RegistrationFilterDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\RegistrationFilterDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\Registration\\RegistrationFilterDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Registration\\RegistrationFilterDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\Registration\\RegistrationFilterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:48:54.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "CourseFilterDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:49:46.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Services.csproj",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\Services.csproj",
+              "RelativeDocumentMoniker": "Services\\Services.csproj",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\Services.csproj",
+              "RelativeToolTip": "Services\\Services.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-25T10:23:22.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
               "Title": "ICourseRepository.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IRepository\\Courses\\ICourseRepository.cs",
@@ -344,124 +667,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Users\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\IRepository\\Users\\IUserRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Users\\IUserRepository.cs",
-              "RelativeToolTip": "Repositories\\IRepository\\Users\\IUserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T13:00:19.215Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CourseContentRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseContentRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseContentRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseContentRepository.cs",
-              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseContentRepository.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwHUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T10:18:56.149Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CourseRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRepository.cs",
-              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T10:12:32.29Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CourseRegistrationRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
-              "RelativeToolTip": "Repositories\\Repository\\Courses\\CourseRegistrationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T10:20:43.402Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 24,
               "Title": "ICourseRegistrationRepository.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseRegistrationRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IRepository\\Courses\\ICourseRegistrationRepository.cs",
               "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseRegistrationRepository.cs",
               "RelativeToolTip": "Repositories\\IRepository\\Courses\\ICourseRegistrationRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-06T10:17:06.192Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ICourseContentRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
-              "RelativeToolTip": "Repositories\\IRepository\\Courses\\ICourseContentRepository.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBcAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 25,
+              "Title": "CourseContentResponseDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T10:16:36.047Z",
+              "WhenOpened": "2025-06-06T09:49:20.401Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CreateRegistrationDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CreateRegistrationDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\CreateRegistrationDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CreateRegistrationDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\CreateRegistrationDto.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAA4wBgAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T13:23:17.254Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CourseFilterDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\CourseContent\\CourseFilterDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:49:46.045Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UpdateCourseContentDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAADwvyEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:49:38.092Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 26,
               "Title": "CreateCourseContentDto.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CreateCourseContentDto.cs",
               "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\CreateCourseContentDto.cs",
@@ -474,163 +706,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CourseContentResponseDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\CourseContent\\CourseContentResponseDto.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBMAAAA/AAAAAAAAAA==",
+              "DocumentIndex": 27,
+              "Title": "UpdateCourseContentDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\CourseContent\\UpdateCourseContentDto.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:49:20.401Z",
+              "WhenOpened": "2025-06-06T09:49:38.092Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CourseListDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CourseListDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\CourseListDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CourseListDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\CourseListDto.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBAAAABJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:52:35.784Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "UpdateCourseDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\UpdateCourseDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\UpdateCourseDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\UpdateCourseDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\UpdateCourseDto.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAA8wB4AAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:48:45.412Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "CreateCourseDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CreateCourseDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\CreateCourseDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CreateCourseDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\CreateCourseDto.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAiwB4AAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:48:30.085Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "CourseResponseDto.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CourseResponseDto.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\CourseResponseDto.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\CourseResponseDto.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\CourseResponseDto.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA4wBAAAABJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:48:20.13Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CourseService.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\Service\\CourseService.cs",
-              "RelativeDocumentMoniker": "Services\\Service\\CourseService.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\Service\\CourseService.cs",
-              "RelativeToolTip": "Services\\Service\\CourseService.cs",
-              "ViewState": "AgIAAA4BAAAAAAAAAAAgwGACAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T10:18:24.648Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "ICourseService.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\IService\\ICourseService.cs",
-              "RelativeDocumentMoniker": "Services\\IService\\ICourseService.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\IService\\ICourseService.cs",
-              "RelativeToolTip": "Services\\IService\\ICourseService.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAwwDEAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T10:13:29.371Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "CourseController.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
-              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\CourseController.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
-              "RelativeToolTip": "DrugUsePrevention\\Controllers\\CourseController.cs",
-              "ViewState": "AgIAAI8EAAAAAAAAAAAiwJwEAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T10:32:34.911Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Users\\UserRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository\\Users\\UserRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Users\\UserRepository.cs",
-              "RelativeToolTip": "Repositories\\Repository\\Users\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T13:11:55.22Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Course.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Course.cs",
-              "RelativeDocumentMoniker": "BussinessObject\\Course.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\Course.cs",
-              "RelativeToolTip": "BussinessObject\\Course.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T09:21:24.155Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Repository\\GenericRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\GenericRepository.cs",
-              "RelativeToolTip": "Repositories\\Repository\\GenericRepository.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAqwE4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T07:38:55.902Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "IGenericRepository.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\IGenericRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\IRepository\\IGenericRepository.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\IGenericRepository.cs",
-              "RelativeToolTip": "Repositories\\IRepository\\IGenericRepository.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAzwCIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:30:04.612Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "FileUploadResponseDto.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\File\\FileUploadResponseDto.cs",
               "RelativeDocumentMoniker": "Services\\DTOs\\File\\FileUploadResponseDto.cs",
@@ -643,7 +732,98 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 29,
+              "Title": "BasePaginationDto.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\BasePaginationDto.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\BasePaginationDto.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\BasePaginationDto.cs",
+              "RelativeToolTip": "Services\\DTOs\\BasePaginationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T10:29:06.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "BasePaginatedList.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Paging\\BasePaginatedList.cs",
+              "RelativeDocumentMoniker": "Repositories\\Paging\\BasePaginatedList.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Paging\\BasePaginatedList.cs",
+              "RelativeToolTip": "Repositories\\Paging\\BasePaginatedList.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAADwvysAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T06:54:38.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
+              "RelativeDocumentMoniker": "BussinessObject\\User.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
+              "RelativeToolTip": "BussinessObject\\User.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAAwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T09:21:11.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:00:19.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\Users\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\Users\\UserRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\Users\\UserRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\Users\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T13:11:55.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\GenericRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Repository\\GenericRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\GenericRepository.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAqwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T07:38:55.902Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\IGenericRepository.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\IRepository\\IGenericRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\IGenericRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAzwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T09:30:04.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
               "Title": "CourseContent.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\CourseContent.cs",
               "RelativeDocumentMoniker": "BussinessObject\\CourseContent.cs",
@@ -656,7 +836,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 37,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\appsettings.json",
               "RelativeDocumentMoniker": "DrugUsePrevention\\appsettings.json",
@@ -669,7 +849,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 38,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Program.cs",
               "RelativeDocumentMoniker": "DrugUsePrevention\\Program.cs",
@@ -682,20 +862,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ApiResponse.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\ApiResponse.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\ApiResponse.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\ApiResponse.cs",
-              "RelativeToolTip": "Services\\DTOs\\ApiResponse.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACoAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:51:34.11Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 39,
               "Title": "CourseRegistration.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\CourseRegistration.cs",
               "RelativeDocumentMoniker": "BussinessObject\\CourseRegistration.cs",
@@ -708,7 +875,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 40,
               "Title": "DashboardData.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\DashboardData.cs",
               "RelativeDocumentMoniker": "BussinessObject\\DashboardData.cs",
@@ -721,7 +888,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 41,
               "Title": "CourseConstants.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Constants\\CourseConstants.cs",
               "RelativeDocumentMoniker": "DrugUsePrevention\\Constants\\CourseConstants.cs",
@@ -734,7 +901,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 42,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\AuthController.cs",
@@ -747,7 +914,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 43,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Repository\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\Repository\\UnitOfWork.cs",
@@ -760,46 +927,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "BasePaginatedList.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Paging\\BasePaginatedList.cs",
-              "RelativeDocumentMoniker": "Repositories\\Paging\\BasePaginatedList.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Repositories\\Paging\\BasePaginatedList.cs",
-              "RelativeToolTip": "Repositories\\Paging\\BasePaginatedList.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAswAgAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T06:54:38.92Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\Class1.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\Course\\Class1.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\Course\\Class1.cs",
-              "RelativeToolTip": "Services\\DTOs\\Course\\Class1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T09:48:54.694Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "PagingRequest.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\DTOs\\PagingRequest.cs",
-              "RelativeDocumentMoniker": "Services\\DTOs\\PagingRequest.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\DTOs\\PagingRequest.cs",
-              "RelativeToolTip": "Services\\DTOs\\PagingRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T10:29:06.244Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 44,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\IRepository\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "Repositories\\IRepository\\IUnitOfWork.cs",
@@ -812,20 +940,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
-              "RelativeDocumentMoniker": "BussinessObject\\User.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
-              "RelativeToolTip": "BussinessObject\\User.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAQwBMAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T09:21:11.45Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 45,
               "Title": "20250606080900_fixCourse.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Migrations\\20250606080900_fixCourse.cs",
               "RelativeDocumentMoniker": "Repositories\\Migrations\\20250606080900_fixCourse.cs",
@@ -838,7 +953,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 46,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Program.cs",
               "RelativeDocumentMoniker": "BussinessObject\\Program.cs",
@@ -850,7 +965,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 47,
               "Title": "CheckCourseContent.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\CheckCourseContent.cs",
               "RelativeDocumentMoniker": "BussinessObject\\CheckCourseContent.cs",
@@ -862,7 +977,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 64,
               "Title": "20250530104623_init2.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Migrations\\20250530104623_init2.cs",
               "RelativeDocumentMoniker": "Repositories\\Migrations\\20250530104623_init2.cs",
@@ -874,7 +989,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 48,
               "Title": "20250529063001_init.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Migrations\\20250529063001_init.cs",
               "RelativeDocumentMoniker": "Repositories\\Migrations\\20250529063001_init.cs",
@@ -886,7 +1001,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 50,
               "Title": "DrugUsePreventionDBContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\Migrations\\DrugUsePreventionDBContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Repositories\\Migrations\\DrugUsePreventionDBContextModelSnapshot.cs",
@@ -898,7 +1013,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 49,
               "Title": "DrugUsePreventionDBContext.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\Repositories\\DrugUsePreventionDBContext.cs",
               "RelativeDocumentMoniker": "Repositories\\DrugUsePreventionDBContext.cs",
@@ -910,7 +1025,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 51,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\WeatherForecastController.cs",
@@ -922,19 +1037,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "Services.csproj",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\Services\\Services.csproj",
-              "RelativeDocumentMoniker": "Services\\Services.csproj",
-              "ToolTip": "D:\\DrugUsePrevention\\Services\\Services.csproj",
-              "RelativeToolTip": "Services\\Services.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-25T10:23:22.813Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 54,
               "Title": "Appointment.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Appointment.cs",
               "RelativeDocumentMoniker": "BussinessObject\\Appointment.cs",
@@ -946,7 +1049,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 53,
               "Title": "Survey.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Survey.cs",
               "RelativeDocumentMoniker": "BussinessObject\\Survey.cs",
@@ -958,7 +1061,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 55,
               "Title": "ProgramParticipation.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\ProgramParticipation.cs",
               "RelativeDocumentMoniker": "BussinessObject\\ProgramParticipation.cs",
@@ -970,7 +1073,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 52,
               "Title": "DrugUsePrevention.csproj",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\DrugUsePrevention.csproj",
               "RelativeDocumentMoniker": "DrugUsePrevention\\DrugUsePrevention.csproj",
@@ -982,7 +1085,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 57,
               "Title": "SurveyAnswer.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\SurveyAnswer.cs",
               "RelativeDocumentMoniker": "BussinessObject\\SurveyAnswer.cs",
@@ -994,7 +1097,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 58,
               "Title": "20250525104249_init.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525104249_init.cs",
               "RelativeDocumentMoniker": "..\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525104249_init.cs",
@@ -1005,7 +1108,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 56,
               "Title": "SurveyQuestion.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\SurveyQuestion.cs",
               "RelativeDocumentMoniker": "BussinessObject\\SurveyQuestion.cs",
@@ -1017,7 +1120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 59,
               "Title": "Consultant.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\Consultant.cs",
               "RelativeDocumentMoniker": "BussinessObject\\Consultant.cs",
@@ -1029,7 +1132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 60,
               "Title": "UserSurveyResponse.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\UserSurveyResponse.cs",
               "RelativeDocumentMoniker": "BussinessObject\\UserSurveyResponse.cs",
@@ -1041,7 +1144,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 61,
               "Title": "UserSurveyAnswer.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\UserSurveyAnswer.cs",
               "RelativeDocumentMoniker": "BussinessObject\\UserSurveyAnswer.cs",
@@ -1053,7 +1156,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 62,
               "Title": "20250525103923_init.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525103923_init.cs",
               "RelativeDocumentMoniker": "..\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525103923_init.cs",
@@ -1064,7 +1167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 63,
               "Title": "20250525103628_init.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525103628_init.cs",
               "RelativeDocumentMoniker": "..\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525103628_init.cs",

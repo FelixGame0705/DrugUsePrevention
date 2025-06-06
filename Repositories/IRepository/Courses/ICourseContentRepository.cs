@@ -13,6 +13,7 @@ namespace Repositories.IRepository.Courses
         // CourseContent specific queries
         Task<CourseContent?> GetContentWithCourseAsync(int contentId);
         Task<BasePaginatedList<CourseContent>> GetContentsByCourseAsync(int courseId, int pageIndex, int pageSize);
+        Task<List<CourseContent>> GetActiveContentsByCourseAsync(int courseId);
         Task<List<CourseContent>> GetContentsByCourseOrderedAsync(int courseId);
         Task<bool> ExistsContentWithOrderAsync(int courseId, int orderIndex, int? excludeContentId = null);
         Task<int> GetMaxOrderIndexAsync(int courseId);

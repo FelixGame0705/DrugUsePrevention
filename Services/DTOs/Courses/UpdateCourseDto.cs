@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTOs.Course
+namespace Services.DTOs.Courses
 {
     public class UpdateCourseDto
     {

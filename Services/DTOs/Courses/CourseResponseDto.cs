@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTOs.Course
+namespace Services.DTOs.Courses
 {
     public class CourseResponseDto
     {
         public int CourseID { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string TargetGroup { get; set; }
-        public string AgeGroup { get; set; }
-        //public List<string> Skills { get; set; } = new(); // NEW: Skills list
-        //public string? ThumbnailUrl { get; set; } // NEW: Thumbnail URL
-        public string ContentURL { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public string? TargetGroup { get; set; }
+        public string? AgeGroup { get; set; }
+        // Skills and ThumbnailUrl removed temporarily
+        public string? ContentURL { get; set; }
         public int? CreatedBy { get; set; }
-        public string CreatorName { get; set; }
+        public string CreatorName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
         public bool IsAccept { get; set; }

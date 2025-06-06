@@ -5,8 +5,10 @@ using Repositories.IRepository.Courses;
 using Repositories.IRepository.Users;
 using Repositories.Paging;
 using Services.DTOs;
-using Services.DTOs.Course;
 using Services.DTOs.CourseContent;
+using Services.DTOs.Courses;
+using Services.DTOs.Dashboard;
+using Services.DTOs.Registration;
 using Services.IService;
 using System;
 using System.Collections.Generic;
@@ -15,29 +17,27 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Service
-{public class CourseService : ICourseService
+{
+    public class CourseService : ICourseService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseContentRepository _courseContentRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICourseRegistrationRepository _registrationRepository;
-        private readonly IFileUploadService _fileUploadService; // NEW
 
         public CourseService(
             IUnitOfWork unitOfWork,
             ICourseRepository courseRepository,
             ICourseContentRepository courseContentRepository,
             IUserRepository userRepository,
-            ICourseRegistrationRepository registrationRepository,
-            IFileUploadService fileUploadService) // NEW
+            ICourseRegistrationRepository registrationRepository)
         {
             _unitOfWork = unitOfWork;
             _courseRepository = courseRepository;
             _courseContentRepository = courseContentRepository;
             _userRepository = userRepository;
             _registrationRepository = registrationRepository;
-            _fileUploadService = fileUploadService; // NEW
         }
 
         #region Course Management
@@ -60,7 +60,6 @@ namespace Services.Service
                 searchKeyword: filter.SearchKeyword,
                 targetGroup: filter.TargetGroup,
                 ageGroup: filter.AgeGroup,
-                skills: filter.Skills, // NEW: Skills filter
                 isActive: filter.IsActive,
                 isAccept: filter.IsAccept,
                 createdBy: filter.CreatedBy,
@@ -92,23 +91,12 @@ namespace Services.Service
                 throw new InvalidOperationException("Tiêu đề khóa học đã tồn tại");
             }
 
-            // Validate skills
-            if (createDto.Skills?.Any() == true)
-            {
-                var skillErrors = SkillsConstants.ValidateSkills(createDto.Skills);
-                if (skillErrors.Any())
-                {
-                    throw new ArgumentException(string.Join(", ", skillErrors));
-                }
-            }
-
             var course = new Course
             {
                 Title = createDto.Title,
                 Description = createDto.Description,
                 TargetGroup = createDto.TargetGroup,
                 AgeGroup = createDto.AgeGroup,
-                SkillsList = createDto.Skills ?? new List<string>(), // NEW: Set skills
                 ContentURL = createDto.ContentURL,
                 CreatedBy = createdBy,
                 CreatedAt = DateTime.UtcNow,
@@ -136,16 +124,6 @@ namespace Services.Service
                 throw new InvalidOperationException("Tiêu đề khóa học đã tồn tại");
             }
 
-            // Validate skills
-            if (updateDto.Skills?.Any() == true)
-            {
-                var skillErrors = SkillsConstants.ValidateSkills(updateDto.Skills);
-                if (skillErrors.Any())
-                {
-                    throw new ArgumentException(string.Join(", ", skillErrors));
-                }
-            }
-
             // Business rule: Check permission - only creator or admin can update
             // This logic should be enhanced based on your role system
 
@@ -153,7 +131,6 @@ namespace Services.Service
             course.Description = updateDto.Description;
             course.TargetGroup = updateDto.TargetGroup;
             course.AgeGroup = updateDto.AgeGroup;
-            course.SkillsList = updateDto.Skills ?? new List<string>(); // NEW: Update skills
             course.ContentURL = updateDto.ContentURL;
             course.isActive = updateDto.IsActive;
             course.isAccept = updateDto.IsAccept;
@@ -277,51 +254,6 @@ namespace Services.Service
             return MapToCourseContentResponseDto(content);
         }
 
-        private CourseRegistrationResponseDto MapToCourseRegistrationResponseDto(CourseRegistration registration)
-        {
-            return new CourseRegistrationResponseDto
-            {
-                RegistrationID = registration.RegistrationID,
-                UserID = registration.UserID ?? 0,
-                CourseID = registration.CourseID ?? 0,
-                UserName = registration.User?.FullName ?? "Không xác định",
-                UserEmail = registration.User?.Email ?? "",
-                CourseTitle = registration.Course?.Title ?? "",
-                RegisteredAt = registration.RegisteredAt,
-                Completed = registration.Completed,
-                CompletedAt = registration.CompletedAt,
-                Progress = registration.Progress,
-                TotalContents = registration.Course?.Contents?.Count ?? 0,
-                CompletedContents = CalculateCompletedContents(registration)
-            };
-        }
-
-        private RegistrationListDto MapToRegistrationListDto(CourseRegistration registration)
-        {
-            return new RegistrationListDto
-            {
-                RegistrationID = registration.RegistrationID,
-                UserID = registration.UserID ?? 0,
-                CourseID = registration.CourseID ?? 0,
-                UserName = registration.User?.FullName ?? "Không xác định",
-                UserEmail = registration.User?.Email ?? "",
-                CourseTitle = registration.Course?.Title ?? "",
-                TargetGroup = registration.Course?.TargetGroup ?? "",
-                AgeGroup = registration.Course?.AgeGroup ?? "",
-                RegisteredAt = registration.RegisteredAt,
-                Completed = registration.Completed,
-                Progress = registration.Progress
-            };
-        }
-
-        private int CalculateCompletedContents(CourseRegistration registration)
-        {
-            if (registration.ContentProgress == null)
-                return 0;
-
-            return registration.ContentProgress.Count(cp => cp.IsCompleted);
-        }
-
         public async Task<int> GetNextOrderIndexAsync(int courseId)
         {
             return await _courseContentRepository.GetNextOrderIndexAsync(courseId);
@@ -372,7 +304,7 @@ namespace Services.Service
 
             // Check if new OrderIndex conflicts with existing content
             if (await _courseContentRepository.ExistsContentWithOrderAsync(
-                content.CourseID ?? 0, updateDto.OrderIndex, updateDto.ContentID))
+                content.CourseID.HasValue ? content.CourseID.Value : 0, updateDto.OrderIndex, updateDto.ContentID))
             {
                 throw new InvalidOperationException("Thứ tự này đã tồn tại trong khóa học");
             }
@@ -480,8 +412,7 @@ namespace Services.Service
                 UserID = userId,
                 CourseID = courseId,
                 RegisteredAt = DateTime.UtcNow,
-                Completed = false,
-                Progress = 0
+                Completed = false
             };
 
             await _registrationRepository.InsertAsync(registration);
@@ -496,12 +427,6 @@ namespace Services.Service
             if (registration == null)
             {
                 throw new KeyNotFoundException("Không tìm thấy đăng ký khóa học");
-            }
-
-            // Business rule: Can't unregister if progress > 50%
-            if (registration.Progress > 50)
-            {
-                throw new InvalidOperationException("Không thể hủy đăng ký khi đã hoàn thành hơn 50% khóa học");
             }
 
             await _registrationRepository.DeleteAsync(registration.RegistrationID);
@@ -583,9 +508,6 @@ namespace Services.Service
             var totalRegistrations = registrations.Count;
             var completedCourses = registrations.Count(r => r.Completed);
             var inProgressCourses = registrations.Count(r => !r.Completed);
-            var overallProgress = registrations.Any() 
-                ? registrations.Average(r => r.Progress) 
-                : 0;
 
             return new UserLearningDashboardDto
             {
@@ -594,13 +516,13 @@ namespace Services.Service
                 TotalRegistrations = totalRegistrations,
                 CompletedCourses = completedCourses,
                 InProgressCourses = inProgressCourses,
-                OverallProgress = Math.Round(overallProgress, 2),
+                OverallProgress = totalRegistrations > 0 ? Math.Round((double)completedCourses / totalRegistrations * 100, 2) : 0,
                 RecentRegistrations = registrations
                     .OrderByDescending(r => r.RegisteredAt)
                     .Take(5)
                     .Select(MapToRegistrationListDto)
                     .ToList(),
-                InProgressCourses = registrations
+                InProgressCoursesList = registrations
                     .Where(r => !r.Completed)
                     .OrderByDescending(r => r.RegisteredAt)
                     .Take(5)
@@ -622,11 +544,8 @@ namespace Services.Service
             var totalEnrollments = registrations.Count;
             var completedEnrollments = registrations.Count(r => r.Completed);
             var inProgressEnrollments = registrations.Count(r => !r.Completed);
-            var completionRate = totalEnrollments > 0 
-                ? (double)completedEnrollments / totalEnrollments * 100 
-                : 0;
-            var averageProgress = registrations.Any() 
-                ? registrations.Average(r => r.Progress) 
+            var completionRate = totalEnrollments > 0
+                ? (double)completedEnrollments / totalEnrollments * 100
                 : 0;
 
             return new CourseEnrollmentStatsDto
@@ -637,7 +556,7 @@ namespace Services.Service
                 CompletedEnrollments = completedEnrollments,
                 InProgressEnrollments = inProgressEnrollments,
                 CompletionRate = Math.Round(completionRate, 2),
-                AverageProgress = Math.Round(averageProgress, 2),
+                AverageProgress = Math.Round(completionRate, 2), // Use completion rate as progress since we don't have Progress field
                 RecentEnrollments = registrations
                     .OrderByDescending(r => r.RegisteredAt)
                     .Take(10)
@@ -660,13 +579,7 @@ namespace Services.Service
                 throw new UnauthorizedAccessException("Bạn không có quyền cập nhật đăng ký này");
             }
 
-            registration.Progress = updateDto.Progress;
             registration.Completed = updateDto.Completed;
-
-            if (updateDto.Completed && !registration.CompletedAt.HasValue)
-            {
-                registration.CompletedAt = DateTime.UtcNow;
-            }
 
             await _registrationRepository.UpdateAsync(registration);
             await _unitOfWork.SaveAsync();
@@ -742,6 +655,9 @@ namespace Services.Service
                         throw new ArgumentException("Dữ liệu quiz phải ở định dạng JSON");
                     }
                     break;
+
+                default:
+                    throw new ArgumentException($"Loại nội dung '{contentType}' không được hỗ trợ");
             }
         }
 
@@ -779,12 +695,12 @@ namespace Services.Service
 
             if (!string.IsNullOrEmpty(filter.TargetGroup))
             {
-                query = query.Where(r => r.Course.TargetGroup == filter.TargetGroup);
+                query = query.Where(r => r.Course != null && r.Course.TargetGroup == filter.TargetGroup);
             }
 
             if (!string.IsNullOrEmpty(filter.AgeGroup))
             {
-                query = query.Where(r => r.Course.AgeGroup == filter.AgeGroup);
+                query = query.Where(r => r.Course != null && r.Course.AgeGroup == filter.AgeGroup);
             }
 
             if (filter.FromDate.HasValue)
@@ -795,16 +711,6 @@ namespace Services.Service
             if (filter.ToDate.HasValue)
             {
                 query = query.Where(r => r.RegisteredAt <= filter.ToDate.Value);
-            }
-
-            if (filter.MinProgress.HasValue)
-            {
-                query = query.Where(r => r.Progress >= filter.MinProgress.Value);
-            }
-
-            if (filter.MaxProgress.HasValue)
-            {
-                query = query.Where(r => r.Progress <= filter.MaxProgress.Value);
             }
 
             return query.OrderByDescending(r => r.RegisteredAt);
@@ -823,8 +729,6 @@ namespace Services.Service
                 Description = course.Description,
                 TargetGroup = course.TargetGroup,
                 AgeGroup = course.AgeGroup,
-                Skills = course.SkillsList, // NEW: Skills
-                ThumbnailUrl = course.ThumbnailUrl, // NEW: Thumbnail
                 ContentURL = course.ContentURL,
                 CreatedBy = course.CreatedBy,
                 CreatorName = course.Creator?.FullName ?? "Không xác định",
@@ -845,8 +749,6 @@ namespace Services.Service
                 Description = course.Description,
                 TargetGroup = course.TargetGroup,
                 AgeGroup = course.AgeGroup,
-                Skills = course.SkillsList, // NEW: Skills
-                ThumbnailUrl = course.ThumbnailUrl, // NEW: Thumbnail
                 CreatorName = course.Creator?.FullName ?? "Không xác định",
                 CreatedAt = course.CreatedAt,
                 IsActive = course.isActive,
@@ -861,19 +763,47 @@ namespace Services.Service
             return new CourseContentResponseDto
             {
                 ContentID = content.ContentID,
-                CourseID = content.CourseID ?? 0,
+                CourseID = content.CourseID.HasValue ? content.CourseID.Value : 0,
                 Title = content.Title,
                 Description = content.Description,
                 ContentType = content.ContentType,
                 ContentData = content.ContentData,
-                FileUrl = content.FileUrl, // NEW: File URL
-                FileName = content.FileName, // NEW: File name
-                FileSize = content.FileSize, // NEW: File size
-                MimeType = content.MimeType, // NEW: MIME type
                 OrderIndex = content.OrderIndex,
                 IsActive = content.isActive,
                 CreatedAt = content.CreatedAt,
                 CourseName = content.Course?.Title ?? ""
+            };
+        }
+
+        private CourseRegistrationResponseDto MapToCourseRegistrationResponseDto(CourseRegistration registration)
+        {
+            return new CourseRegistrationResponseDto
+            {
+                RegistrationID = registration.RegistrationID,
+                UserID = registration.UserID.HasValue ? registration.UserID.Value : 0,
+                CourseID = registration.CourseID.HasValue ? registration.CourseID.Value : 0,
+                UserName = registration.User?.FullName ?? "Không xác định",
+                UserEmail = registration.User?.Email ?? "",
+                CourseTitle = registration.Course?.Title ?? "",
+                RegisteredAt = registration.RegisteredAt,
+                Completed = registration.Completed
+            };
+        }
+
+        private RegistrationListDto MapToRegistrationListDto(CourseRegistration registration)
+        {
+            return new RegistrationListDto
+            {
+                RegistrationID = registration.RegistrationID,
+                UserID = registration.UserID.HasValue ? registration.UserID.Value : 0,
+                CourseID = registration.CourseID.HasValue ? registration.CourseID.Value : 0,
+                UserName = registration.User?.FullName ?? "Không xác định",
+                UserEmail = registration.User?.Email ?? "",
+                CourseTitle = registration.Course?.Title ?? "",
+                TargetGroup = registration.Course?.TargetGroup ?? "",
+                AgeGroup = registration.Course?.AgeGroup ?? "",
+                RegisteredAt = registration.RegisteredAt,
+                Completed = registration.Completed
             };
         }
 
