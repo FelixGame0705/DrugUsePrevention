@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,11 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(DrugUsePreventionDBContext))]
-    partial class DrugUsePreventionDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250530104623_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,35 +60,6 @@ namespace Repositories.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("BussinessObjects.CheckCourseContent", b =>
-                {
-                    b.Property<int>("CheckID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CheckID"));
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ContentID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RegistrationID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CheckID");
-
-                    b.HasIndex("ContentID");
-
-                    b.HasIndex("RegistrationID");
-
-                    b.ToTable("CheckCourseContent");
                 });
 
             modelBuilder.Entity("BussinessObjects.Consultant", b =>
@@ -147,58 +121,11 @@ namespace Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isAccept")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
                     b.HasKey("CourseID");
 
                     b.HasIndex("CreatorUserID");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("BussinessObjects.CourseContent", b =>
-                {
-                    b.Property<int>("ContentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContentID"));
-
-                    b.Property<string>("ContentData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CourseID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderIndex")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ContentID");
-
-                    b.HasIndex("CourseID");
-
-                    b.ToTable("CourseContent");
                 });
 
             modelBuilder.Entity("BussinessObjects.CourseRegistration", b =>
@@ -273,9 +200,6 @@ namespace Repositories.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -522,25 +446,6 @@ namespace Repositories.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BussinessObjects.CheckCourseContent", b =>
-                {
-                    b.HasOne("BussinessObjects.CourseContent", "Content")
-                        .WithMany("ProgressByUsers")
-                        .HasForeignKey("ContentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BussinessObjects.CourseRegistration", "Registration")
-                        .WithMany("ContentProgress")
-                        .HasForeignKey("RegistrationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Content");
-
-                    b.Navigation("Registration");
-                });
-
             modelBuilder.Entity("BussinessObjects.Consultant", b =>
                 {
                     b.HasOne("BussinessObjects.User", "User")
@@ -561,15 +466,6 @@ namespace Repositories.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("BussinessObjects.CourseContent", b =>
-                {
-                    b.HasOne("BussinessObjects.Course", "Course")
-                        .WithMany("Contents")
-                        .HasForeignKey("CourseID");
-
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("BussinessObjects.CourseRegistration", b =>
@@ -679,19 +575,7 @@ namespace Repositories.Migrations
 
             modelBuilder.Entity("BussinessObjects.Course", b =>
                 {
-                    b.Navigation("Contents");
-
                     b.Navigation("Registrations");
-                });
-
-            modelBuilder.Entity("BussinessObjects.CourseContent", b =>
-                {
-                    b.Navigation("ProgressByUsers");
-                });
-
-            modelBuilder.Entity("BussinessObjects.CourseRegistration", b =>
-                {
-                    b.Navigation("ContentProgress");
                 });
 
             modelBuilder.Entity("BussinessObjects.Program", b =>

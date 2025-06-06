@@ -21,5 +21,6 @@ namespace BussinessObjects
 
         public virtual User User { get; set; }
         public virtual Course Course { get; set; }
+        public virtual ICollection<CheckCourseContent>? ContentProgress { get; set; }
     }
 }

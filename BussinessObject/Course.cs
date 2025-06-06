@@ -19,10 +19,12 @@ namespace BussinessObjects
         public string TargetGroup { get; set; }
         public string AgeGroup { get; set; }
         public string ContentURL { get; set; }
-        public int CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
-
+        public bool isActive { get; set; } = true;
+        public bool isAccept { get; set; } = true;
         public virtual User Creator { get; set; }
-        public virtual ICollection<CourseRegistration> Registrations { get; set; }
+        public virtual ICollection<CourseRegistration>? Registrations { get; set; }
+        public virtual ICollection<CourseContent>? Contents { get; set; }
     }
 }

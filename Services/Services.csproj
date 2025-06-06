@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="IService\" />
-    <Folder Include="Service\" />
+    <Folder Include="AutoMapping\" />
   </ItemGroup>
 
 </Project>

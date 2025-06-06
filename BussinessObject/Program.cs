@@ -17,6 +17,7 @@ namespace BussinessObjects
         public DateTime EndDate { get; set; }
         public string Location { get; set; }
         public int CreatedBy { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public virtual User Creator { get; set; }
         public virtual ICollection<ProgramParticipation> Participants { get; set; }
