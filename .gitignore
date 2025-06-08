@@ -61,3 +61,4 @@ nunit-*.xml
 *.json
 *.suo
 /.vs/ProjectEvaluation/druguseprevention.projects.v9.bin
+/.vs/DrugUsePrevention/v17/.suo
