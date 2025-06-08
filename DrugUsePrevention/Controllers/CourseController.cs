@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTOs.Common;
 using Services.DTOs.CourseContent;
@@ -26,7 +27,9 @@ namespace WebAPI.Controllers
         /// [TASK] API View Course - Có phân trang, filter theo ngày tháng, kỹ năng, độ tuổi
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<PaginatedApiResponse<CourseListDto>>> GetCourses([FromQuery] CourseFilterDto filter)
+        public async Task<ActionResult<PaginatedApiResponse<CourseListDto>>> GetCourses(
+            [FromQuery] CourseFilterDto filter
+        )
         {
             try
             {
@@ -68,16 +71,21 @@ namespace WebAPI.Controllers
         /// [TASK] API Create khóa học - Cho phép tạo khóa học, cho phép up ảnh thumbnail của khóa học (Consultant)
         /// </summary>
         [HttpPost]
-        [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseResponseDto>>> CreateCourse([FromBody] CreateCourseDto createDto)
+        [Authorize(Roles = "Consultant, Manager")]
+        public async Task<ActionResult<ApiResponse<CourseResponseDto>>> CreateCourse(
+            [FromBody] CreateCourseDto createDto
+        )
         {
             try
             {
                 int createdBy = GetCurrentUserId();
 
                 var result = await _courseService.CreateCourseAsync(createDto, createdBy);
-                return CreatedAtAction(nameof(GetCourse), new { id = result.CourseID },
-                    ApiResponse<CourseResponseDto>.SuccessResult(result, "Tạo khóa học thành công"));
+                return CreatedAtAction(
+                    nameof(GetCourse),
+                    new { id = result.CourseID },
+                    ApiResponse<CourseResponseDto>.SuccessResult(result, "Tạo khóa học thành công")
+                );
             }
             catch (ArgumentException ex)
             {
@@ -89,7 +97,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học")
+                );
             }
         }
 
@@ -102,7 +113,10 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPut("{id}")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseResponseDto>>> UpdateCourse(int id, [FromBody] UpdateCourseDto updateDto)
+        public async Task<ActionResult<ApiResponse<CourseResponseDto>>> UpdateCourse(
+            int id,
+            [FromBody] UpdateCourseDto updateDto
+        )
         {
             try
             {
@@ -113,7 +127,12 @@ namespace WebAPI.Controllers
 
                 int updatedBy = GetCurrentUserId();
                 var result = await _courseService.UpdateCourseAsync(updateDto, updatedBy);
-                return Ok(ApiResponse<CourseResponseDto>.SuccessResult(result, "Cập nhật khóa học thành công"));
+                return Ok(
+                    ApiResponse<CourseResponseDto>.SuccessResult(
+                        result,
+                        "Cập nhật khóa học thành công"
+                    )
+                );
             }
             catch (KeyNotFoundException ex)
             {
@@ -125,7 +144,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi cập nhật khóa học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi cập nhật khóa học")
+                );
             }
         }
 
@@ -152,7 +174,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi xóa khóa học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi xóa khóa học")
+                );
             }
         }
 
@@ -161,7 +186,10 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPatch("{id}/toggle-status")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<string>>> ToggleCourseStatus(int id, [FromBody] bool isActive)
+        public async Task<ActionResult<ApiResponse<string>>> ToggleCourseStatus(
+            int id,
+            [FromBody] bool isActive
+        )
         {
             try
             {
@@ -188,14 +216,19 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPatch("{id}/approve")]
         [Authorize(Roles = "Manager")]
-        public async Task<ActionResult<ApiResponse<string>>> ApproveCourse(int id, [FromBody] bool isAccept)
+        public async Task<ActionResult<ApiResponse<string>>> ApproveCourse(
+            int id,
+            [FromBody] bool isAccept
+        )
         {
             try
             {
                 int approvedBy = GetCurrentUserId();
                 await _courseService.ApproveCourseAsync(id, isAccept, approvedBy);
 
-                string message = isAccept ? "Duyệt khóa học thành công" : "Từ chối khóa học thành công";
+                string message = isAccept
+                    ? "Duyệt khóa học thành công"
+                    : "Từ chối khóa học thành công";
                 return Ok(ApiResponse<string>.SuccessResult("", message));
             }
             catch (KeyNotFoundException ex)
@@ -217,14 +250,21 @@ namespace WebAPI.Controllers
         /// Hiển thị danh sách học phần và các bài học của course
         /// </summary>
         [HttpGet("{courseId}/contents")]
-        public async Task<ActionResult<PaginatedApiResponse<CourseContentResponseDto>>> GetCourseContents(
+        public async Task<
+            ActionResult<PaginatedApiResponse<CourseContentResponseDto>>
+        > GetCourseContents(
             int courseId,
             [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10)
+            [FromQuery] int pageSize = 10
+        )
         {
             try
             {
-                var result = await _courseService.GetCourseContentsAsync(courseId, pageIndex, pageSize);
+                var result = await _courseService.GetCourseContentsAsync(
+                    courseId,
+                    pageIndex,
+                    pageSize
+                );
                 return Ok(PaginatedApiResponse<CourseContentResponseDto>.SuccessResult(result));
             }
             catch (KeyNotFoundException ex)
@@ -241,7 +281,9 @@ namespace WebAPI.Controllers
         /// Get active contents only (for learning)
         /// </summary>
         [HttpGet("{courseId}/contents/active")]
-        public async Task<ActionResult<ApiResponse<List<CourseContentResponseDto>>>> GetActiveCourseContents(int courseId)
+        public async Task<
+            ActionResult<ApiResponse<List<CourseContentResponseDto>>>
+        > GetActiveCourseContents(int courseId)
         {
             try
             {
@@ -262,7 +304,9 @@ namespace WebAPI.Controllers
         /// Get specific content details
         /// </summary>
         [HttpGet("contents/{contentId}")]
-        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> GetCourseContent(int contentId)
+        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> GetCourseContent(
+            int contentId
+        )
         {
             try
             {
@@ -284,13 +328,21 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPost("contents")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> CreateCourseContent([FromBody] CreateCourseContentDto createDto)
+        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> CreateCourseContent(
+            [FromBody] CreateCourseContentDto createDto
+        )
         {
             try
             {
                 var result = await _courseService.CreateCourseContentAsync(createDto);
-                return CreatedAtAction(nameof(GetCourseContent), new { contentId = result.ContentID },
-                    ApiResponse<CourseContentResponseDto>.SuccessResult(result, "Tạo nội dung bài học thành công"));
+                return CreatedAtAction(
+                    nameof(GetCourseContent),
+                    new { contentId = result.ContentID },
+                    ApiResponse<CourseContentResponseDto>.SuccessResult(
+                        result,
+                        "Tạo nội dung bài học thành công"
+                    )
+                );
             }
             catch (KeyNotFoundException ex)
             {
@@ -306,7 +358,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo nội dung bài học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo nội dung bài học")
+                );
             }
         }
 
@@ -315,7 +370,10 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPut("contents/{contentId}")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> UpdateCourseContent(int contentId, [FromBody] UpdateCourseContentDto updateDto)
+        public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> UpdateCourseContent(
+            int contentId,
+            [FromBody] UpdateCourseContentDto updateDto
+        )
         {
             try
             {
@@ -325,7 +383,12 @@ namespace WebAPI.Controllers
                 }
 
                 var result = await _courseService.UpdateCourseContentAsync(updateDto);
-                return Ok(ApiResponse<CourseContentResponseDto>.SuccessResult(result, "Cập nhật nội dung bài học thành công"));
+                return Ok(
+                    ApiResponse<CourseContentResponseDto>.SuccessResult(
+                        result,
+                        "Cập nhật nội dung bài học thành công"
+                    )
+                );
             }
             catch (KeyNotFoundException ex)
             {
@@ -341,7 +404,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi cập nhật nội dung bài học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi cập nhật nội dung bài học")
+                );
             }
         }
 
@@ -367,7 +433,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi xóa nội dung bài học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi xóa nội dung bài học")
+                );
             }
         }
 
@@ -394,7 +463,10 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPatch("{courseId}/contents/reorder")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<string>>> ReorderCourseContents(int courseId, [FromBody] Dictionary<int, int> contentOrderMapping)
+        public async Task<ActionResult<ApiResponse<string>>> ReorderCourseContents(
+            int courseId,
+            [FromBody] Dictionary<int, int> contentOrderMapping
+        )
         {
             try
             {
@@ -420,13 +492,20 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpPost("{courseId}/register")]
         [Authorize(Roles = "Member,Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseRegistrationResponseDto>>> RegisterForCourse(int courseId)
+        public async Task<
+            ActionResult<ApiResponse<CourseRegistrationResponseDto>>
+        > RegisterForCourse(int courseId)
         {
             try
             {
                 int userId = GetCurrentUserId();
                 var result = await _courseService.RegisterForCourseAsync(courseId, userId);
-                return Ok(ApiResponse<CourseRegistrationResponseDto>.SuccessResult(result, "Đăng ký khóa học thành công"));
+                return Ok(
+                    ApiResponse<CourseRegistrationResponseDto>.SuccessResult(
+                        result,
+                        "Đăng ký khóa học thành công"
+                    )
+                );
             }
             catch (ArgumentException ex)
             {
@@ -442,7 +521,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi đăng ký khóa học"));
+                return StatusCode(
+                    500,
+                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi đăng ký khóa học")
+                );
             }
         }
 
@@ -520,9 +602,9 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpGet("{courseId}/registrations")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<PaginatedApiResponse<RegistrationListDto>>> GetCourseRegistrations(
-            int courseId,
-            [FromQuery] RegistrationFilterDto filter)
+        public async Task<
+            ActionResult<PaginatedApiResponse<RegistrationListDto>>
+        > GetCourseRegistrations(int courseId, [FromQuery] RegistrationFilterDto filter)
         {
             try
             {
@@ -544,7 +626,9 @@ namespace WebAPI.Controllers
         /// </summary>
         [HttpGet("{courseId}/enrollment-stats")]
         [Authorize(Roles = "Consultant,Manager")]
-        public async Task<ActionResult<ApiResponse<CourseEnrollmentStatsDto>>> GetCourseEnrollmentStats(int courseId)
+        public async Task<
+            ActionResult<ApiResponse<CourseEnrollmentStatsDto>>
+        > GetCourseEnrollmentStats(int courseId)
         {
             try
             {
@@ -571,8 +655,8 @@ namespace WebAPI.Controllers
         /// </summary>
         private int GetCurrentUserId()
         {
-            // Example implementation - adjust based on your JWT setup
-            var userIdClaim = User.FindFirst("userId") ?? User.FindFirst("sub");
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier); // "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+
             if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
             {
                 return userId;
@@ -626,7 +710,9 @@ namespace WebAPI.Controllers
         /// Get user's course registrations
         /// </summary>
         [HttpGet("my-courses")]
-        public async Task<ActionResult<PaginatedApiResponse<RegistrationListDto>>> GetMyRegistrations([FromQuery] RegistrationFilterDto filter)
+        public async Task<
+            ActionResult<PaginatedApiResponse<RegistrationListDto>>
+        > GetMyRegistrations([FromQuery] RegistrationFilterDto filter)
         {
             try
             {
@@ -648,13 +734,20 @@ namespace WebAPI.Controllers
         /// Update learning progress
         /// </summary>
         [HttpPatch("progress")]
-        public async Task<ActionResult<ApiResponse<CourseRegistrationResponseDto>>> UpdateProgress([FromBody] UpdateProgressDto updateDto)
+        public async Task<ActionResult<ApiResponse<CourseRegistrationResponseDto>>> UpdateProgress(
+            [FromBody] UpdateProgressDto updateDto
+        )
         {
             try
             {
                 int userId = GetCurrentUserId();
                 var result = await _courseService.UpdateProgressAsync(updateDto, userId);
-                return Ok(ApiResponse<CourseRegistrationResponseDto>.SuccessResult(result, "Cập nhật tiến độ thành công"));
+                return Ok(
+                    ApiResponse<CourseRegistrationResponseDto>.SuccessResult(
+                        result,
+                        "Cập nhật tiến độ thành công"
+                    )
+                );
             }
             catch (KeyNotFoundException ex)
             {

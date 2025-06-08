@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,13 @@ namespace BussinessObjects
         public string TargetGroup { get; set; }
         public string AgeGroup { get; set; }
         public string ContentURL { get; set; }
-        public int? CreatedBy { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public bool isActive { get; set; } = true;
         public bool isAccept { get; set; } = true;
+        public int? CreatedBy { get; set; }
+
+        [ForeignKey("CreatedBy")]
         public virtual User Creator { get; set; }
         public virtual ICollection<CourseRegistration>? Registrations { get; set; }
         public virtual ICollection<CourseContent>? Contents { get; set; }
