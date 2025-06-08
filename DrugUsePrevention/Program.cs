@@ -5,7 +5,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.IRepository;
+using Repositories.IRepository.Courses;
+using Repositories.IRepository.Users;
 using Repositories.Repository;
+using Repositories.Repository.Courses;
+using Repositories.Repository.Users;
 using Services.IService;
 using Services.MailUtils;
 using Services.Service;
@@ -34,6 +38,12 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddTransient<ISendMailService, SendMailService>();
+            builder.Services.AddScoped<
+                ICourseRegistrationRepository,
+                CourseRegistrationRepository
+            >();
+            builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddControllers();
 
             // Thêm Swagger
@@ -44,7 +54,40 @@ namespace DrugUsePrevention
                     "v1",
                     new OpenApiInfo { Title = "DrugUsePrevention API", Version = "v1" }
                 );
+
+                // Thêm cấu hình xác thực JWT vào Swagger
+                c.AddSecurityDefinition(
+                    "Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        Description =
+                            "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer abcdef12345\"",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        BearerFormat = "JWT",
+                    }
+                );
+
+                c.AddSecurityRequirement(
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer",
+                                },
+                            },
+                            Array.Empty<string>()
+                        },
+                    }
+                );
             });
+
             builder
                 .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -62,6 +105,7 @@ namespace DrugUsePrevention
                         ValidateIssuerSigningKey = true,
                     };
                 });
+            builder.Services.AddAuthorization();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -75,7 +119,7 @@ namespace DrugUsePrevention
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
