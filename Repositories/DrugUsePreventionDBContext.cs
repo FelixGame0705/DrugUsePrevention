@@ -23,8 +23,15 @@ namespace Repositories
         public virtual DbSet<ProgramParticipation> ProgramParticipations { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<SurveyAnswer> SurveyAnswers { get; set; }
+        public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+        public virtual DbSet<CheckCourseContent> CheckCourseContents { get; set; }
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<UserSurveyAnswer> UserSurveyAnswers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<CourseContent> CourseContents { get; set; }
+        public virtual DbSet<NewsArticle> NewsArticles { get; set; }
+        public virtual DbSet<NewsTag> NewsTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

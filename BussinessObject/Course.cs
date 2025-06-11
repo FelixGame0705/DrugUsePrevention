@@ -20,7 +20,7 @@ namespace BussinessObjects
         public string TargetGroup { get; set; }
         public string AgeGroup { get; set; }
         public string ContentURL { get; set; }
-
+        public string ThumbnailURL { get; set; } // URL của hình ảnh đại diện khóa học
         public DateTime CreatedAt { get; set; }
         public bool isActive { get; set; } = true;
         public bool isAccept { get; set; } = true;

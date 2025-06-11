@@ -20,7 +20,7 @@ namespace BussinessObjects
         public string Headline { get; set; } = string.Empty;
 
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         [Required]
         public string NewsContent { get; set; } = string.Empty;
@@ -29,27 +29,25 @@ namespace BussinessObjects
         public string NewsSource { get; set; } = string.Empty;
 
         [Required]
-        public int CategoryID { get; set; }
+        public int? CategoryID { get; set; }
 
         [Required, MaxLength(200)]
         public string NewsStatus { get; set; } = string.Empty;
 
-        [Required]
-        public int CreatedByID { get; set; }
+        public int? CreatedByID { get; set; }
 
-        [Required]
-        public int UpdatedByID { get; set; }
+        public int? UpdatedByID { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
         [ForeignKey("CategoryID")]
-        public virtual Category Category { get; set; }
+        public virtual Category? Category { get; set; }
 
         [ForeignKey("CreatedByID")]
-        public virtual User CreatedBy { get; set; }
+        public virtual User? CreatedBy { get; set; }
 
         [ForeignKey("UpdatedByID")]
-        public virtual User UpdatedBy { get; set; }
+        public virtual User? UpdatedBy { get; set; }
 
-        public virtual ICollection<NewsTag> NewsTags { get; set; }
+        public virtual ICollection<NewsTag>? NewsTags { get; set; }
     }
 }

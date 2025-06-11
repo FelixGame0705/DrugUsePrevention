@@ -15,6 +15,7 @@ namespace BussinessObjects
         public string Type { get; set; } // ASSIST, CRAFFT, PreProgram, PostProgram
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string ThumbnailURL { get; set; } // URL of the survey's thumbnail image
 
         public virtual ICollection<SurveyQuestion> Questions { get; set; }
     }

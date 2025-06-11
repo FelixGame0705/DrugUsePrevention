@@ -16,6 +16,7 @@ namespace BussinessObjects
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Phone { get; set; }
+        public string AvatarUrl { get; set; } // URL đến ảnh đại diện của người dùng
         public DateTime? DateOfBirth { get; set; }
         public string Gender { get; set; } // Male, Female, Other
         public string Role { get; set; } = "Guest";

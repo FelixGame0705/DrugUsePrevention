@@ -10,11 +10,11 @@ namespace BussinessObjects
 {
     public class NewsTag
     {
-        [Key, Column(Order = 0)]
-        public int NewsArticleID { get; set; }
+        [Key]
+        public int NewsTagID { get; set; }
+        public int? NewsArticleID { get; set; }
 
-        [Key, Column(Order = 1)]
-        public int TagID { get; set; }
+        public int? TagID { get; set; }
 
         [ForeignKey("NewsArticleID")]
         public virtual NewsArticle NewsArticle { get; set; }

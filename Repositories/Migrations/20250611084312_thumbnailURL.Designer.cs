@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories;
 
@@ -11,9 +12,11 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(DrugUsePreventionDBContext))]
-    partial class DrugUsePreventionDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250611084312_thumbnailURL")]
+    partial class thumbnailURL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,33 +62,6 @@ namespace Repositories.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("BussinessObjects.Category", b =>
-                {
-                    b.Property<int>("CategoryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
-
-                    b.Property<string>("CategoryDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ParentCategoryID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CategoryID");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("BussinessObjects.CheckCourseContent", b =>
                 {
                     b.Property<int>("CheckID")
@@ -112,7 +88,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("RegistrationID");
 
-                    b.ToTable("CheckCourseContents");
+                    b.ToTable("CheckCourseContent");
                 });
 
             modelBuilder.Entity("BussinessObjects.Consultant", b =>
@@ -226,7 +202,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.ToTable("CourseContents");
+                    b.ToTable("CourseContent");
                 });
 
             modelBuilder.Entity("BussinessObjects.CourseRegistration", b =>
@@ -279,86 +255,6 @@ namespace Repositories.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("DashboardData");
-                });
-
-            modelBuilder.Entity("BussinessObjects.NewsArticle", b =>
-                {
-                    b.Property<int>("NewsArticleID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsArticleID"));
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CreatedByID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Headline")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NewsAticleName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("NewsContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewsSource")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewsStatus")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("UpdatedByID")
-                        .HasColumnType("int");
-
-                    b.HasKey("NewsArticleID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.HasIndex("CreatedByID");
-
-                    b.HasIndex("UpdatedByID");
-
-                    b.ToTable("NewsArticles");
-                });
-
-            modelBuilder.Entity("BussinessObjects.NewsTag", b =>
-                {
-                    b.Property<int>("NewsTagID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NewsTagID"));
-
-                    b.Property<int?>("NewsArticleID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TagID")
-                        .HasColumnType("int");
-
-                    b.HasKey("NewsTagID");
-
-                    b.HasIndex("NewsArticleID");
-
-                    b.HasIndex("TagID");
-
-                    b.ToTable("NewsTags");
                 });
 
             modelBuilder.Entity("BussinessObjects.Program", b =>
@@ -513,29 +409,7 @@ namespace Repositories.Migrations
 
                     b.HasIndex("SurveyID");
 
-                    b.ToTable("SurveyQuestions");
-                });
-
-            modelBuilder.Entity("BussinessObjects.Tag", b =>
-                {
-                    b.Property<int>("TagID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagID"));
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TagName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("TagID");
-
-                    b.ToTable("Tags");
+                    b.ToTable("SurveyQuestion");
                 });
 
             modelBuilder.Entity("BussinessObjects.User", b =>
@@ -747,44 +621,6 @@ namespace Repositories.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BussinessObjects.NewsArticle", b =>
-                {
-                    b.HasOne("BussinessObjects.Category", "Category")
-                        .WithMany("NewsAticles")
-                        .HasForeignKey("CategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BussinessObjects.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByID");
-
-                    b.HasOne("BussinessObjects.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedByID");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
-                });
-
-            modelBuilder.Entity("BussinessObjects.NewsTag", b =>
-                {
-                    b.HasOne("BussinessObjects.NewsArticle", "NewsArticle")
-                        .WithMany("NewsTags")
-                        .HasForeignKey("NewsArticleID");
-
-                    b.HasOne("BussinessObjects.Tag", "Tag")
-                        .WithMany("NewsTags")
-                        .HasForeignKey("TagID");
-
-                    b.Navigation("NewsArticle");
-
-                    b.Navigation("Tag");
-                });
-
             modelBuilder.Entity("BussinessObjects.Program", b =>
                 {
                     b.HasOne("BussinessObjects.User", "Creator")
@@ -875,11 +711,6 @@ namespace Repositories.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BussinessObjects.Category", b =>
-                {
-                    b.Navigation("NewsAticles");
-                });
-
             modelBuilder.Entity("BussinessObjects.Course", b =>
                 {
                     b.Navigation("Contents");
@@ -897,11 +728,6 @@ namespace Repositories.Migrations
                     b.Navigation("ContentProgress");
                 });
 
-            modelBuilder.Entity("BussinessObjects.NewsArticle", b =>
-                {
-                    b.Navigation("NewsTags");
-                });
-
             modelBuilder.Entity("BussinessObjects.Program", b =>
                 {
                     b.Navigation("Participants");
@@ -915,11 +741,6 @@ namespace Repositories.Migrations
             modelBuilder.Entity("BussinessObjects.SurveyQuestion", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("BussinessObjects.Tag", b =>
-                {
-                    b.Navigation("NewsTags");
                 });
 
             modelBuilder.Entity("BussinessObjects.User", b =>
