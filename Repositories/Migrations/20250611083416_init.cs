@@ -49,13 +49,19 @@ namespace Repositories.Migrations
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VerificationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsEmailVerified = table.Column<bool>(type: "bit", nullable: false),
+                    ResetPasswordToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResetPasswordExpiry = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -143,19 +149,19 @@ namespace Repositories.Migrations
                     TargetGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AgeGroup = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContentURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorUserID = table.Column<int>(type: "int", nullable: false)
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    isAccept = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_Courses_Users_CreatorUserID",
-                        column: x => x.CreatorUserID,
+                        name: "FK_Courses_Users_CreatedBy",
+                        column: x => x.CreatedBy,
                         principalTable: "Users",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +176,7 @@ namespace Repositories.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatorUserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -230,6 +237,31 @@ namespace Repositories.Migrations
                         column: x => x.QuestionID,
                         principalTable: "SurveyQuestion",
                         principalColumn: "QuestionID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseContent",
+                columns: table => new
+                {
+                    ContentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseID = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentData = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderIndex = table.Column<int>(type: "int", nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseContent", x => x.ContentID);
+                    table.ForeignKey(
+                        name: "FK_CourseContent_Courses_CourseID",
+                        column: x => x.CourseID,
+                        principalTable: "Courses",
+                        principalColumn: "CourseID");
                 });
 
             migrationBuilder.CreateTable(
@@ -316,6 +348,34 @@ namespace Repositories.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CheckCourseContent",
+                columns: table => new
+                {
+                    CheckID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RegistrationID = table.Column<int>(type: "int", nullable: false),
+                    ContentID = table.Column<int>(type: "int", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "bit", nullable: false),
+                    CompletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CheckCourseContent", x => x.CheckID);
+                    table.ForeignKey(
+                        name: "FK_CheckCourseContent_CourseContent_ContentID",
+                        column: x => x.ContentID,
+                        principalTable: "CourseContent",
+                        principalColumn: "ContentID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CheckCourseContent_CourseRegistrations_RegistrationID",
+                        column: x => x.RegistrationID,
+                        principalTable: "CourseRegistrations",
+                        principalColumn: "RegistrationID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ConsultantID",
                 table: "Appointments",
@@ -325,6 +385,21 @@ namespace Repositories.Migrations
                 name: "IX_Appointments_UserID",
                 table: "Appointments",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckCourseContent_ContentID",
+                table: "CheckCourseContent",
+                column: "ContentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CheckCourseContent_RegistrationID",
+                table: "CheckCourseContent",
+                column: "RegistrationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseContent_CourseID",
+                table: "CourseContent",
+                column: "CourseID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseRegistrations_CourseID",
@@ -337,9 +412,9 @@ namespace Repositories.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_CreatorUserID",
+                name: "IX_Courses_CreatedBy",
                 table: "Courses",
-                column: "CreatorUserID");
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProgramParticipations_ProgramID",
@@ -399,10 +474,10 @@ namespace Repositories.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "Consultants");
+                name: "CheckCourseContent");
 
             migrationBuilder.DropTable(
-                name: "CourseRegistrations");
+                name: "Consultants");
 
             migrationBuilder.DropTable(
                 name: "DashboardData");
@@ -414,7 +489,10 @@ namespace Repositories.Migrations
                 name: "UserSurveyAnswers");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "CourseContent");
+
+            migrationBuilder.DropTable(
+                name: "CourseRegistrations");
 
             migrationBuilder.DropTable(
                 name: "Programs");
@@ -424,6 +502,9 @@ namespace Repositories.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserSurveyResponses");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "SurveyQuestion");

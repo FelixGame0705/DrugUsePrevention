@@ -12,8 +12,8 @@ using Repositories;
 namespace Repositories.Migrations
 {
     [DbContext(typeof(DrugUsePreventionDBContext))]
-    [Migration("20250608035953_createby")]
-    partial class createby
+    [Migration("20250611083416_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
