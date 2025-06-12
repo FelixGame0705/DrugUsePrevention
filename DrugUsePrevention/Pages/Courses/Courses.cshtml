@@ -131,6 +131,12 @@
                 showLoading();
                 hideError();
                 
+                // Ensure page is a valid number
+                page = parseInt(page) || 1;
+                if (page < 1) page = 1;
+                
+                console.log('Loading courses for page:', page);
+                
                 const pageSize = document.getElementById('pageSize').value;
                 const startDate = document.getElementById('startDate').value;
                 const endDate = document.getElementById('endDate').value;
@@ -153,6 +159,8 @@
                 console.log('Response status:', response.status);
                 
                 if (!response.ok) {
+                    const errorText = await response.text();
+                    console.log('Error response:', errorText);
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 
@@ -173,13 +181,13 @@
         // Display courses in table
         function displayCourses(apiResponse) {
             const tbody = document.getElementById('coursesTableBody');
-            console.log("Tri api ", apiResponse.data)
-            if (!apiResponse.isSuccess || !apiResponse.data || !apiResponse.data.items) {
+
+           if (!apiResponse.success || !apiResponse.data || !Array.isArray(apiResponse.data)) {
                 tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Không có dữ liệu hoặc lỗi API</td></tr>';
                 return;
             }
             
-            const courses = apiResponse.data.items;
+            const courses = apiResponse.data;
             
             if (courses.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Không có khóa học nào</td></tr>';
@@ -220,7 +228,8 @@
                 
                 const data = await response.json();
                 
-                if (data.isSuccess && data.data) {
+                // Fix: API returns 'success' not 'isSuccess'
+                if (data.success && data.data) {
                     const course = data.data;
                     document.getElementById('courseDetailContent').innerHTML = `
                         <div class="row">
@@ -263,7 +272,8 @@
                 
                 const data = await response.json();
                 
-                if (data.isSuccess && data.data) {
+                // Fix: API returns 'success' not 'isSuccess'
+                if (data.success && data.data) {
                     const contents = data.data;
                     let contentHtml = '<h6>Nội dung khóa học</h6>';
                     
@@ -301,20 +311,24 @@
         function updatePagination(apiResponse) {
             const pagination = document.getElementById('pagination');
             
-            if (!apiResponse.data) {
+            // Fix: API response structure - pagination info is in apiResponse.pagination
+            if (!apiResponse.pagination) {
                 pagination.innerHTML = '';
                 return;
             }
             
-            currentPage = apiResponse.data.pageIndex;
-            totalPages = apiResponse.data.totalPages;
+            // Fix: API uses 'currentPage' not 'pageIndex'
+            currentPage = parseInt(apiResponse.pagination.currentPage) || 1;
+            totalPages = parseInt(apiResponse.pagination.totalPages) || 1;
+            
+            console.log('Pagination info:', { currentPage, totalPages, pagination: apiResponse.pagination });
             
             let paginationHtml = '';
             
             // Previous button
             paginationHtml += `
                 <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                    <a class="page-link" href="#" onclick="loadCourses(${currentPage - 1})">Trước</a>
+                    <a class="page-link" href="#" onclick="event.preventDefault(); loadCourses(${Math.max(1, currentPage - 1)})">Trước</a>
                 </li>
             `;
             
@@ -322,15 +336,15 @@
             for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
                 paginationHtml += `
                     <li class="page-item ${i === currentPage ? 'active' : ''}">
-                        <a class="page-link" href="#" onclick="loadCourses(${i})">${i}</a>
+                        <a class="page-link" href="#" onclick="event.preventDefault(); loadCourses(${i})">${i}</a>
                     </li>
                 `;
             }
             
-            // Next button
+            // Next button  
             paginationHtml += `
-                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                    <a class="page-link" href="#" onclick="loadCourses(${currentPage + 1})">Sau</a>
+                <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="event.preventDefault(); loadCourses(${Math.min(totalPages, currentPage + 1)})">Sau</a>
                 </li>
             `;
             
