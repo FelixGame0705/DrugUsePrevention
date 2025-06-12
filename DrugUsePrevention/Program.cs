@@ -30,21 +30,26 @@ namespace DrugUsePrevention
                     builder.Configuration.GetConnectionString("DefaultConnectionString")
                 )
             );
+
             var mailsettings = builder.Configuration.GetSection("MailSettings"); // đọc config
             builder.Services.Configure<MailSettings>(mailsettings);
+
+            // Dependency Injection
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddTransient<ISendMailService, SendMailService>();
-            builder.Services.AddScoped<
-                ICourseRegistrationRepository,
-                CourseRegistrationRepository
-            >();
+            builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
             builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            // Add Controllers
             builder.Services.AddControllers();
+
+            // Add Razor Pages - PHẢI ĐẶT TRƯỚC builder.Build()
+            builder.Services.AddRazorPages();
 
             // Thêm Swagger
             builder.Services.AddEndpointsApiExplorer();
@@ -88,8 +93,8 @@ namespace DrugUsePrevention
                 );
             });
 
-            builder
-                .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            // JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -105,7 +110,10 @@ namespace DrugUsePrevention
                         ValidateIssuerSigningKey = true,
                     };
                 });
+
             builder.Services.AddAuthorization();
+
+            // BUILD APP - SAU DÒNG NÀY KHÔNG ĐƯỢC THÊM SERVICES NỮA
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -118,11 +126,18 @@ namespace DrugUsePrevention
                 });
             }
 
+            // Middleware pipeline
             app.UseHttpsRedirection();
+            app.UseStaticFiles(); // Thêm dòng này để serve static files cho Razor Pages
+
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Mapping
             app.MapControllers();
+            app.MapRazorPages();
 
             app.Run();
         }
