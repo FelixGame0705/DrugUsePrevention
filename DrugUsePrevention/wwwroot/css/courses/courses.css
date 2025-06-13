@@ -1,0 +1,350 @@
+﻿/* courses.css - Styles cho trang Courses */
+
+/* Course thumbnail in table */
+.course-thumbnail {
+    border: 1px solid #dee2e6;
+}
+
+/* Filter section */
+.card-header h5 {
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Table styling */
+.table th {
+    white-space: nowrap;
+    font-weight: 600;
+    background-color: #343a40 !important;
+    color: white !important;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Button groups in table */
+.btn-group .btn-sm {
+    margin: 1px;
+    padding: 0.25rem 0.5rem;
+}
+
+    .btn-group .btn-sm i {
+        font-size: 0.875rem;
+    }
+
+/* Status badges */
+.badge {
+    font-size: 0.75rem;
+}
+
+    .badge.bg-success {
+        background-color: #198754 !important;
+    }
+
+    .badge.bg-secondary {
+        background-color: #6c757d !important;
+    }
+
+    .badge.bg-primary {
+        background-color: #0d6efd !important;
+    }
+
+    .badge.bg-warning {
+        background-color: #ffc107 !important;
+        color: #000 !important;
+    }
+
+/* Modal styling */
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+
+/* Course detail modal */
+.modal-body table {
+    margin-bottom: 1rem;
+}
+
+    .modal-body table td:first-child {
+        width: 120px;
+        font-weight: 600;
+    }
+
+/* Action buttons in modal */
+.modal-body .btn-group-vertical .btn {
+    margin-bottom: 0.25rem;
+}
+
+/* Course content list */
+.list-group-item {
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+    .list-group-item:hover {
+        border-left-color: #0d6efd;
+        background-color: #f8f9fa;
+    }
+
+    .list-group-item h6 {
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+
+    .list-group-item .text-success {
+        color: #198754 !important;
+    }
+
+/* Pagination styling */
+.pagination {
+    margin-bottom: 0;
+}
+
+    .pagination .page-link {
+        color: #0d6efd;
+        border-color: #dee2e6;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+
+    .pagination .page-link:hover {
+        color: #0a58ca;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+/* Loading and error states */
+.alert {
+    border-radius: 0.375rem;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Filter form styling */
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-select,
+.form-control {
+    border-color: #ced4da;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+/* Button styling */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+    }
+
+.btn-outline-primary {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+    }
+
+/* Toast notifications */
+.toast {
+    min-width: 300px;
+    border-radius: 0.375rem;
+}
+
+.toast-body {
+    padding: 0.75rem;
+}
+
+/* Registration status indicators */
+.course-registered {
+    border-left: 4px solid #198754;
+}
+
+.course-not-registered {
+    border-left: 4px solid #dee2e6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+
+    .btn-group .btn-sm {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    .modal-lg {
+        max-width: 95%;
+        margin: 0.5rem auto;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+        .pagination .page-item {
+            margin: 0.1rem;
+        }
+}
+
+@media (max-width: 576px) {
+    .card-body .row > div {
+        margin-bottom: 1rem;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+        .btn-group .btn {
+            margin: 0.1rem 0;
+        }
+
+    .table td:nth-child(3) {
+        display: none; /* Hide description column on very small screens */
+    }
+
+    .table th:nth-child(3) {
+        display: none;
+    }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #212529;
+        border-color: #495057;
+    }
+
+    .card-header {
+        background-color: #343a40;
+        border-color: #495057;
+    }
+
+    .table {
+        color: #fff;
+    }
+
+    .form-control,
+    .form-select {
+        background-color: #495057;
+        border-color: #6c757d;
+        color: #fff;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #495057;
+            border-color: #86b7fe;
+            color: #fff;
+        }
+
+    .modal-content {
+        background-color: #212529;
+        color: #fff;
+    }
+
+    .modal-header {
+        border-color: #495057;
+    }
+
+    .modal-footer {
+        border-color: #495057;
+    }
+}
+
+/* Animation for smooth transitions */
+.table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+    .table tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+
+.btn {
+    transition: all 0.15s ease-in-out;
+}
+
+.form-control,
+.form-select {
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Course thumbnails hover effect */
+.course-thumbnail {
+    transition: transform 0.2s ease-in-out;
+}
+
+    .course-thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+/* Filter section collapse animation */
+.card {
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+    .card:hover {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
