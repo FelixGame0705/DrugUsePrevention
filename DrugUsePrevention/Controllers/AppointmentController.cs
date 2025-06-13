@@ -38,5 +38,20 @@ namespace DrugUsePrevention.Controllers
                 return StatusCode(500, new { message = "An error occurred" });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllAppointment()
+        {
+            try
+            {
+                var result = await _appointmentService.GetAllAppointment();
+                
+                return Ok(new { message = "Success", data = result });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, new { message = "An error occurred" });
+            }
+        }
     }
 }

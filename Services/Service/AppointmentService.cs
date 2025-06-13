@@ -36,7 +36,7 @@ namespace Services.Service
 
             var appointment = new Appointment();
             appointment.User = user;
-            if (request.ConsultantID!= null)
+            if (request.ConsultantID != null)
             {
                 var consultant = await _consultantRepository.GetByIdAsync(request.ConsultantID);
                 appointment.Consultant = consultant;
@@ -56,6 +56,24 @@ namespace Services.Service
             appointmentResponse.Notes = appointment.Notes;
             appointmentResponse.CreatedAt = appointment.CreatedAt;
             return appointmentResponse;
+        }
+
+        public async Task<List<ApppointmentResponse>> GetAllAppointment()
+        {
+            var appointments = await _apointmentRepository.GetAllAsync();
+            List<ApppointmentResponse> apppointmentResponses = new List<ApppointmentResponse>();
+            foreach (var appointment in appointments)
+            {
+                var appointmentResponse = new ApppointmentResponse();
+                appointmentResponse.AppointmentID = appointment.AppointmentID;
+                appointmentResponse.ConsultantID = appointment.ConsultantID;
+                appointmentResponse.ScheduledAt = appointment.ScheduledAt;
+                appointmentResponse.Status = appointment.Status;
+                appointmentResponse.Notes = appointment.Notes;
+                appointmentResponse.CreatedAt = appointment.CreatedAt;
+                apppointmentResponses.Add(appointmentResponse);
+            }
+            return apppointmentResponses;
         }
     }
 }
