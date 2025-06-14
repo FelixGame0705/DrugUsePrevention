@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using BussinessObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 
 namespace Repositories
@@ -48,6 +50,16 @@ namespace Repositories
                 .WithMany()
                 .HasForeignKey(a => a.ConsultantID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Consultant>().Property(a => a.WorkingHours).HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<List<DateTime>>(v, (JsonSerializerOptions)null) ?? new List<DateTime>(),
+                new ValueComparer<List<DateTime>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c.ToList()
+                    )
+            );
 
             base.OnModelCreating(modelBuilder);
         }

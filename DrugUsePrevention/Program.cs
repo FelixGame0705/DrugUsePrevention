@@ -5,9 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.IRepository;
+using Repositories.IRepository.Appointments;
+using Repositories.IRepository.Consultants;
 using Repositories.IRepository.Courses;
 using Repositories.IRepository.Users;
 using Repositories.Repository;
+using Repositories.Repository.Appointments;
+using Repositories.Repository.Consultants;
 using Repositories.Repository.Courses;
 using Repositories.Repository.Users;
 using Services.IService;
@@ -44,6 +48,10 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
             builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            builder.Services.AddScoped<IConsultantRepository, ConsultantRepository>();
+            builder.Services.AddScoped<IConsultantService, ConsultantService>();
 
             // Add Controllers
             builder.Services.AddControllers();

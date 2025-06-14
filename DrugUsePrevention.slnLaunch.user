@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "DrugUsePrevention\\DrugUsePrevention.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "DrugUserPreventionUI\\DrugUserPreventionUI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
