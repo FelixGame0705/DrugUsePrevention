@@ -98,9 +98,10 @@ namespace Services.Service
                 TargetGroup = createDto.TargetGroup,
                 AgeGroup = createDto.AgeGroup,
                 ContentURL = createDto.ContentURL,
+                ThumbnailURL = createDto.ThumbnailURL, // Thêm thuộc tính này
                 CreatedBy = createdBy,
                 CreatedAt = DateTime.UtcNow,
-                isActive = createDto.IsActive,
+                isActive = true,
                 isAccept = false // Default need approval
             };
 
@@ -132,6 +133,7 @@ namespace Services.Service
             course.TargetGroup = updateDto.TargetGroup;
             course.AgeGroup = updateDto.AgeGroup;
             course.ContentURL = updateDto.ContentURL;
+            course.ThumbnailURL = updateDto.ThumbnailURL; // Thêm thuộc tính này
             course.isActive = updateDto.IsActive;
             course.isAccept = updateDto.IsAccept;
 
@@ -730,6 +732,7 @@ namespace Services.Service
                 TargetGroup = course.TargetGroup,
                 AgeGroup = course.AgeGroup,
                 ContentURL = course.ContentURL,
+                ThumbnailURL = course.ThumbnailURL, // Thêm thuộc tính này
                 CreatedBy = course.CreatedBy,
                 CreatorName = course.Creator?.FullName ?? "Không xác định",
                 CreatedAt = course.CreatedAt,
@@ -749,6 +752,7 @@ namespace Services.Service
                 Description = course.Description,
                 TargetGroup = course.TargetGroup,
                 AgeGroup = course.AgeGroup,
+                ThumbnailURL = course.ThumbnailURL, // Thêm thuộc tính này
                 CreatorName = course.Creator?.FullName ?? "Không xác định",
                 CreatedAt = course.CreatedAt,
                 IsActive = course.isActive,

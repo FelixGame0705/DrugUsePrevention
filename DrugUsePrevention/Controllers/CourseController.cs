@@ -97,10 +97,11 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(
-                    500,
-                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học")
-                );
+#if DEBUG
+                return StatusCode(500, ApiResponse<string>.ErrorResult($"Lỗi server: {ex.Message}"));
+#else
+            return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học"));
+#endif
             }
         }
 
@@ -144,10 +145,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(
-                    500,
-                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi cập nhật khóa học")
-                );
+                return StatusCode(500, ApiResponse<string>.ErrorResult($"Lỗi server: {ex.Message}"));
             }
         }
 
@@ -174,10 +172,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(
-                    500,
-                    ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi xóa khóa học")
-                );
+                return StatusCode(500, ApiResponse<string>.ErrorResult($"Lỗi server: {ex.Message}"));
             }
         }
 
@@ -203,7 +198,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra"));
+                return StatusCode(500, ApiResponse<string>.ErrorResult($"Lỗi server: {ex.Message}"));
             }
         }
 

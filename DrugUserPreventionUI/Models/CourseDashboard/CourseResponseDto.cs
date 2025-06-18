@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTOs.Courses
+namespace DrugUserPreventionUI.Models.CourseDasboard
 {
     public class CourseResponseDto
     {

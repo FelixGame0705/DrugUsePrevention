@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTOs.Courses
+namespace DrugUserPreventionUI.Models.CourseDasboard
 {
     public class CourseListDto
     {
@@ -13,7 +13,8 @@ namespace Services.DTOs.Courses
         public string Description { get; set; }
         public string TargetGroup { get; set; }
         public string AgeGroup { get; set; }
-        public string ThumbnailURL { get; set; } // URL của hình ảnh đại diện khóa học
+        //public List<string> Skills { get; set; } = new(); // NEW: Skills list
+        public string? ThumbnailUrl { get; set; } // NEW: Thumbnail URL
         public string CreatorName { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }

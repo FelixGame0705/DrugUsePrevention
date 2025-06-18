@@ -31,7 +31,7 @@ namespace Services.DTOs.Courses
         //public List<string> Skills { get; set; } = new();
         [Url(ErrorMessage = "URL nội dung không hợp lệ")]
         public string? ContentURL { get; set; }
-
+        public string ThumbnailURL { get; set; } // URL của hình ảnh đại diện khóa học
         public bool IsActive { get; set; }
         public bool IsAccept { get; set; }
     }

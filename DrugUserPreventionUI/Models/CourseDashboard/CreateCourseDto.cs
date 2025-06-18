@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.DTOs.Courses
+namespace DrugUserPreventionUI.Models.CourseDasboard
 {
     public class CreateCourseDto
     {
@@ -30,6 +30,7 @@ namespace Services.DTOs.Courses
         ///// Danh sách kỹ năng được phát triển qua khóa học
         //public List<string> Skills { get; set; } = new();
         public string ThumbnailURL { get; set; } // URL của hình ảnh đại diện khóa học
-
+        public bool IsActive { get; set; } = true;
+        public bool isAccept { get; set; } = true;
     }
 }
