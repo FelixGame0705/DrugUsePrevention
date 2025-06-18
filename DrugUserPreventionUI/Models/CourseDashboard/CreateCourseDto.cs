@@ -9,28 +9,26 @@ namespace DrugUserPreventionUI.Models.CourseDasboard
 {
     public class CreateCourseDto
     {
-        [Required(ErrorMessage = "Tiêu đề khóa học không được để trống")]
+        [Required(ErrorMessage = "Tiêu đề khóa học là bắt buộc")]
         [MaxLength(200, ErrorMessage = "Tiêu đề không được vượt quá 200 ký tự")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Mô tả khóa học không được để trống")]
+        [Required(ErrorMessage = "Mô tả khóa học là bắt buộc")]
         [MaxLength(1000, ErrorMessage = "Mô tả không được vượt quá 1000 ký tự")]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Nhóm đối tượng không được để trống")]
+        [Required(ErrorMessage = "Nhóm đối tượng là bắt buộc")]
         [MaxLength(100, ErrorMessage = "Nhóm đối tượng không được vượt quá 100 ký tự")]
-        public string TargetGroup { get; set; }
+        public string TargetGroup { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Nhóm tuổi không được để trống")]
-        [MaxLength(50, ErrorMessage = "Nhóm tuổi không được vượt quá 50 ký tự")]
-        public string AgeGroup { get; set; }
+        [Required(ErrorMessage = "Độ tuổi là bắt buộc")]
+        [MaxLength(50, ErrorMessage = "Độ tuổi không được vượt quá 50 ký tự")]
+        public string AgeGroup { get; set; } = string.Empty;
 
         [Url(ErrorMessage = "URL nội dung không hợp lệ")]
         public string? ContentURL { get; set; }
-        ///// Danh sách kỹ năng được phát triển qua khóa học
-        //public List<string> Skills { get; set; } = new();
-        public string ThumbnailURL { get; set; } // URL của hình ảnh đại diện khóa học
-        public bool IsActive { get; set; } = true;
-        public bool isAccept { get; set; } = true;
+
+        [Url(ErrorMessage = "URL hình đại diện không hợp lệ")]
+        public string? ThumbnailURL { get; set; }
     }
 }
