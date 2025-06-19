@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< Updated upstream
   "WorkspaceRootPath": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\",
   "Documents": [
     {
@@ -157,6 +158,69 @@
     {
       "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|d:\\fpt_study\\ky8\\prn3\\druguseprevention\\repositories\\migrations\\20250530104623_init2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\migrations\\20250530104623_init2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+  "WorkspaceRootPath": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\druguseprevention\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\repositories\\irepository\\admins\\iadminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\admins\\iadminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\services\\service\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\service\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\services\\dtos\\user\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\dtos\\user\\resetpasswordrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\druguseprevention\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\druguseprevention\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\druguseprevention\\druguseprevention.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\druguseprevention.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\druguseprevention\\controllers\\consultantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\consultantcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\repositories\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\repository\\users\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\repositories\\drugusepreventiondbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\drugusepreventiondbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\repositories\\irepository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62BC9AEC-B993-402C-B1B5-6BD774F1ECB9}|Repositories\\Repositories.csproj|solutionrelative:repositories\\irepository\\users\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\services\\iservice\\iappointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\iservice\\iappointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|c:\\users\\gia bao\\desktop\\prn232\\drugprevent\\services\\service\\sendmailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|solutionrelative:services\\service\\sendmailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> Stashed changes
     }
   ],
   "DocumentGroupContainers": [
@@ -165,6 +229,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
+<<<<<<< Updated upstream
           "DockedWidth": 268,
           "SelectedChildIndex": 16,
           "Children": [
@@ -295,11 +360,28 @@
               "ViewState": "AgIAABEAAAAAAAAAAAA3wBUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:21:24.155Z",
+=======
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ResetPasswordRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\DTOs\\User\\ResetPasswordRequest.cs",
+              "RelativeDocumentMoniker": "Services\\DTOs\\User\\ResetPasswordRequest.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\DTOs\\User\\ResetPasswordRequest.cs",
+              "RelativeToolTip": "Services\\DTOs\\User\\ResetPasswordRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:53:33.248Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+<<<<<<< Updated upstream
               "Title": "CourseRegistration.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\CourseRegistration.cs",
               "RelativeDocumentMoniker": "BussinessObject\\CourseRegistration.cs",
@@ -412,11 +494,22 @@
               "ViewState": "AgIAABIAAAAAAAAAAAAQwBsAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T10:10:00.925Z",
+=======
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\BussinessObject\\User.cs",
+              "RelativeDocumentMoniker": "BussinessObject\\User.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\BussinessObject\\User.cs",
+              "RelativeToolTip": "BussinessObject\\User.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAuwA0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T05:40:58.562Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
+<<<<<<< Updated upstream
               "Title": "20250529063001_init.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\Repositories\\Migrations\\20250529063001_init.cs",
               "RelativeDocumentMoniker": "Repositories\\Migrations\\20250529063001_init.cs",
@@ -503,10 +596,34 @@
               "ViewState": "AgIAABcAAAAAAAAAAAAUwBwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T06:20:50.772Z",
+=======
+              "Title": "DrugUsePreventionDBContext.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\DrugUsePreventionDBContext.cs",
+              "RelativeDocumentMoniker": "Repositories\\DrugUsePreventionDBContext.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\DrugUsePreventionDBContext.cs",
+              "RelativeToolTip": "Repositories\\DrugUsePreventionDBContext.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAIwEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:23:59.092Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IAdminRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\Admins\\IAdminRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\Admins\\IAdminRepository.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\Admins\\IAdminRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\Admins\\IAdminRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAIA/wBoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:19:03.153Z",
+>>>>>>> Stashed changes
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 21,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\WeatherForecastController.cs",
@@ -516,10 +633,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T06:35:51.345Z",
+=======
+              "DocumentIndex": 8,
+              "Title": "ConsultantController.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Controllers\\ConsultantController.cs",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\ConsultantController.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Controllers\\ConsultantController.cs",
+              "RelativeToolTip": "DrugUsePrevention\\Controllers\\ConsultantController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAADwvzgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:30:15.961Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 20,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
@@ -529,10 +658,22 @@
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T07:21:10.407Z",
+=======
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "DrugUsePrevention\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAArwIQAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T07:03:00.298Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 22,
               "Title": "Services.csproj",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\Services\\Services.csproj",
@@ -554,10 +695,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:24:26.503Z",
+=======
+              "DocumentIndex": 2,
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\Service\\AdminService.cs",
+              "RelativeDocumentMoniker": "Services\\Service\\AdminService.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\Service\\AdminService.cs",
+              "RelativeToolTip": "Services\\Service\\AdminService.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAADwvzoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:27:26.952Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 25,
               "Title": "Survey.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\Survey.cs",
@@ -580,10 +733,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-05-25T10:12:52.907Z",
+=======
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\appsettings.json",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\appsettings.json",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\appsettings.json",
+              "RelativeToolTip": "DrugUsePrevention\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-19T06:33:52.482Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 28,
               "Title": "ProgramParticipation.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\ProgramParticipation.cs",
@@ -593,10 +758,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAIBZwAwAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:25:06.663Z",
+=======
+              "DocumentIndex": 7,
+              "Title": "DrugUsePrevention.http",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\DrugUsePrevention.http",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\DrugUsePrevention.http",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\DrugUsePrevention.http",
+              "RelativeToolTip": "DrugUsePrevention\\DrugUsePrevention.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-06-19T06:37:17.094Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 27,
               "Title": "DashboardData.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\DashboardData.cs",
@@ -606,10 +783,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAIBZwAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:42:05.926Z",
+=======
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Program.cs",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\Program.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\DrugUsePrevention\\Program.cs",
+              "RelativeToolTip": "DrugUsePrevention\\Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAArwC8AAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:49:47.013Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 24,
               "Title": "DrugUsePrevention.csproj",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DrugUsePrevention\\DrugUsePrevention.csproj",
@@ -631,10 +820,22 @@
               "ViewState": "AgIAAAEAAAAAAAAAAIBZwA0AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:23:01.052Z",
+=======
+              "DocumentIndex": 11,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\IGenericRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\IGenericRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA2wBQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T06:20:18.022Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 31,
               "Title": "20250525104249_init.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\DataAccessObjects\\Migrations\\20250525104249_init.cs",
@@ -655,10 +856,22 @@
               "ViewState": "AgIAAAoAAAAAAAAAAAAcwBEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:22:40.143Z",
+=======
+              "DocumentIndex": 12,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "RelativeToolTip": "Repositories\\IRepository\\Users\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T05:54:36.191Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 32,
               "Title": "Consultant.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\Consultant.cs",
@@ -668,10 +881,22 @@
               "ViewState": "AgIAAAoAAAAAAAAAAAAxwBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:36:33.099Z",
+=======
+              "DocumentIndex": 9,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\Repository\\Users\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repository\\Users\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Repositories\\Repository\\Users\\UserRepository.cs",
+              "RelativeToolTip": "Repositories\\Repository\\Users\\UserRepository.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAswCkAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T05:53:10.941Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 33,
               "Title": "UserSurveyResponse.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\UserSurveyResponse.cs",
@@ -681,10 +906,22 @@
               "ViewState": "AgIAAA8AAAAAAAAAAAA2wBUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T09:23:47.611Z",
+=======
+              "DocumentIndex": 13,
+              "Title": "IAppointmentService.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\IService\\IAppointmentService.cs",
+              "RelativeDocumentMoniker": "Services\\IService\\IAppointmentService.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\IService\\IAppointmentService.cs",
+              "RelativeToolTip": "Services\\IService\\IAppointmentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T05:43:40.54Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 34,
               "Title": "UserSurveyAnswer.cs",
               "DocumentMoniker": "D:\\FPT_Study\\Ky8\\PRN3\\DrugUsePrevention\\BussinessObject\\UserSurveyAnswer.cs",
@@ -730,6 +967,18 @@
               "RelativeToolTip": "DataAccessObjects\\Migrations\\20250525103628_init.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-25T10:36:29.403Z"
+=======
+              "DocumentIndex": 14,
+              "Title": "SendMailService.cs",
+              "DocumentMoniker": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\Service\\SendMailService.cs",
+              "RelativeDocumentMoniker": "Services\\Service\\SendMailService.cs",
+              "ToolTip": "C:\\Users\\Gia Bao\\Desktop\\PRN232\\DrugPrevent\\Services\\Service\\SendMailService.cs",
+              "RelativeToolTip": "Services\\Service\\SendMailService.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCYAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T05:41:35.1Z",
+              "EditorCaption": ""
+>>>>>>> Stashed changes
             }
           ]
         }

@@ -2,7 +2,21 @@
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.IRepository;
+<<<<<<< Updated upstream
 using Repositories.Repository;
+=======
+using Repositories.IRepository.Admins;
+using Repositories.IRepository.Appointments;
+using Repositories.IRepository.Consultants;
+using Repositories.IRepository.Courses;
+using Repositories.IRepository.Users;
+using Repositories.Repository;
+using Repositories.Repository.Admins;
+using Repositories.Repository.Appointments;
+using Repositories.Repository.Consultants;
+using Repositories.Repository.Courses;
+using Repositories.Repository.Users;
+>>>>>>> Stashed changes
 using Services.IService;
 using Services.Service; // Thêm dòng này ở đầu file
 
@@ -26,6 +40,22 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+<<<<<<< Updated upstream
+=======
+            builder.Services.AddScoped<IAdminRepository,AdminRepository>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddTransient<ISendMailService, SendMailService>();
+            builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
+            builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            builder.Services.AddScoped<IConsultantRepository, ConsultantRepository>();
+            builder.Services.AddScoped<IConsultantService, ConsultantService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
+
+            // Add Controllers
+>>>>>>> Stashed changes
             builder.Services.AddControllers();
 
             // Thêm Swagger

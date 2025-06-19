@@ -1,4 +1,4 @@
-@DrugUsePrevention_HostAddress = http://localhost:5103
+@DrugUsePrevention_HostAddress = http://localhost:7045
 
 GET {{DrugUsePrevention_HostAddress}}/weatherforecast/
 Accept: application/json
