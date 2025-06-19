@@ -124,7 +124,7 @@ namespace DrugUsePrevention.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<TokenResponseDto>> Login(UserLoginRequest request)
+        public async Task<ActionResult<TokenResponseDto>> Login([FromBody] UserLoginRequest request)
         {
             var token = await _authService.LoginAsync(request);
             if (token is null)

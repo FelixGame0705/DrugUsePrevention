@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text;
 using System.Text.Json;
-using DrugUserPreventionUI.Models.CourseDasboard; // Note: typo in namespace
+using DrugUserPreventionUI.Models.CourseDashboard; // Note: typo in namespace
 using DrugUserPreventionUI.Models.Common;
 
 namespace DrugUserPreventionUI.Pages.CourseDashboard
@@ -26,6 +26,9 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
         [BindProperty]
         public CreateCourseDto CourseForm { get; set; } = new CreateCourseDto();
+        // Helper properties for user info
+        public string UserName => HttpContext.Session.GetString("user_name") ?? "User";
+        public string UserRole => HttpContext.Session.GetString("user_role") ?? "Member";
 
         // Load danh sách khóa học với phân trang và filter
         public async Task<IActionResult> OnGetAsync(string? action = null, int? id = null,
@@ -42,7 +45,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                var client = GetAuthenticatedClient();
 
                 // Load danh sách courses với filter
                 await LoadCoursesList(client, pageIndex, pageSize);
@@ -80,16 +83,36 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
         // Thêm khóa học mới
         public async Task<IActionResult> OnPostAddAsync()
         {
+            // Validate on server side first
             if (!ModelState.IsValid)
             {
-                await LoadCoursesList(_httpClientFactory.CreateClient(), 1, 10);
+                var validationErrors = ModelState
+                    .SelectMany(x => x.Value.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToList();
+
+                Message = "Dữ liệu không hợp lệ: " + string.Join(", ", validationErrors);
+                MessageType = "error";
+
+                await LoadCoursesList(GetAuthenticatedClient(), 1, 10);
                 CurrentAction = "add";
                 return Page();
             }
 
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                // ✅ SỬA: Sử dụng GetAuthenticatedClient() thay vì _httpClientFactory.CreateClient()
+                var client = GetAuthenticatedClient();
+
+                // Debug: Check if token exists
+                var token = HttpContext.Request.Cookies["auth_token"];
+                Console.WriteLine($"=== ADD COURSE DEBUG ===");
+                Console.WriteLine($"Token exists: {!string.IsNullOrEmpty(token)}");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    Console.WriteLine($"Token preview: {token[..Math.Min(50, token.Length)]}...");
+                }
+                Console.WriteLine($"Authorization header: {client.DefaultRequestHeaders.Authorization?.ToString()}");
 
                 // Debug: Log request data
                 var json = JsonSerializer.Serialize(CourseForm, new JsonSerializerOptions
@@ -117,21 +140,27 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
                     if (apiResponse?.Success == true)
                     {
-                        return RedirectToPage("/CourseDashboard", new { message = "Thêm khóa học thành công!", messageType = "success" });
+                        return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Thêm khóa học thành công!", messageType = "success" });
                     }
                     else
                     {
-                        Message = $"Lỗi: {apiResponse?.Message ?? "Không thể tạo khóa học"}";
+                        Message = $"API Error: {apiResponse?.Message ?? "Không thể tạo khóa học"}";
                         if (apiResponse?.Errors?.Any() == true)
                         {
-                            Message += " - " + string.Join(", ", apiResponse.Errors);
+                            Message += "\nChi tiết: " + string.Join(", ", apiResponse.Errors);
                         }
                         MessageType = "error";
                     }
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    // ✅ THÊM: Xử lý riêng lỗi Unauthorized
+                    Console.WriteLine("Unauthorized - Redirecting to login");
+                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", messageType = "warning" });
+                }
                 else
                 {
-                    // Parse error response
+                    // Parse error response for better debugging
                     try
                     {
                         var errorResponse = JsonSerializer.Deserialize<ApiResponse<object>>(responseContent, new JsonSerializerOptions
@@ -139,26 +168,42 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                             PropertyNameCaseInsensitive = true
                         });
 
-                        Message = $"Lỗi khi thêm khóa học: {errorResponse?.Message ?? response.ReasonPhrase}";
+                        Message = $"HTTP {(int)response.StatusCode} - {errorResponse?.Message ?? response.ReasonPhrase}";
                         if (errorResponse?.Errors?.Any() == true)
                         {
-                            Message += " - " + string.Join(", ", errorResponse.Errors);
+                            Message += "\nLỗi chi tiết: " + string.Join(", ", errorResponse.Errors);
                         }
+
+                        // Add raw response for debugging
+                        Message += $"\nRaw Response: {responseContent}";
                     }
                     catch
                     {
-                        Message = $"Lỗi khi thêm khóa học: {responseContent}";
+                        Message = $"HTTP {(int)response.StatusCode} - {response.ReasonPhrase}\nRaw Response: {responseContent}";
                     }
                     MessageType = "error";
                 }
             }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"HTTP Request Exception: {ex.Message}");
+                Message = $"Lỗi kết nối: {ex.Message}";
+                MessageType = "error";
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"Timeout Exception: {ex.Message}");
+                Message = $"Timeout: {ex.Message}";
+                MessageType = "error";
+            }
             catch (Exception ex)
             {
-                Message = $"Lỗi: {ex.Message}";
+                Console.WriteLine($"General Exception: {ex.Message}");
+                Message = $"Lỗi không mong muốn: {ex.Message}\nStackTrace: {ex.StackTrace}";
                 MessageType = "error";
             }
 
-            await LoadCoursesList(_httpClientFactory.CreateClient(), 1, 10);
+            await LoadCoursesList(GetAuthenticatedClient(), 1, 10);
             CurrentAction = "add";
             return Page();
         }
@@ -168,14 +213,15 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
         {
             if (!ModelState.IsValid)
             {
-                await LoadCoursesList(_httpClientFactory.CreateClient(), 1, 10);
+                await LoadCoursesList(GetAuthenticatedClient(), 1, 10); // ✅ SỬA: Sử dụng GetAuthenticatedClient()
                 CurrentAction = "edit";
                 return Page();
             }
 
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                // ✅ SỬA: Sử dụng GetAuthenticatedClient()
+                var client = GetAuthenticatedClient();
 
                 // Tạo UpdateCourseDto từ CreateCourseDto
                 var updateDto = new UpdateCourseDto
@@ -196,7 +242,11 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/CourseDashboard", new { message = "Cập nhật khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Cập nhật khóa học thành công!", messageType = "success" });
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", messageType = "warning" });
                 }
                 else
                 {
@@ -211,7 +261,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 MessageType = "error";
             }
 
-            await LoadCoursesList(_httpClientFactory.CreateClient(), 1, 10);
+            await LoadCoursesList(GetAuthenticatedClient(), 1, 10); // ✅ SỬA: Sử dụng GetAuthenticatedClient()
             CurrentAction = "edit";
             return Page();
         }
@@ -221,22 +271,27 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                // ✅ SỬA: Sử dụng GetAuthenticatedClient()
+                var client = GetAuthenticatedClient();
                 var response = await client.DeleteAsync($"{BASE_API_URL}/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/CourseDashboard", new { message = "Xóa khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Xóa khóa học thành công!", messageType = "success" });
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", messageType = "warning" });
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi xóa: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi xóa: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
         }
 
@@ -245,7 +300,8 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                // ✅ SỬA: Sử dụng GetAuthenticatedClient()
+                var client = GetAuthenticatedClient();
                 var json = JsonSerializer.Serialize(isActive);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -254,17 +310,21 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 if (response.IsSuccessStatusCode)
                 {
                     var statusText = isActive ? "kích hoạt" : "vô hiệu hóa";
-                    return RedirectToPage("/CourseDashboard", new { message = $"Đã {statusText} khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Đã {statusText} khóa học thành công!", messageType = "success" });
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", messageType = "warning" });
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi cập nhật trạng thái: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi cập nhật trạng thái: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
         }
 
@@ -273,7 +333,8 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
+                // ✅ SỬA: Sử dụng GetAuthenticatedClient()
+                var client = GetAuthenticatedClient();
                 var json = JsonSerializer.Serialize(isAccept);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -282,18 +343,43 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 if (response.IsSuccessStatusCode)
                 {
                     var approvalText = isAccept ? "duyệt" : "từ chối";
-                    return RedirectToPage("/CourseDashboard", new { message = $"Đã {approvalText} khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Đã {approvalText} khóa học thành công!", messageType = "success" });
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.", messageType = "warning" });
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi duyệt khóa học: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi duyệt khóa học: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
+        }
+
+        // Helper method to configure authenticated HTTP client
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            var token = HttpContext.Request.Cookies["auth_token"];
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            }
+
+            return client;
+        }
+
+        // Helper method to check authentication
+        private bool IsAuthenticated()
+        {
+            return !string.IsNullOrEmpty(HttpContext.Request.Cookies["auth_token"]);
         }
 
         // Helper methods
@@ -303,6 +389,14 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
             var queryString = $"?pageIndex={pageIndex}&pageSize={pageSize}";
 
             var response = await client.GetAsync($"{BASE_API_URL}{queryString}");
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                // Token expired or invalid, redirect to login
+                Response.Redirect("/Login?message=Phiên đăng nhập đã hết hạn&messageType=warning");
+                return;
+            }
+
             response.EnsureSuccessStatusCode();
 
             var apiResponse = await response.Content.ReadFromJsonAsync<PaginatedApiResponse<CourseListDto>>();

@@ -20,11 +20,29 @@
                     <i class="fas fa-graduation-cap me-2"></i>
                     Quản lý Khóa học
                 </h2>
-                <div>
-                    <a href="?action=add" class="btn btn-primary">
-                        <i class="fas fa-plus me-1"></i>
-                        Thêm khóa học
-                    </a>
+                <div class="d-flex align-items-center gap-3">
+                    <!-- ✅ FIXED: User Info -->
+                    <div class="text-end">
+                        <small class="text-muted d-block">Xin chào,</small>
+                        <strong class="text-primary">@Model.UserName</strong>
+                        <span class="badge bg-secondary ms-1">@Model.UserRole</span>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="btn-group">
+                        <a href="?action=add" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>
+                            Thêm khóa học
+                        </a>                       
+
+                        
+                        <form method="post" asp-page="/Login" asp-page-handler="Logout" style="display: inline;">
+                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Bạn có chắc muốn đăng xuất?')">
+                                <i class="fas fa-sign-out-alt me-1"></i>
+                                Đăng xuất
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +53,7 @@
     {
         <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
             <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
-            @Model.Message
+            <pre style="white-space: pre-wrap; margin: 0;">@Model.Message</pre>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
@@ -79,28 +97,66 @@
                                         <td>@course.AgeGroup</td>
                                         <td>@(course.CreatorName ?? "N/A")</td>
                                         <td>@course.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                        
+                                        <!-- ✅ FIXED: Status Column -->
                                         <td>
-                                            <span class="badge @(course.IsActive ? "bg-success" : "bg-secondary")">
-                                                @(course.IsActive ? "Đang hoạt động" : "Không hoạt động")
-                                            </span>
+                                            <form method="post" asp-page-handler="UpdateStatus" style="display: inline;">
+                                                <input type="hidden" name="id" value="@course.CourseID" />
+                                                <input type="hidden" name="isActive" value="@(!course.IsActive)" />
+                                                <button type="submit" 
+                                                        class="btn btn-sm @(course.IsActive ? "btn-success" : "btn-secondary")" 
+                                                        onclick="return confirm('@(course.IsActive ? "Bạn có chắc muốn vô hiệu hóa khóa học này?" : "Bạn có chắc muốn kích hoạt khóa học này?")')">
+                                                    @if (course.IsActive)
+                                                    {
+                                                        <i class="fas fa-check-circle me-1"></i>@Html.Raw("Đang hoạt động")
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-times-circle me-1"></i>@Html.Raw("Không hoạt động")
+                                                    }
+                                                </button>
+                                            </form>
                                         </td>
+                                        
+                                        <!-- ✅ FIXED: Approval Column -->
                                         <td>
-                                            <span class="badge @(course.IsAccept ? "bg-info" : "bg-warning")">
-                                                @(course.IsAccept ? "Đã duyệt" : "Chưa duyệt")
-                                            </span>
+                                            <form method="post" asp-page-handler="Approve" style="display: inline;">
+                                                <input type="hidden" name="id" value="@course.CourseID" />
+                                                <input type="hidden" name="isAccept" value="@(!course.IsAccept)" />
+                                                <button type="submit" 
+                                                        class="btn btn-sm @(course.IsAccept ? "btn-info" : "btn-warning")" 
+                                                        onclick="return confirm('@(course.IsAccept ? "Bạn có chắc muốn từ chối khóa học này?" : "Bạn có chắc muốn duyệt khóa học này?")')">
+                                                    @if (course.IsAccept)
+                                                    {
+                                                        <i class="fas fa-check-circle me-1"></i>@Html.Raw("Đã duyệt")
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-clock me-1"></i>@Html.Raw("Chưa duyệt")
+                                                    }
+                                                </button>
+                                            </form>
                                         </td>
+                                        
+                                        <!-- ✅ FIXED: Action Buttons -->
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="?action=detail&id=@course.CourseID" class="btn btn-sm btn-outline-info" title="Xem chi tiết">
+                                                <a href="?action=detail&id=@course.CourseID" 
+                                                   class="btn btn-sm btn-outline-info" 
+                                                   title="Xem chi tiết">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="?action=edit&id=@course.CourseID" class="btn btn-sm btn-outline-warning" title="Chỉnh sửa">
+                                                <a href="?action=edit&id=@course.CourseID" 
+                                                   class="btn btn-sm btn-outline-warning" 
+                                                   title="Chỉnh sửa">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form method="post" asp-page-handler="Delete" style="display: inline;">
+                                                <form method="post" asp-page-handler="Delete" style="display: inline;" class="d-inline">
                                                     <input type="hidden" name="id" value="@course.CourseID" />
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa"
-                                                            onclick="return confirm('Bạn có chắc muốn xóa khóa học này?')">
+                                                    <button type="submit" 
+                                                            class="btn btn-sm btn-outline-danger" 
+                                                            title="Xóa"
+                                                            onclick="return confirm('Bạn có chắc muốn xóa khóa học: @course.Title?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -337,7 +393,7 @@
         // Auto dismiss alerts after 5 seconds
         setTimeout(function() {
             $('.alert').alert('close');
-        }, 5000);
+        }, 8000);
 
         // Confirm deletion
         function confirmDelete(courseName) {
@@ -348,9 +404,88 @@
         $('input[name="CourseForm.ThumbnailURL"]').on('input', function() {
             var url = $(this).val();
             if (url) {
-                // Create preview (you can implement this feature)
                 console.log('Preview URL:', url);
             }
         });
     </script>
 }
+
+<style>
+/* ✅ ADDED: Custom CSS for better button styling */
+.btn-group .btn {
+    border-radius: 0.375rem;
+    margin-right: 2px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+}
+
+.btn i {
+    margin-right: 0.25rem;
+}
+
+.btn-group form {
+    display: inline-block;
+}
+
+
+media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 2px;
+        margin-right: 0;
+        width: 100%;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+}
+
+/* Alert message formatting */
+.alert pre {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Button hover effects */
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+</style>

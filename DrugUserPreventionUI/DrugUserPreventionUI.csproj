@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\Courses\" />
+    <Folder Include="Pages\Auth\" />
   </ItemGroup>
 
 </Project>

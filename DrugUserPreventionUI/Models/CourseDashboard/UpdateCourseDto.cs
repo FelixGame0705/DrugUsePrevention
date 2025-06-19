@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrugUserPreventionUI.Models.CourseDasboard
+namespace DrugUserPreventionUI.Models.CourseDashboard
 {
     public class UpdateCourseDto
     {

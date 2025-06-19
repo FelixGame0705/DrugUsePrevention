@@ -3,6 +3,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
+// Add session support
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(8); // Session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,14 +25,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapGet("/", context => {
-    context.Response.Redirect("/Appointment"); // e.g., "/Home", "/Appointments"
+    context.Response.Redirect("/login"); // e.g., "/Home", "/Appointments"
     return Task.CompletedTask;
 });
 

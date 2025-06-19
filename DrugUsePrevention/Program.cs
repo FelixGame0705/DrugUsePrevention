@@ -137,7 +137,7 @@ namespace DrugUsePrevention
             // Middleware pipeline
             app.UseHttpsRedirection();
             app.UseStaticFiles(); // Thêm dòng này để serve static files cho Razor Pages
-
+    
             app.UseRouting();
 
             app.UseAuthentication();
