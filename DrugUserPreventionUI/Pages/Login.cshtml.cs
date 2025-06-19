@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace DrugUserPreventionUI.Pages
 {
     public class LoginModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private const string AUTH_API_URL = "https://localhost:7045"; // Base URL của API (bỏ dấu / cuối)
+        private const string AUTH_API_URL = "https://localhost:7045";
 
         public LoginModel(IHttpClientFactory httpClientFactory)
         {
@@ -22,27 +24,35 @@ namespace DrugUserPreventionUI.Pages
         public string? Message { get; set; }
         public string? MessageType { get; set; }
 
-        public IActionResult OnGet(string? message = null, string? messageType = null)
+        public async Task<IActionResult> OnGetAsync(string? message = null, string? messageType = null)
         {
-            // Hiển thị message từ redirect (logout, etc.)
             if (!string.IsNullOrEmpty(message))
             {
                 Message = message;
                 MessageType = messageType ?? "info";
             }
 
-            // Check if already logged in
+            // Check if already logged in by checking and decoding token
             var token = HttpContext.Request.Cookies["auth_token"];
             if (!string.IsNullOrEmpty(token))
             {
-                // Redirect to dashboard if already logged in
-                return RedirectToPage("/CourseDashboard/CourseDashboard");
+                var userInfo = DecodeJwtToken(token);
+                if (userInfo != null && IsTokenValid(token))
+                {
+                    // User is already logged in, redirect to appropriate page
+                    return RedirectToRoleBasedPage(userInfo.Role);
+                }
+                else
+                {
+                    // Token is invalid or expired, clear it
+                    Response.Cookies.Delete("auth_token");
+                    Console.WriteLine("Invalid or expired token found, cleared it");
+                }
             }
 
             return Page();
         }
-        //login
-        // ✅ UPDATE: OnPostAsync method trong LoginModel.cs
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -82,53 +92,37 @@ namespace DrugUserPreventionUI.Pages
 
                         if (loginResponse != null && !string.IsNullOrEmpty(loginResponse.AccessToken))
                         {
-                            // ✅ Store token in cookie
-                            var cookieOptions = new CookieOptions
+                            // Decode JWT token to verify it contains user info
+                            var userInfo = DecodeJwtToken(loginResponse.AccessToken);
+
+                            if (userInfo != null)
                             {
-                                HttpOnly = true,
-                                Secure = Request.IsHttps,
-                                SameSite = SameSiteMode.Lax,
-                                Expires = DateTime.UtcNow.AddHours(8)
-                            };
+                                // Only store the JWT token in cookie
+                                var cookieOptions = new CookieOptions
+                                {
+                                    HttpOnly = true,
+                                    Secure = Request.IsHttps,
+                                    SameSite = SameSiteMode.Lax,
+                                    Expires = userInfo.Expiration ?? DateTime.UtcNow.AddHours(8)
+                                };
 
-                            Response.Cookies.Append("auth_token", loginResponse.AccessToken, cookieOptions);
+                                Response.Cookies.Append("auth_token", loginResponse.AccessToken, cookieOptions);
 
-                            // ✅ CRITICAL: Store user info in session with error handling
-                            try
-                            {
-                                Console.WriteLine("=== STORING SESSION DATA ===");
+                                Console.WriteLine($"=== LOGIN SUCCESS ===");
+                                Console.WriteLine($"Token: {loginResponse.AccessToken[..Math.Min(20, loginResponse.AccessToken.Length)]}...");
+                                Console.WriteLine($"User: {userInfo.UserName} ({userInfo.Role})");
+                                Console.WriteLine($"Email: {userInfo.Email}");
+                                Console.WriteLine($"UserId: {userInfo.UserId}");
+                                Console.WriteLine($"Expires: {userInfo.Expiration}");
 
-                                var userName = loginResponse.UserName ?? loginResponse.FullName ?? "User";
-                                var userRole = loginResponse.Role ?? "Member";
-                                var userId = loginResponse.UserId.ToString();
-                                var userEmail = loginResponse.Email ?? "";
-
-                                HttpContext.Session.SetString("user_name", userName);
-                                HttpContext.Session.SetString("user_role", userRole);
-                                HttpContext.Session.SetString("user_id", userId);
-                                HttpContext.Session.SetString("user_email", userEmail);
-
-                                // ✅ FORCE session save
-                                await HttpContext.Session.CommitAsync();
-
-                                Console.WriteLine($"Session stored - Name: {userName}, Role: {userRole}");
-
-                                // Verify session was saved
-                                var testName = HttpContext.Session.GetString("user_name");
-                                Console.WriteLine($"Session verification - Retrieved name: {testName}");
+                                // Redirect based on user role
+                                return RedirectToRoleBasedPage(userInfo.Role, $"Xin chào {userInfo.DisplayName}! Đăng nhập thành công.");
                             }
-                            catch (Exception sessionEx)
+                            else
                             {
-                                Console.WriteLine($"Session error: {sessionEx.Message}");
-                                // Continue anyway - session is not critical for basic functionality
+                                Message = "Đăng nhập thất bại: Token không hợp lệ hoặc không chứa thông tin người dùng";
+                                MessageType = "error";
                             }
-
-                            // ✅ FIXED: Use correct redirect path
-                            return RedirectToPage("/CourseDashboard", new
-                            {
-                                message = $"Xin chào {loginResponse.UserName ?? "User"}! Đăng nhập thành công.",
-                                messageType = "success"
-                            });
                         }
                         else
                         {
@@ -139,7 +133,8 @@ namespace DrugUserPreventionUI.Pages
                     catch (JsonException ex)
                     {
                         Console.WriteLine($"JSON Parse Error: {ex.Message}");
-                        Message = $"Lỗi parse JSON: {ex.Message}. Raw response: {responseContent}";
+                        Console.WriteLine($"Raw response: {responseContent}");
+                        Message = $"Lỗi parse JSON từ server";
                         MessageType = "error";
                     }
                 }
@@ -150,6 +145,10 @@ namespace DrugUserPreventionUI.Pages
                     if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         Message = "Tên đăng nhập hoặc mật khẩu không chính xác";
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        Message = "Tài khoản không có quyền truy cập hoặc đã bị khóa";
                     }
                     else
                     {
@@ -178,23 +177,14 @@ namespace DrugUserPreventionUI.Pages
             return Page();
         }
 
-        // Logout
         public IActionResult OnPostLogout()
         {
             try
             {
-                // Clear authentication
+                // Only clear the token cookie
                 Response.Cookies.Delete("auth_token");
 
-                // Clear session if available
-                try
-                {
-                    HttpContext.Session.Clear();
-                }
-                catch (InvalidOperationException)
-                {
-                    // Session not configured, ignore
-                }
+                Console.WriteLine("Auth token cleared - user logged out");
 
                 return RedirectToPage("/Login", new { message = "Đăng xuất thành công!", messageType = "success" });
             }
@@ -204,9 +194,228 @@ namespace DrugUserPreventionUI.Pages
                 return RedirectToPage("/Login", new { message = "Đã đăng xuất", messageType = "info" });
             }
         }
+
+        // Decode JWT token to get user information
+        public UserInfoDto? DecodeJwtToken(string? token = null)
+        {
+            try
+            {
+                token ??= HttpContext.Request.Cookies["auth_token"];
+                if (string.IsNullOrEmpty(token)) return null;
+
+                var handler = new JwtSecurityTokenHandler();
+                if (!handler.CanReadToken(token)) return null;
+
+                var jsonToken = handler.ReadJwtToken(token);
+                var userInfo = new UserInfoDto();
+
+                foreach (var claim in jsonToken.Claims)
+                {
+                    Console.WriteLine($"Claim: {claim.Type} = {claim.Value}");
+
+                    switch (claim.Type)
+                    {
+                        // ID
+                        case "sub":
+                        case "userid":
+                        case "id":
+                        case "nameid":
+                        case "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier":
+                            if (int.TryParse(claim.Value, out var userId))
+                                userInfo.UserId = userId;
+                            break;
+
+                        // Username
+                        case "unique_name":
+                        case "username":
+                        case "name":
+                        case "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name":
+                            userInfo.UserName = claim.Value;
+                            break;
+
+                        // Email
+                        case "email":
+                            userInfo.Email = claim.Value;
+                            break;
+
+                        // Role
+                        case "role":
+                        case "http://schemas.microsoft.com/ws/2008/06/identity/claims/role":
+                            userInfo.Role = ValidateAndNormalizeRole(claim.Value);
+                            break;
+
+                        // FullName
+                        case "fullname":
+                        case "given_name":
+                        case "family_name":
+                            userInfo.FullName = claim.Value;
+                            break;
+                    }
+                }
+
+                userInfo.Expiration = jsonToken.ValidTo;
+
+                if (string.IsNullOrEmpty(userInfo.UserName))
+                {
+                    Console.WriteLine("Token missing username claim");
+                    return null;
+                }
+
+                userInfo.Role ??= "Guest";
+
+                Console.WriteLine($"Decoded JWT - User: {userInfo.UserName}, Role: {userInfo.Role}, Expires: {userInfo.Expiration}");
+
+                return userInfo;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error decoding JWT token: {ex.Message}");
+                return null;
+            }
+        }
+
+        // Check if token is still valid (not expired)
+        public bool IsTokenValid(string? token = null)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                {
+                    token = HttpContext.Request.Cookies["auth_token"];
+                }
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return false;
+                }
+
+                var handler = new JwtSecurityTokenHandler();
+
+                if (!handler.CanReadToken(token))
+                {
+                    return false;
+                }
+
+                var jsonToken = handler.ReadJwtToken(token);
+
+                // Check if token is expired
+                var isExpired = jsonToken.ValidTo < DateTime.UtcNow;
+
+                Console.WriteLine($"Token valid until: {jsonToken.ValidTo}, Current time: {DateTime.UtcNow}, Is expired: {isExpired}");
+
+                return !isExpired;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error validating token: {ex.Message}");
+                return false;
+            }
+        }
+
+        // Helper method to get current user info from JWT
+        public UserInfoDto? GetCurrentUser()
+        {
+            var token = HttpContext.Request.Cookies["auth_token"];
+            if (string.IsNullOrEmpty(token) || !IsTokenValid(token))
+            {
+                return null;
+            }
+
+            return DecodeJwtToken(token);
+        }
+
+        // Helper method to check if user is authenticated
+        public bool IsAuthenticated()
+        {
+            var token = HttpContext.Request.Cookies["auth_token"];
+            return !string.IsNullOrEmpty(token) && IsTokenValid(token) && DecodeJwtToken(token) != null;
+        }
+
+        // Helper method to check if user has specific role or higher
+        public bool HasRoleOrHigher(string requiredRole)
+        {
+            var userInfo = GetCurrentUser();
+            if (userInfo == null) return false;
+
+            var roleHierarchy = new Dictionary<string, int>
+            {
+                { "Guest", 0 },
+                { "Member", 1 },
+                { "Staff", 2 },
+                { "Consultant", 3 },
+                { "Manager", 4 },
+                { "Admin", 5 }
+            };
+
+            var userRoleLevel = roleHierarchy.GetValueOrDefault(userInfo.Role, 0);
+            var requiredRoleLevel = roleHierarchy.GetValueOrDefault(requiredRole, 0);
+
+            return userRoleLevel >= requiredRoleLevel;
+        }
+
+        // Get user's role
+        public string GetUserRole()
+        {
+            var userInfo = GetCurrentUser();
+            return userInfo?.Role ?? "Guest";
+        }
+
+        // Get user's display name
+        public string GetDisplayName()
+        {
+            var userInfo = GetCurrentUser();
+            return userInfo?.DisplayName ?? "Guest";
+        }
+
+        // Get auth token
+        public string GetAuthToken()
+        {
+            return HttpContext.Request.Cookies["auth_token"] ?? "";
+        }
+
+        // Helper method to redirect based on user role
+        private IActionResult RedirectToRoleBasedPage(string role, string? message = null)
+        {
+            var messageParams = new
+            {
+                message = message ?? "",
+                messageType = string.IsNullOrEmpty(message) ? "" : "success"
+            };
+
+            var normalizedRole = ValidateAndNormalizeRole(role);
+
+            return normalizedRole.ToLower() switch
+            {
+                "admin" => RedirectToPage("/Admin/Dashboard", messageParams),
+                "manager" => RedirectToPage("/CourseDashboard/CourseDashboard", messageParams),
+                "consultant" => RedirectToPage("/Consultant/Dashboard", messageParams),
+                "staff" => RedirectToPage("/Staff/Dashboard", messageParams),
+                "member" => RedirectToPage("/Member/Dashboard", messageParams),
+                "guest" or _ => RedirectToPage("/Courses", messageParams) // Default for Guest and unknown roles
+            };
+        }
+
+        // Validate and normalize role names - Guest is default
+        private string ValidateAndNormalizeRole(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+                return "Guest"; // Default role
+
+            var normalizedRole = role.Trim().ToLower();
+
+            return normalizedRole switch
+            {
+                "admin" or "administrator" => "Admin",
+                "manager" or "quản lý" => "Manager",
+                "consultant" or "chuyên viên tư vấn" or "tư vấn viên" => "Consultant",
+                "staff" or "nhân viên" => "Staff",
+                "member" or "thành viên" => "Member",
+                "guest" or "khách" or _ => "Guest" // Guest is default for unknown roles
+            };
+        }
     }
 
-    // DTOs matching the API controller
+    // DTOs
     public class UserLoginRequest
     {
         [Required(ErrorMessage = "Tên đăng nhập là bắt buộc")]
@@ -220,7 +429,6 @@ namespace DrugUserPreventionUI.Pages
     public class TokenResponseDto
     {
         public string AccessToken { get; set; } = string.Empty;
-        // Additional properties that might be included
         public string? RefreshToken { get; set; }
         public DateTime? Expiration { get; set; }
         public int UserId { get; set; }
@@ -230,49 +438,17 @@ namespace DrugUserPreventionUI.Pages
         public string? FullName { get; set; }
     }
 
-    // Additional DTOs for other auth operations
-    public class RegisterUserRequest
+    // DTO for user information from JWT
+    public class UserInfoDto
     {
-        [Required(ErrorMessage = "Tên đầy đủ là bắt buộc")]
-        public string FullName { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Email là bắt buộc")]
-        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
+        public int UserId { get; set; }
+        public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Role { get; set; } = "Guest"; // Default role
+        public string? FullName { get; set; }
+        public DateTime? Expiration { get; set; }
 
-        [Required(ErrorMessage = "Tên đăng nhập là bắt buộc")]
-        public string Username { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
-        [MinLength(8, ErrorMessage = "Mật khẩu phải có ít nhất 8 ký tự")]
-        public string Password { get; set; } = string.Empty;
-
-        [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
-        public string Phone { get; set; } = string.Empty;
-
-        [DataType(DataType.Date)]
-        public DateTime? DateOfBirth { get; set; }
-
-        public string Gender { get; set; } = string.Empty; // Male, Female, Other
-
-        [Required(ErrorMessage = "Vai trò là bắt buộc")]
-        public string Role { get; set; } = "Member"; // Default role
-    }
-
-    public class ForgotPasswordRequest
-    {
-        [Required(ErrorMessage = "Email là bắt buộc")]
-        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
-        public string Email { get; set; } = string.Empty;
-    }
-
-    public class ResetPasswordRequest
-    {
-        [Required(ErrorMessage = "Token là bắt buộc")]
-        public string Token { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Mật khẩu mới là bắt buộc")]
-        [MinLength(8, ErrorMessage = "Mật khẩu phải có ít nhất 8 ký tự")]
-        public string NewPassword { get; set; } = string.Empty;
+        // Computed property for display name
+        public string DisplayName => FullName ?? UserName ?? "User";
     }
 }

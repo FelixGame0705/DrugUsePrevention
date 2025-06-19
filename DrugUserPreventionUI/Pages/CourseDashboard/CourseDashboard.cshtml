@@ -120,22 +120,26 @@
                                         
                                         <!-- ✅ FIXED: Approval Column -->
                                         <td>
-                                            <form method="post" asp-page-handler="Approve" style="display: inline;">
-                                                <input type="hidden" name="id" value="@course.CourseID" />
-                                                <input type="hidden" name="isAccept" value="@(!course.IsAccept)" />
-                                                <button type="submit" 
-                                                        class="btn btn-sm @(course.IsAccept ? "btn-info" : "btn-warning")" 
-                                                        onclick="return confirm('@(course.IsAccept ? "Bạn có chắc muốn từ chối khóa học này?" : "Bạn có chắc muốn duyệt khóa học này?")')">
-                                                    @if (course.IsAccept)
-                                                    {
-                                                        <i class="fas fa-check-circle me-1"></i>@Html.Raw("Đã duyệt")
-                                                    }
-                                                    else
-                                                    {
-                                                        <i class="fas fa-clock me-1"></i>@Html.Raw("Chưa duyệt")
-                                                    }
-                                                </button>
-                                            </form>
+                                            @if (course.IsAccept)
+                                            {
+                                                <!-- Nếu đã duyệt, hiển thị trạng thái "Đã duyệt" (không thể bấm) -->
+                                                <span class="btn btn-sm btn-info disabled">
+                                                    <i class="fas fa-check-circle me-1"></i>Đã duyệt
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <!-- Nếu chưa duyệt, hiển thị nút "Duyệt" có thể bấm -->
+                                                <form method="post" asp-page-handler="Approve" style="display: inline;">
+                                                    <input type="hidden" name="id" value="@course.CourseID" />
+                                                    <input type="hidden" name="isAccept" value="true" />
+                                                    <button type="submit" 
+                                                            class="btn btn-sm btn-warning" 
+                                                            onclick="return confirm('Bạn có chắc muốn duyệt khóa học này?')">
+                                                        <i class="fas fa-clock me-1"></i>Duyệt
+                                                    </button>
+                                                </form>
+                                            }
                                         </td>
                                         
                                         <!-- ✅ FIXED: Action Buttons -->

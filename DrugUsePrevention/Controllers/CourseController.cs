@@ -21,12 +21,14 @@ namespace WebAPI.Controllers
             _courseService = courseService;
         }
 
-        #region ✅ API View Course - Phân trang, filter theo ngày tháng, kỹ năng, độ tuổi
+        #region ✅ API View Course - PUBLIC ACCESS (Guest có thể xem)
 
         /// <summary>
         /// [TASK] API View Course - Có phân trang, filter theo ngày tháng, kỹ năng, độ tuổi
+        /// PUBLIC: Guest, Member đều có thể xem danh sách khóa học
         /// </summary>
         [HttpGet]
+        [AllowAnonymous] // ✅ FIXED: Guest có thể xem danh sách khóa học
         public async Task<ActionResult<PaginatedApiResponse<CourseListDto>>> GetCourses(
             [FromQuery] CourseFilterDto filter
         )
@@ -44,8 +46,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get course details by ID
+        /// PUBLIC: Guest có thể xem chi tiết khóa học công khai
         /// </summary>
         [HttpGet("{id}")]
+        [AllowAnonymous] // ✅ FIXED: Guest có thể xem chi tiết khóa học
         public async Task<ActionResult<ApiResponse<CourseResponseDto>>> GetCourse(int id)
         {
             try
@@ -65,13 +69,17 @@ namespace WebAPI.Controllers
 
         #endregion
 
-        #region ✅ API Create Course - Cho Consultant
+        #region ✅ API Create Course - Cho Staff, Consultant, Manager, Admin
 
         /// <summary>
-        /// [TASK] API Create khóa học - Cho phép tạo khóa học, cho phép up ảnh thumbnail của khóa học (Consultant)
+        /// [TASK] API Create khóa học - Cho phép tạo khóa học, cho phép up ảnh thumbnail của khóa học
+        /// Staff: Quản lý chương trình và nội dung
+        /// Consultant: Tạo khóa học chuyên môn
+        /// Manager: Quản lý tổng thể
+        /// Admin: Toàn quyền
         /// </summary>
         [HttpPost]
-        [Authorize(Roles = "Consultant, Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<CourseResponseDto>>> CreateCourse(
             [FromBody] CreateCourseDto createDto
         )
@@ -100,20 +108,20 @@ namespace WebAPI.Controllers
 #if DEBUG
                 return StatusCode(500, ApiResponse<string>.ErrorResult($"Lỗi server: {ex.Message}"));
 #else
-            return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học"));
+                return StatusCode(500, ApiResponse<string>.ErrorResult("Có lỗi xảy ra khi tạo khóa học"));
 #endif
             }
         }
 
         #endregion
 
-        #region ✅ API Update/Delete Course - Cho Consultant
+        #region ✅ API Update/Delete Course - Cho Staff, Consultant, Manager, Admin
 
         /// <summary>
-        /// [TASK] API Update Course - Cho Consultant
+        /// [TASK] API Update Course - Cho Staff, Consultant, Manager, Admin
         /// </summary>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<CourseResponseDto>>> UpdateCourse(
             int id,
             [FromBody] UpdateCourseDto updateDto
@@ -153,7 +161,7 @@ namespace WebAPI.Controllers
         /// [TASK] API Delete Course - Xóa khóa học bằng cách thay đổi trạng thái isActive = false
         /// </summary>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<string>>> DeleteCourse(int id)
         {
             try
@@ -180,7 +188,7 @@ namespace WebAPI.Controllers
         /// Toggle course status (active/inactive)
         /// </summary>
         [HttpPatch("{id}/toggle-status")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<string>>> ToggleCourseStatus(
             int id,
             [FromBody] bool isActive
@@ -204,13 +212,14 @@ namespace WebAPI.Controllers
 
         #endregion
 
-        #region ✅ API Manager Approval
+        #region ✅ API Manager Approval - Chỉ Manager và Admin
 
         /// <summary>
         /// [TASK] API cho phép Manager duyệt khóa học - isAccept = true
+        /// Chỉ Manager và Admin mới có quyền duyệt khóa học
         /// </summary>
         [HttpPatch("{id}/approve")]
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager,Admin")] // ✅ FIXED: Thêm Admin vào quyền approve
         public async Task<ActionResult<ApiResponse<string>>> ApproveCourse(
             int id,
             [FromBody] bool isAccept
@@ -243,8 +252,10 @@ namespace WebAPI.Controllers
         /// <summary>
         /// [TASK] API list ra chi tiết các bài học trong course
         /// Hiển thị danh sách học phần và các bài học của course
+        /// PUBLIC: Guest có thể xem nội dung khóa học công khai
         /// </summary>
         [HttpGet("{courseId}/contents")]
+        [AllowAnonymous] // ✅ FIXED: Guest có thể xem nội dung khóa học
         public async Task<
             ActionResult<PaginatedApiResponse<CourseContentResponseDto>>
         > GetCourseContents(
@@ -274,8 +285,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get active contents only (for learning)
+        /// PUBLIC: Guest có thể xem nội dung active
         /// </summary>
         [HttpGet("{courseId}/contents/active")]
+        [AllowAnonymous] // ✅ FIXED: Guest có thể xem nội dung active
         public async Task<
             ActionResult<ApiResponse<List<CourseContentResponseDto>>>
         > GetActiveCourseContents(int courseId)
@@ -297,8 +310,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get specific content details
+        /// PUBLIC: Guest có thể xem chi tiết nội dung
         /// </summary>
         [HttpGet("contents/{contentId}")]
+        [AllowAnonymous] // ✅ FIXED: Guest có thể xem chi tiết nội dung
         public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> GetCourseContent(
             int contentId
         )
@@ -319,10 +334,12 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// [TASK] API create CourseContent - Cho phép up khóa học lên trong api (Consultant)
+        /// [TASK] API create CourseContent - Cho phép up khóa học lên trong api
+        /// Staff: Quản lý nội dung chương trình
+        /// Consultant: Tạo nội dung chuyên môn
         /// </summary>
         [HttpPost("contents")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> CreateCourseContent(
             [FromBody] CreateCourseContentDto createDto
         )
@@ -361,10 +378,10 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
-        /// [TASK] API update CourseContent - Cho Consultant
+        /// [TASK] API update CourseContent - Cho Staff, Consultant, Manager, Admin
         /// </summary>
         [HttpPut("contents/{contentId}")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<CourseContentResponseDto>>> UpdateCourseContent(
             int contentId,
             [FromBody] UpdateCourseContentDto updateDto
@@ -410,7 +427,7 @@ namespace WebAPI.Controllers
         /// [TASK] API delete CourseContent - Xóa bằng cách thay đổi trạng thái isActive = false
         /// </summary>
         [HttpDelete("contents/{contentId}")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<string>>> DeleteCourseContent(int contentId)
         {
             try
@@ -439,7 +456,7 @@ namespace WebAPI.Controllers
         /// Get next order index for new content
         /// </summary>
         [HttpGet("{courseId}/contents/next-order")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<int>>> GetNextOrderIndex(int courseId)
         {
             try
@@ -457,7 +474,7 @@ namespace WebAPI.Controllers
         /// Reorder course contents
         /// </summary>
         [HttpPatch("{courseId}/contents/reorder")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<ActionResult<ApiResponse<string>>> ReorderCourseContents(
             int courseId,
             [FromBody] Dictionary<int, int> contentOrderMapping
@@ -484,9 +501,12 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// [TASK] API cho phép member đăng ký khóa học - Ghi thông tin ở bảng registrationCourse
+        /// Member: Đăng ký khóa học để học
+        /// Consultant: Có thể đăng ký để tham khảo
+        /// Manager/Admin: Có thể đăng ký để giám sát
         /// </summary>
         [HttpPost("{courseId}/register")]
-        [Authorize(Roles = "Member,Consultant,Manager")]
+        [Authorize(Roles = "Member,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Admin
         public async Task<
             ActionResult<ApiResponse<CourseRegistrationResponseDto>>
         > RegisterForCourse(int courseId)
@@ -527,7 +547,7 @@ namespace WebAPI.Controllers
         /// Unregister from course
         /// </summary>
         [HttpDelete("{courseId}/unregister")]
-        [Authorize(Roles = "Member,Consultant,Manager")]
+        [Authorize(Roles = "Member,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Admin
         public async Task<ActionResult<ApiResponse<string>>> UnregisterFromCourse(int courseId)
         {
             try
@@ -552,9 +572,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Check if user can register for course
+        /// Chỉ cần đăng nhập là có thể check
         /// </summary>
         [HttpGet("{courseId}/can-register")]
-        [Authorize]
+        [Authorize] // ✅ KEEP: Cần đăng nhập để check đăng ký
         public async Task<ActionResult<ApiResponse<bool>>> CanUserRegister(int courseId)
         {
             try
@@ -571,9 +592,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Check if user is registered for course
+        /// Chỉ cần đăng nhập là có thể check
         /// </summary>
         [HttpGet("{courseId}/is-registered")]
-        [Authorize]
+        [Authorize] // ✅ KEEP: Cần đăng nhập để check trạng thái đăng ký
         public async Task<ActionResult<ApiResponse<bool>>> IsUserRegistered(int courseId)
         {
             try
@@ -596,7 +618,7 @@ namespace WebAPI.Controllers
         /// Get registrations for a course (for instructors/managers)
         /// </summary>
         [HttpGet("{courseId}/registrations")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<
             ActionResult<PaginatedApiResponse<RegistrationListDto>>
         > GetCourseRegistrations(int courseId, [FromQuery] RegistrationFilterDto filter)
@@ -620,7 +642,7 @@ namespace WebAPI.Controllers
         /// Get enrollment statistics for a course
         /// </summary>
         [HttpGet("{courseId}/enrollment-stats")]
-        [Authorize(Roles = "Consultant,Manager")]
+        [Authorize(Roles = "Staff,Consultant,Manager,Admin")] // ✅ FIXED: Thêm Staff và Admin
         public async Task<
             ActionResult<ApiResponse<CourseEnrollmentStatsDto>>
         > GetCourseEnrollmentStats(int courseId)
@@ -646,11 +668,10 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get current user ID from JWT token
-        /// TODO: Implement based on your authentication system
         /// </summary>
         private int GetCurrentUserId()
         {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier); // "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
             {
@@ -669,7 +690,7 @@ namespace WebAPI.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize] // ✅ KEEP: Learning controller cần đăng nhập
     public class LearningController : ControllerBase
     {
         private readonly ICourseService _courseService;
@@ -681,6 +702,7 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get user's learning dashboard
+        /// Tất cả role đã đăng nhập đều có thể xem dashboard của mình
         /// </summary>
         [HttpGet("dashboard")]
         public async Task<ActionResult<ApiResponse<UserLearningDashboardDto>>> GetUserDashboard()
@@ -703,6 +725,7 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Get user's course registrations
+        /// Tất cả role đã đăng nhập đều có thể xem khóa học của mình
         /// </summary>
         [HttpGet("my-courses")]
         public async Task<
@@ -727,6 +750,7 @@ namespace WebAPI.Controllers
 
         /// <summary>
         /// Update learning progress
+        /// Tất cả role đã đăng nhập đều có thể cập nhật tiến độ học tập
         /// </summary>
         [HttpPatch("progress")]
         public async Task<ActionResult<ApiResponse<CourseRegistrationResponseDto>>> UpdateProgress(
@@ -760,7 +784,7 @@ namespace WebAPI.Controllers
 
         private int GetCurrentUserId()
         {
-            var userIdClaim = User.FindFirst("userId") ?? User.FindFirst("sub");
+            var userIdClaim = User.FindFirst("userId") ?? User.FindFirst("sub") ?? User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
             {
                 return userId;

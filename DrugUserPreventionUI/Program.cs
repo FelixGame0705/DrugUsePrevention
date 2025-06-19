@@ -1,16 +1,20 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
-// Add session support
+
+// ✅ Add session support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(8); // Session timeout
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.Name = ".DrugPrevention.Session";
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 });
 
 var app = builder.Build();
@@ -19,19 +23,22 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSession();
 app.UseRouting();
+
+// ✅ IMPORTANT: UseSession() must be AFTER UseRouting() but BEFORE UseAuthorization()
+app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+// ✅ FIXED: Redirect to correct login page
 app.MapGet("/", context => {
-    context.Response.Redirect("/login"); // e.g., "/Home", "/Appointments"
+    context.Response.Redirect("/Login"); // Capital L
     return Task.CompletedTask;
 });
 
