@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using System.IdentityModel.Tokens.Jwt
+@using DrugUserPreventionUI.Pages
+
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -75,12 +78,84 @@
                 transform: translateY(-1px);
             }
 
+            .navbar-nav .nav-link.active {
+                color: white !important;
+                background-color: rgba(255, 255, 255, 0.2);
+                font-weight: 600;
+            }
+
         .navbar-toggler {
             border-color: rgba(255, 255, 255, 0.3);
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* ✅ Role Badge */
+        .role-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+            .role-badge.admin {
+                background-color: #dc2626;
+            }
+
+            .role-badge.manager {
+                background-color: #7c3aed;
+            }
+
+            .role-badge.consultant {
+                background-color: #059669;
+            }
+
+            .role-badge.staff {
+                background-color: #0284c7;
+            }
+
+            .role-badge.member {
+                background-color: #65a30d;
+            }
+
+        /* ✅ User Info Dropdown */
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+            color: white;
+        }
+
+            .user-info .dropdown-toggle::after {
+                display: none;
+            }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: var(--light-color);
+                color: var(--primary-color);
+            }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
         }
 
         /* ✅ Enhanced Cards */
@@ -244,6 +319,10 @@
                 width: 100%;
             }
 
+        .user-info {
+            margin-top: 0.5rem;
+        }
+
         }
 
         /* ✅ Loading Animation */
@@ -296,8 +375,98 @@
     </style>
 </head>
 <body>
+    @{
+        // ✅ ADDED: Get user info from JWT token for role-based navigation
+        DrugUserPreventionUI.Pages.UserInfoDto currentUser = null;
+        string displayName = "Guest";
+        string userRole = "Guest";
+        bool isAuthenticated = false;
+
+        try
+        {
+            var token = Context.Request.Cookies["auth_token"];
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                if (handler.CanReadToken(token))
+                {
+                    var jsonToken = handler.ReadJwtToken(token);
+
+                    // Check if token is not expired
+                    if (jsonToken.ValidTo > DateTime.UtcNow)
+                    {
+                        isAuthenticated = true;
+                        currentUser = new DrugUserPreventionUI.Pages.UserInfoDto();
+
+                        foreach (var claim in jsonToken.Claims)
+                        {
+                            switch (claim.Type)
+                            {
+                                case "sub":
+                                case "userid":
+                                case "id":
+                                case "nameid":
+                                case "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier":
+                                    if (int.TryParse(claim.Value, out var userId))
+                                        currentUser.UserId = userId;
+                                    break;
+                                case "unique_name":
+                                case "username":
+                                case "name":
+                                case "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name":
+                                    currentUser.UserName = claim.Value;
+                                    break;
+                                case "email":
+                                    currentUser.Email = claim.Value;
+                                    break;
+                                case "role":
+                                case "http://schemas.microsoft.com/ws/2008/06/identity/claims/role":
+                                    var normalizedRole = claim.Value?.Trim().ToLower();
+                                    userRole = normalizedRole switch
+                                    {
+                                        "admin" or "administrator" => "Admin",
+                                        "manager" or "quản lý" => "Manager",
+                                        "consultant" or "chuyên viên tư vấn" or "tư vấn viên" => "Consultant",
+                                        "staff" or "nhân viên" => "Staff",
+                                        "member" or "thành viên" => "Member",
+                                        _ => "Guest"
+                                    };
+                                    currentUser.Role = userRole;
+                                    break;
+                                case "fullname":
+                                case "given_name":
+                                case "family_name":
+                                    currentUser.FullName = claim.Value;
+                                    break;
+                            }
+                        }
+
+                        currentUser.Expiration = jsonToken.ValidTo;
+                        displayName = currentUser.FullName ?? currentUser.UserName ?? "User";
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // If any error occurs, treat as guest
+            isAuthenticated = false;
+            userRole = "Guest";
+            displayName = "Guest";
+            currentUser = null;
+        }
+
+        // Role permissions
+        bool isAdmin = userRole == "Admin";
+        bool isManager = userRole == "Manager";
+        bool isConsultant = userRole == "Consultant";
+        bool isStaff = userRole == "Staff";
+        bool isMember = userRole == "Member";
+        bool isGuest = userRole == "Guest" || !isAuthenticated;
+    }
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
                     <i class="fas fa-shield-heart me-2"></i>
@@ -307,26 +476,127 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <!-- ✅ COMMON NAVIGATION - Available for all users -->
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">
                                 <i class="fas fa-home me-1"></i>
                                 Trang chủ
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Courses">
-                                <i class="fas fa-graduation-cap me-1"></i>
-                                Khóa học
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/MyCourses">
-                                <i class="fas fa-user-graduate me-1"></i>
-                                Khóa học của tôi
-                            </a>
-                        </li>
+
+                        @if (isAuthenticated)
+                        {
+                            <!-- ✅ AUTHENTICATED USER NAVIGATION -->
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Courses">
+                                    <i class="fas fa-graduation-cap me-1"></i>
+                                    Khóa học
+                                </a>
+                            </li>
+
+                            @if (isMember || isStaff || isConsultant || isManager || isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/MyCourses">
+                                        <i class="fas fa-user-graduate me-1"></i>
+                                        Khóa học của tôi
+                                    </a>
+                                </li>
+                            }
+
+                            <!-- ✅ MANAGEMENT NAVIGATION -->
+                            @if (isConsultant || isStaff || isManager)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="managementDropdown" role="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-cogs me-1"></i>
+                                        Quản lý
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @if (isConsultant || isStaff || isManager)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-area="" asp-page="/CourseDashboard">
+                                                    <i class="fas fa-graduation-cap me-2"></i>
+                                                    Quản lý Khóa học
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (isStaff || isManager)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-area="" asp-page="/UserManagement">
+                                                    <i class="fas fa-users me-2"></i>
+                                                    Quản lý Người dùng
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (isManager)
+                                        {
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="" asp-page="/Reports">
+                                                    <i class="fas fa-chart-bar me-2"></i>
+                                                    Báo cáo
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                            <!-- ✅ ADMIN NAVIGATION -->
+                            @if (isAdmin)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-shield-alt me-1"></i>
+                                        Quản trị
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/Admin/Dashboard">
+                                                <i class="fas fa-tachometer-alt me-2"></i>
+                                                Dashboard Admin
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/Admin/SystemSettings">
+                                                <i class="fas fa-cog me-2"></i>
+                                                Cài đặt hệ thống
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/Admin/UserRoles">
+                                                <i class="fas fa-user-tag me-2"></i>
+                                                Phân quyền
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/Admin/SystemLogs">
+                                                <i class="fas fa-list-alt me-2"></i>
+                                                System Logs
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <!-- ✅ GUEST NAVIGATION -->
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Courses">
+                                    <i class="fas fa-graduation-cap me-1"></i>
+                                    Khóa học
+                                </a>
+                            </li>
+                        }
+
+                        <!-- ✅ COMMON LINKS -->
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Privacy">
                                 <i class="fas fa-user-shield me-1"></i>
@@ -334,18 +604,105 @@
                             </a>
                         </li>
                     </ul>
+
+                    <!-- ✅ USER AUTHENTICATION SECTION -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Login">
-                                <i class="fas fa-sign-in-alt me-1"></i>
-                                Đăng nhập
-                            </a>
-                        </li>
+                        @if (isAuthenticated && currentUser != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle user-info" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle me-2"></i>
+                                    <span class="d-none d-md-inline">@displayName</span>
+                                    <span class="role-badge @userRole.ToLower() ms-2">@userRole</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <h6 class="dropdown-header">
+                                            <i class="fas fa-user me-2"></i>
+                                            @displayName
+                                        </h6>
+                                    </li>
+                                    <li>
+                                        <span class="dropdown-item-text small text-muted">
+                                            @(currentUser?.Email ?? "")
+                                        </span>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/Profile">
+                                            <i class="fas fa-user-edit me-2"></i>
+                                            Hồ sơ cá nhân
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/Settings">
+                                            <i class="fas fa-cog me-2"></i>
+                                            Cài đặt
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="post" asp-page="/Login" asp-page-handler="Logout" style="display: inline;">
+                                            <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Bạn có chắc muốn đăng xuất?')">
+                                                <i class="fas fa-sign-out-alt me-2"></i>
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Register">
+                                    <i class="fas fa-user-plus me-1"></i>
+                                    Đăng ký
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Login">
+                                    <i class="fas fa-sign-in-alt me-1"></i>
+                                    Đăng nhập
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    <!-- ✅ ROLE-BASED WELCOME MESSAGE -->
+    @if (isAuthenticated && !string.IsNullOrEmpty(ViewBag.ShowWelcome?.ToString()))
+    {
+        <div class="container-fluid">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Chào mừng @displayName!</strong>
+                Bạn đang đăng nhập với quyền <strong>@userRole</strong>.
+                @switch (userRole)
+                {
+                    case "Admin":
+                        <span>Bạn có quyền quản trị toàn hệ thống.</span>
+                        break;
+                    case "Manager":
+                        <span>Bạn có thể duyệt khóa học và quản lý báo cáo.</span>
+                        break;
+                    case "Consultant":
+                        <span>Bạn có thể tạo và quản lý khóa học.</span>
+                        break;
+                    case "Staff":
+                        <span>Bạn có thể hỗ trợ quản lý khóa học và người dùng.</span>
+                        break;
+                    case "Member":
+                        <span>Bạn có thể tham gia và theo dõi các khóa học.</span>
+                        break;
+                }
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    }
 
     <div class="container-fluid">
         <main role="main" class="pb-3">
@@ -361,6 +718,12 @@
                         <i class="fas fa-shield-heart me-2"></i>
                         <span>&copy; 2025 - Drug User Prevention System</span>
                     </div>
+                    @if (isAuthenticated)
+                    {
+                        <small class="text-muted">
+                            Đăng nhập với quyền: <strong>@userRole</strong>
+                        </small>
+                    }
                 </div>
                 <div class="col-md-6 text-md-end">
                     <a asp-area="" asp-page="/Privacy" class="me-3">
@@ -397,7 +760,7 @@
         $(document).ready(function() {
             // Auto-dismiss alerts after 8 seconds
             setTimeout(function() {
-                $('.alert').fadeOut('slow');
+                $('.alert:not(.alert-info)').fadeOut('slow');
             }, 8000);
 
             // Add loading animation to buttons on form submit
@@ -430,6 +793,15 @@
                     $(this).removeClass('scrolled');
                 }
             });
+
+            // ✅ Role-based UI enhancements
+            const userRole = '@userRole';
+            if (userRole) {
+                $('body').addClass('role-' + userRole.toLowerCase());
+
+                // Add role-specific styling
+                $('.navbar-brand').append(' <small class="role-indicator">(' + userRole + ')</small>');
+            }
         });
 
         // ✅ Utility Functions

@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "D:\\DrugUsePrevention\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\coursedashboard\\coursedashboard.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\courses\\courses.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\courses\\courses.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|d:\\druguseprevention\\bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -25,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|d:\\druguseprevention\\druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A64DA52-3A78-4D09-B2AD-9BF974DE1DBB}|DrugUsePrevention\\DrugUsePrevention.csproj|solutionrelative:druguseprevention\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\models\\common\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,20 +67,12 @@
       "RelativeMoniker": "D:0:0:{E07368DC-E049-4D38-BC6B-470805E57EE6}|BussinessObject\\BussinessObjects.csproj|solutionrelative:bussinessobject\\courseregistration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\courses\\courses.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\courses\\courses.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\courses\\courses.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\courses\\courses.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\models\\coursedashboard\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\models\\coursedashboard\\courselistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|d:\\druguseprevention\\druguserpreventionui\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D193C198-D37C-4668-B528-89E49114F8BC}|DrugUserPreventionUI\\DrugUserPreventionUI.csproj|solutionrelative:druguserpreventionui\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51960A7-419C-4543-A2C6-B8592163BA40}|Services\\Services.csproj|d:\\druguseprevention\\services\\dtos\\courses\\courseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -327,7 +327,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 268,
-          "SelectedChildIndex": 25,
+          "SelectedChildIndex": 27,
           "Children": [
             {
               "$type": "Bookmark",
@@ -415,13 +415,51 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
+              "Title": "CourseDashboard.cshtml.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
+              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
+              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACECAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T08:05:11.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "DrugUsePrevention\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAQwIoAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T07:21:10.407Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Courses.cshtml.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
+              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
+              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAMkAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-19T02:11:22.04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "CourseController.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
               "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\CourseController.cs",
               "ToolTip": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\CourseController.cs",
               "RelativeToolTip": "DrugUsePrevention\\Controllers\\CourseController.cs",
-              "ViewState": "AgIAALoCAAAAAAAAAAAYwBsDAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAApwFEAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T10:32:34.911Z",
               "EditorCaption": ""
@@ -434,14 +472,64 @@
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Login.cshtml.cs",
               "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Login.cshtml.cs",
               "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Login.cshtml.cs",
-              "ViewState": "AgIAAH0BAAAAAAAAAAAAAIUBAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAH0BAAAAAAAAAAAAAIUBAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-18T10:30:11.414Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "CourseDashboard.cshtml",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
+              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
+              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T08:04:58.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAEoBAAAAAAAAAAAYwFsBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-19T02:03:08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
+              "RelativeDocumentMoniker": "BussinessObject\\User.cs",
+              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
+              "RelativeToolTip": "BussinessObject\\User.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA0wBIAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-06T19:01:45.974Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Login.cshtml",
+              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Login.cshtml",
+              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Login.cshtml",
+              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Login.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAEEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T10:29:55.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Program.cs",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Program.cs",
@@ -453,72 +541,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CourseDashboard.cshtml",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
-              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
-              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml",
-              "ViewState": "AgIAAMsBAAAAAAAAAAAowOoBAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-18T08:04:58.816Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CourseDashboard.cshtml.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
-              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
-              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\CourseDashboard\\CourseDashboard.cshtml.cs",
-              "ViewState": "AgIAAKIBAAAAAAAAAAAkwMABAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-18T08:05:11.445Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Login.cshtml",
-              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Login.cshtml",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Login.cshtml",
-              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Login.cshtml",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAEEAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-18T10:29:55.958Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
-              "RelativeDocumentMoniker": "BussinessObject\\User.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\BussinessObject\\User.cs",
-              "RelativeToolTip": "BussinessObject\\User.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAA0wBIAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-06T19:01:45.974Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "DrugUsePrevention\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUsePrevention\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "DrugUsePrevention\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAQwIoAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T07:21:10.407Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "CoursesDTO.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Models\\Courses\\CoursesDTO.cs",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Models\\Courses\\CoursesDTO.cs",
@@ -530,7 +553,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "CourseRegistration.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\BussinessObject\\CourseRegistration.cs",
               "RelativeDocumentMoniker": "BussinessObject\\CourseRegistration.cs",
@@ -542,7 +565,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Privacy.cshtml",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Privacy.cshtml",
@@ -554,7 +577,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "UserRole.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Models\\Common\\UserRole.cs",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Models\\Common\\UserRole.cs",
@@ -566,7 +589,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Courses.cshtml",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml",
@@ -579,18 +602,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 14,
-              "Title": "Courses.cshtml.cs",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
-              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
-              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Courses\\Courses.cshtml.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAMkAAABlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T02:11:22.04Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "MyCourses.cshtml",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\MyCourses.cshtml",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Courses\\MyCourses.cshtml",
@@ -602,7 +613,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "MyCourses.cshtml.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Courses\\MyCourses.cshtml.cs",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Courses\\MyCourses.cshtml.cs",
@@ -615,18 +626,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 17,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "DrugUserPreventionUI\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAPkAAAAAAAAAAAAYwAkBAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T02:03:08Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
               "Title": "CourseListDto.cs",
               "DocumentMoniker": "D:\\DrugUsePrevention\\DrugUserPreventionUI\\Models\\CourseDashboard\\CourseListDto.cs",
               "RelativeDocumentMoniker": "DrugUserPreventionUI\\Models\\CourseDashboard\\CourseListDto.cs",
