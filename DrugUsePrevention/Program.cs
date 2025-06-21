@@ -5,11 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.IRepository;
+using Repositories.IRepository.Admins;
 using Repositories.IRepository.Appointments;
 using Repositories.IRepository.Consultants;
 using Repositories.IRepository.Courses;
 using Repositories.IRepository.Users;
 using Repositories.Repository;
+using Repositories.Repository.Admins;
 using Repositories.Repository.Appointments;
 using Repositories.Repository.Consultants;
 using Repositories.Repository.Courses;
@@ -43,6 +45,7 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddTransient<ISendMailService, SendMailService>();
             builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
@@ -52,6 +55,7 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             builder.Services.AddScoped<IConsultantRepository, ConsultantRepository>();
             builder.Services.AddScoped<IConsultantService, ConsultantService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
 
             // Add Controllers
             builder.Services.AddControllers();
