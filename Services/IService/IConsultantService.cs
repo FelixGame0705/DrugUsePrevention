@@ -1,4 +1,5 @@
 ﻿using BussinessObjects;
+using Services.DTOs.Appointment;
 using Services.DTOs.Consultant;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace Services.IService
 {
     public interface IConsultantService
     {
-        Task<List<DateTime>> GetWorkingHour(int id);
+        Task<List<string>> GetWorkingHour(int id);
         Task<ConsultantResponse> CreateConsultant(ConsultantRequest consultantRequest);
+        Task<ApppointmentResponse> ApppointmentApprove(string status, int appointmentId);
     }
 }

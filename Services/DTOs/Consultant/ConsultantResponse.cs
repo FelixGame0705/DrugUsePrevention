@@ -11,6 +11,6 @@ namespace Services.DTOs.Consultant
         public int ConsultantID { get; set; }
         public string Qualifications { get; set; }
         public string Specialty { get; set; }
-        public List<DateTime> WorkingHours { get; set; }
+        public List<string> WorkingHours { get; set; }
     }
 }

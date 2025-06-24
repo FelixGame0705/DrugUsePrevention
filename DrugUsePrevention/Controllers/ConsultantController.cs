@@ -52,5 +52,19 @@ namespace DrugUsePrevention.Controllers
                 return StatusCode(500, new { message = "An error occurred" });
             }
         }
+        [HttpPut("appointment/{appointmentId}")]
+        public async Task<IActionResult> AppointmentApprove([FromBody] string status, [FromRoute]int appointmentId)
+        {
+            try
+            {
+                var result = await _consultantService.ApppointmentApprove(status, appointmentId);
+                return Ok(new { message = "Success", data = result });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

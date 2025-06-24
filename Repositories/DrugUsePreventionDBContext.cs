@@ -53,8 +53,8 @@ namespace Repositories
 
             modelBuilder.Entity<Consultant>().Property(a => a.WorkingHours).HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                v => JsonSerializer.Deserialize<List<DateTime>>(v, (JsonSerializerOptions)null) ?? new List<DateTime>(),
-                new ValueComparer<List<DateTime>>(
+                v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>(),
+                new ValueComparer<List<string>>(
                     (c1, c2) => c1.SequenceEqual(c2),
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                     c => c.ToList()
