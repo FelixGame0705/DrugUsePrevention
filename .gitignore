@@ -53,6 +53,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.vs/
 /.vs/DrugUsePrevention/CopilotIndices/17.13.444.19527
 /.vs/DrugUsePrevention/FileContentIndex
 /.vs/DrugUsePrevention/copilot-chat/d7f7902b/sessions
@@ -78,3 +79,4 @@ nunit-*.xml
 .vs/DrugUsePrevention/CopilotIndices/17.14.698.11175/SemanticSymbols.db-wal
 .vs/DrugUsePrevention/CopilotIndices/17.14.698.11175/CodeChunks.db
 
+/.vs/DrugUsePrevention/DesignTimeBuild/.dtbcache.v2
