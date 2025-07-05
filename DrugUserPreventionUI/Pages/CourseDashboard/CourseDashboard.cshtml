@@ -9,6 +9,14 @@
     int totalItems = ViewData["TotalItems"] as int? ?? 0;
     bool hasPrevious = currentPage > 1;
     bool hasNext = currentPage < totalPages;
+    
+    // ✅ UPDATED: Get user info from JWT token using LoginModel methods
+    var loginModel = new DrugUserPreventionUI.Pages.LoginModel(HttpContext.RequestServices.GetService<IHttpClientFactory>());
+    loginModel.PageContext = PageContext;
+    var currentUser = loginModel.GetCurrentUser();
+    var displayName = loginModel.GetDisplayName();
+    var userRole = loginModel.GetUserRole();
+    var isAuthenticated = loginModel.IsAuthenticated();
 }
 
 <div class="container-fluid">
@@ -21,11 +29,11 @@
                     Quản lý Khóa học
                 </h2>
                 <div class="d-flex align-items-center gap-3">
-                    <!-- ✅ FIXED: User Info -->
+                    <!-- ✅ UPDATED: User Info from JWT token -->
                     <div class="text-end">
                         <small class="text-muted d-block">Xin chào,</small>
-                        <strong class="text-primary">@Model.UserName</strong>
-                        <span class="badge bg-secondary ms-1">@Model.UserRole</span>
+                        <strong class="text-primary">@displayName</strong>
+                        <span class="badge bg-secondary ms-1">@userRole</span>
                     </div>
                     
                     <!-- Actions -->
@@ -48,345 +56,381 @@
         </div>
     </div>
 
-    <!-- Alert Messages -->
-    @if (!string.IsNullOrEmpty(Model.Message))
+    <!-- Authentication Check -->
+    @if (!isAuthenticated || currentUser == null)
     {
-        <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
-            <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
-            <pre style="white-space: pre-wrap; margin: 0;">@Model.Message</pre>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Chưa đăng nhập!</strong> Bạn cần đăng nhập để truy cập trang này.
+            <div class="mt-2">
+                <a href="/Login" class="btn btn-sm btn-warning">
+                    <i class="fas fa-sign-in-alt me-1"></i>
+                    Đăng nhập ngay
+                </a>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
-
-    <!-- Course List View -->
-    @if (string.IsNullOrEmpty(Model.CurrentAction) || Model.CurrentAction == "list")
+    else
     {
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Danh sách Khóa học</h5>
+        <!-- Alert Messages -->
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
+                <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
+                <pre style="white-space: pre-wrap; margin: 0;">@Model.Message</pre>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-            <div class="card-body">
-                @if (Model.Courses.Any())
-                {
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tiêu đề</th>
-                                    <th>Nhóm đối tượng</th>
-                                    <th>Độ tuổi</th>
-                                    <th>Người tạo</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Trạng thái</th>
-                                    <th>Duyệt</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var course in Model.Courses)
-                                {
-                                    <tr>
-                                        <td>@course.CourseID</td>
-                                        <td>
-                                            <strong>@course.Title</strong>
-                                            <br>
-                                            <small class="text-muted">@(course.Description?.Length > 50 ? course.Description.Substring(0, 50) + "..." : course.Description)</small>
-                                        </td>
-                                        <td>@course.TargetGroup</td>
-                                        <td>@course.AgeGroup</td>
-                                        <td>@(course.CreatorName ?? "N/A")</td>
-                                        <td>@course.CreatedAt.ToString("dd/MM/yyyy")</td>
-                                        
-                                        <!-- ✅ FIXED: Status Column -->
-                                        <td>
-                                            <form method="post" asp-page-handler="UpdateStatus" style="display: inline;">
-                                                <input type="hidden" name="id" value="@course.CourseID" />
-                                                <input type="hidden" name="isActive" value="@(!course.IsActive)" />
-                                                <button type="submit" 
-                                                        class="btn btn-sm @(course.IsActive ? "btn-success" : "btn-secondary")" 
-                                                        onclick="return confirm('@(course.IsActive ? "Bạn có chắc muốn vô hiệu hóa khóa học này?" : "Bạn có chắc muốn kích hoạt khóa học này?")')">
-                                                    @if (course.IsActive)
-                                                    {
-                                                        <i class="fas fa-check-circle me-1"></i>@Html.Raw("Đang hoạt động")
-                                                    }
-                                                    else
-                                                    {
-                                                        <i class="fas fa-times-circle me-1"></i>@Html.Raw("Không hoạt động")
-                                                    }
-                                                </button>
-                                            </form>
-                                        </td>
-                                        
-                                        <!-- ✅ FIXED: Approval Column -->
-                                        <td>
-                                            @if (course.IsAccept)
-                                            {
-                                                <!-- Nếu đã duyệt, hiển thị trạng thái "Đã duyệt" (không thể bấm) -->
-                                                <span class="btn btn-sm btn-info disabled">
-                                                    <i class="fas fa-check-circle me-1"></i>Đã duyệt
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <!-- Nếu chưa duyệt, hiển thị nút "Duyệt" có thể bấm -->
-                                                <form method="post" asp-page-handler="Approve" style="display: inline;">
-                                                    <input type="hidden" name="id" value="@course.CourseID" />
-                                                    <input type="hidden" name="isAccept" value="true" />
-                                                    <button type="submit" 
-                                                            class="btn btn-sm btn-warning" 
-                                                            onclick="return confirm('Bạn có chắc muốn duyệt khóa học này?')">
-                                                        <i class="fas fa-clock me-1"></i>Duyệt
-                                                    </button>
-                                                </form>
-                                            }
-                                        </td>
-                                        
-                                        <!-- ✅ FIXED: Action Buttons -->
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a href="?action=detail&id=@course.CourseID" 
-                                                   class="btn btn-sm btn-outline-info" 
-                                                   title="Xem chi tiết">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="?action=edit&id=@course.CourseID" 
-                                                   class="btn btn-sm btn-outline-warning" 
-                                                   title="Chỉnh sửa">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form method="post" asp-page-handler="Delete" style="display: inline;" class="d-inline">
-                                                    <input type="hidden" name="id" value="@course.CourseID" />
-                                                    <button type="submit" 
-                                                            class="btn btn-sm btn-outline-danger" 
-                                                            title="Xóa"
-                                                            onclick="return confirm('Bạn có chắc muốn xóa khóa học: @course.Title?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Pagination -->
-                    @if (totalPages > 1)
+        }
+
+        <!-- Course List View -->
+        @if (string.IsNullOrEmpty(Model.CurrentAction) || Model.CurrentAction == "list")
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Danh sách Khóa học</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Courses.Any())
                     {
-                        <nav aria-label="Course pagination" class="mt-4">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item @(hasPrevious ? "" : "disabled")">
-                                    <a class="page-link" href="?pageIndex=@(currentPage - 1)" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                
-                                @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
-                                {
-                                    <li class="page-item @(i == currentPage ? "active" : "")">
-                                        <a class="page-link" href="?pageIndex=@i">@i</a>
-                                    </li>
-                                }
-                                
-                                <li class="page-item @(hasNext ? "" : "disabled")">
-                                    <a class="page-link" href="?pageIndex=@(currentPage + 1)" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Nhóm đối tượng</th>
+                                        <th>Độ tuổi</th>
+                                        <th>Người tạo</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Trạng thái</th>
+                                        <th>Duyệt</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                        <tr>
+                                            <td>@course.CourseID</td>
+                                            <td>
+                                                <strong>@course.Title</strong>
+                                                <br>
+                                                <small class="text-muted">@(course.Description?.Length > 50 ? course.Description.Substring(0, 50) + "..." : course.Description)</small>
+                                            </td>
+                                            <td>@course.TargetGroup</td>
+                                            <td>@course.AgeGroup</td>
+                                            <td>@(course.CreatorName ?? "N/A")</td>
+                                            <td>@course.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                            
+                                            <!-- ✅ FIXED: Status Column -->
+                                            <td>
+                                                <form method="post" asp-page-handler="UpdateStatus" style="display: inline;">
+                                                    <input type="hidden" name="id" value="@course.CourseID" />
+                                                    <input type="hidden" name="isActive" value="@(!course.IsActive)" />
+                                                    <button type="submit" 
+                                                            class="btn btn-sm @(course.IsActive ? "btn-success" : "btn-secondary")" 
+                                                            onclick="return confirm('@(course.IsActive ? "Bạn có chắc muốn vô hiệu hóa khóa học này?" : "Bạn có chắc muốn kích hoạt khóa học này?")')">
+                                                        @if (course.IsActive)
+                                                        {
+                                                            <i class="fas fa-check-circle me-1"></i>@Html.Raw("Đang hoạt động")
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fas fa-times-circle me-1"></i>@Html.Raw("Không hoạt động")
+                                                        }
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            
+                                            <!-- ✅ FIXED: Approval Column - Có cả nút Duyệt và Hủy duyệt -->
+                                            <td>
+                                                @if (course.IsAccept)
+                                                {
+                                                    <!-- Nếu đã duyệt, hiển thị trạng thái và nút "Hủy duyệt" -->
+                                                    <div class="approval-column">
+                                                        <span class="badge bg-success mb-1">
+                                                            <i class="fas fa-check-circle me-1"></i>Đã duyệt
+                                                        </span>
+                                                        <form method="post" asp-page-handler="Approve" style="display: inline;">
+                                                            <input type="hidden" name="id" value="@course.CourseID" />
+                                                            <input type="hidden" name="isAccept" value="false" />
+                                                            <button type="submit" 
+                                                                    class="btn btn-sm btn-outline-secondary" 
+                                                                    onclick="return confirm('Bạn có chắc muốn hủy duyệt khóa học này?')"
+                                                                    title="Hủy duyệt">
+                                                                <i class="fas fa-times me-1"></i>Hủy duyệt
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <!-- Nếu chưa duyệt, hiển thị trạng thái và nút "Duyệt" -->
+                                                    <div class="approval-column">
+                                                        <span class="badge bg-warning mb-1">
+                                                            <i class="fas fa-clock me-1"></i>Chưa duyệt
+                                                        </span>
+                                                        <form method="post" asp-page-handler="Approve" style="display: inline;">
+                                                            <input type="hidden" name="id" value="@course.CourseID" />
+                                                            <input type="hidden" name="isAccept" value="true" />
+                                                            <button type="submit" 
+                                                                    class="btn btn-sm btn-primary" 
+                                                                    onclick="return confirm('Bạn có chắc muốn duyệt khóa học này?')"
+                                                                    title="Duyệt khóa học">
+                                                                <i class="fas fa-check me-1"></i>Duyệt
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </td>
+                                            
+                                            <!-- ✅ FIXED: Action Buttons -->
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a href="?action=detail&id=@course.CourseID" 
+                                                       class="btn btn-sm btn-outline-info" 
+                                                       title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="?action=edit&id=@course.CourseID" 
+                                                       class="btn btn-sm btn-outline-warning" 
+                                                       title="Chỉnh sửa">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <form method="post" asp-page-handler="Delete" style="display: inline;" class="d-inline">
+                                                        <input type="hidden" name="id" value="@course.CourseID" />
+                                                        <button type="submit" 
+                                                                class="btn btn-sm btn-outline-danger" 
+                                                                title="Xóa"
+                                                                onclick="return confirm('Bạn có chắc muốn xóa khóa học: @course.Title?')">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                         
-                        <div class="text-center text-muted">
-                            Trang @currentPage / @totalPages - Tổng cộng: @totalItems khóa học
+                        <!-- Pagination -->
+                        @if (totalPages > 1)
+                        {
+                            <nav aria-label="Course pagination" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item @(hasPrevious ? "" : "disabled")">
+                                        <a class="page-link" href="?pageIndex=@(currentPage - 1)" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    
+                                    @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link" href="?pageIndex=@i">@i</a>
+                                        </li>
+                                    }
+                                    
+                                    <li class="page-item @(hasNext ? "" : "disabled")">
+                                        <a class="page-link" href="?pageIndex=@(currentPage + 1)" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            
+                            <div class="text-center text-muted">
+                                Trang @currentPage / @totalPages - Tổng cộng: @totalItems khóa học
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">Chưa có khóa học nào</h5>
+                            <p class="text-muted">Nhấn nút "Thêm khóa học" để tạo khóa học đầu tiên</p>
                         </div>
                     }
-                }
-                else
-                {
-                    <div class="text-center py-5">
-                        <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Chưa có khóa học nào</h5>
-                        <p class="text-muted">Nhấn nút "Thêm khóa học" để tạo khóa học đầu tiên</p>
-                    </div>
-                }
+                </div>
             </div>
-        </div>
-    }
+        }
 
-    <!-- Course Detail View -->
-    @if (Model.CurrentAction == "detail" && Model.CourseDetail != null)
-    {
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Chi tiết Khóa học</h5>
-                <a href="/CourseDashboard" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-1"></i>
-                    Quay lại
-                </a>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        @if (!string.IsNullOrEmpty(Model.CourseDetail.ThumbnailURL))
-                        {
-                            <img src="@Model.CourseDetail.ThumbnailURL" class="img-fluid rounded" alt="Course Thumbnail" />
-                        }
-                        else
-                        {
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px;">
-                                <i class="fas fa-image fa-3x text-muted"></i>
-                            </div>
-                        }
-                    </div>
-                    <div class="col-md-8">
-                        <h3>@Model.CourseDetail.Title</h3>
-                        <p class="text-muted">@Model.CourseDetail.Description</p>
-                        
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                                <strong>Nhóm đối tượng:</strong> @Model.CourseDetail.TargetGroup
-                            </div>
-                            <div class="col-sm-6">
-                                <strong>Độ tuổi:</strong> @Model.CourseDetail.AgeGroup
-                            </div>
+        <!-- Course Detail View -->
+        @if (Model.CurrentAction == "detail" && Model.CourseDetail != null)
+        {
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Chi tiết Khóa học</h5>
+                    <a href="/CourseDashboard" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>
+                        Quay lại
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @if (!string.IsNullOrEmpty(Model.CourseDetail.ThumbnailURL))
+                            {
+                                <img src="@Model.CourseDetail.ThumbnailURL" class="img-fluid rounded" alt="Course Thumbnail" />
+                            }
+                            else
+                            {
+                                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            }
                         </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                                <strong>Trạng thái:</strong> 
-                                <span class="badge @(Model.CourseDetail.IsActive ? "bg-success" : "bg-secondary")">
-                                    @(Model.CourseDetail.IsActive ? "Đang hoạt động" : "Không hoạt động")
-                                </span>
+                        <div class="col-md-8">
+                            <h3>@Model.CourseDetail.Title</h3>
+                            <p class="text-muted">@Model.CourseDetail.Description</p>
+                            
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>Nhóm đối tượng:</strong> @Model.CourseDetail.TargetGroup
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Độ tuổi:</strong> @Model.CourseDetail.AgeGroup
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <strong>Duyệt:</strong>
-                                <span class="badge @(Model.CourseDetail.IsAccept ? "bg-info" : "bg-warning")">
-                                    @(Model.CourseDetail.IsAccept ? "Đã duyệt" : "Chưa duyệt")
-                                </span>
+                            
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>Trạng thái:</strong> 
+                                    <span class="badge @(Model.CourseDetail.IsActive ? "bg-success" : "bg-secondary")">
+                                        @(Model.CourseDetail.IsActive ? "Đang hoạt động" : "Không hoạt động")
+                                    </span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Duyệt:</strong>
+                                    <span class="badge @(Model.CourseDetail.IsAccept ? "bg-success" : "bg-warning")">
+                                        @(Model.CourseDetail.IsAccept ? "Đã duyệt" : "Chưa duyệt")
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                                <strong>Ngày tạo:</strong> @Model.CourseDetail.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                            
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>Ngày tạo:</strong> @Model.CourseDetail.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Người tạo:</strong> @(Model.CourseDetail.CreatorName ?? "N/A")
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <strong>Người tạo:</strong> @(Model.CourseDetail.CreatorName ?? "N/A")
-                            </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                                <strong>Số lượng nội dung:</strong> @Model.CourseDetail.TotalContents
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <strong>Số lượng nội dung:</strong> @Model.CourseDetail.TotalContents
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Số lượng đăng ký:</strong> @Model.CourseDetail.TotalRegistrations
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <strong>Số lượng đăng ký:</strong> @Model.CourseDetail.TotalRegistrations
-                            </div>
-                        </div>
 
-                        @if (!string.IsNullOrEmpty(Model.CourseDetail.ContentURL))
-                        {
-                            <div class="mb-3">
-                                <strong>Nội dung:</strong>
-                                <a href="@Model.CourseDetail.ContentURL" target="_blank" class="btn btn-sm btn-outline-primary ms-2">
-                                    <i class="fas fa-external-link-alt me-1"></i>
-                                    Xem nội dung
+                            @if (!string.IsNullOrEmpty(Model.CourseDetail.ContentURL))
+                            {
+                                <div class="mb-3">
+                                    <strong>Nội dung:</strong>
+                                    <a href="@Model.CourseDetail.ContentURL" target="_blank" class="btn btn-sm btn-outline-primary ms-2">
+                                        <i class="fas fa-external-link-alt me-1"></i>
+                                        Xem nội dung
+                                    </a>
+                                </div>
+                            }
+
+                            <div class="mt-4">
+                                <a href="?action=edit&id=@Model.CourseDetail.CourseID" class="btn btn-warning me-2">
+                                    <i class="fas fa-edit me-1"></i>
+                                    Chỉnh sửa
                                 </a>
                             </div>
-                        }
-
-                        <div class="mt-4">
-                            <a href="?action=edit&id=@Model.CourseDetail.CourseID" class="btn btn-warning me-2">
-                                <i class="fas fa-edit me-1"></i>
-                                Chỉnh sửa
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
-    <!-- Add/Edit Course Form -->
-    @if (Model.CurrentAction == "add" || Model.CurrentAction == "edit")
-    {
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">@(Model.CurrentAction == "add" ? "Thêm khóa học mới" : "Chỉnh sửa khóa học")</h5>
-                <a href="/CourseDashboard" class="btn btn-secondary">
-                    <i class="fas fa-times me-1"></i>
-                    Hủy
-                </a>
+        <!-- Add/Edit Course Form -->
+        @if (Model.CurrentAction == "add" || Model.CurrentAction == "edit")
+        {
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@(Model.CurrentAction == "add" ? "Thêm khóa học mới" : "Chỉnh sửa khóa học")</h5>
+                    <a href="/CourseDashboard" class="btn btn-secondary">
+                        <i class="fas fa-times me-1"></i>
+                        Hủy
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="@(Model.CurrentAction == "add" ? "Add" : "Update")">
+                        @if (Model.CurrentAction == "edit")
+                        {
+                            <input type="hidden" name="id" value="@Request.Query["id"]" />
+                        }
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CourseForm.Title" class="form-label">Tiêu đề khóa học *</label>
+                                    <input asp-for="CourseForm.Title" class="form-control" required />
+                                    <span asp-validation-for="CourseForm.Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CourseForm.TargetGroup" class="form-label">Nhóm đối tượng *</label>
+                                    <input asp-for="CourseForm.TargetGroup" class="form-control" required />
+                                    <span asp-validation-for="CourseForm.TargetGroup" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CourseForm.AgeGroup" class="form-label">Độ tuổi *</label>
+                                    <input asp-for="CourseForm.AgeGroup" class="form-control" required />
+                                    <span asp-validation-for="CourseForm.AgeGroup" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CourseForm.ThumbnailURL" class="form-label">URL Hình đại diện</label>
+                                    <input asp-for="CourseForm.ThumbnailURL" class="form-control" type="url" />
+                                    <span asp-validation-for="CourseForm.ThumbnailURL" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CourseForm.Description" class="form-label">Mô tả khóa học *</label>
+                            <textarea asp-for="CourseForm.Description" class="form-control" rows="4" required></textarea>
+                            <span asp-validation-for="CourseForm.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CourseForm.ContentURL" class="form-label">URL Nội dung khóa học</label>
+                            <input asp-for="CourseForm.ContentURL" class="form-control" type="url" />
+                            <span asp-validation-for="CourseForm.ContentURL" class="text-danger"></span>
+                            <div class="form-text">Liên kết đến nội dung khóa học (video, tài liệu, etc.)</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="/CourseDashboard" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>
+                                Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i>
+                                @(Model.CurrentAction == "add" ? "Thêm khóa học" : "Cập nhật khóa học")
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="card-body">
-                <form method="post" asp-page-handler="@(Model.CurrentAction == "add" ? "Add" : "Update")">
-                    @if (Model.CurrentAction == "edit")
-                    {
-                        <input type="hidden" name="id" value="@Request.Query["id"]" />
-                    }
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="CourseForm.Title" class="form-label">Tiêu đề khóa học *</label>
-                                <input asp-for="CourseForm.Title" class="form-control" required />
-                                <span asp-validation-for="CourseForm.Title" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="CourseForm.TargetGroup" class="form-label">Nhóm đối tượng *</label>
-                                <input asp-for="CourseForm.TargetGroup" class="form-control" required />
-                                <span asp-validation-for="CourseForm.TargetGroup" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="CourseForm.AgeGroup" class="form-label">Độ tuổi *</label>
-                                <input asp-for="CourseForm.AgeGroup" class="form-control" required />
-                                <span asp-validation-for="CourseForm.AgeGroup" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="CourseForm.ThumbnailURL" class="form-label">URL Hình đại diện</label>
-                                <input asp-for="CourseForm.ThumbnailURL" class="form-control" type="url" />
-                                <span asp-validation-for="CourseForm.ThumbnailURL" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="CourseForm.Description" class="form-label">Mô tả khóa học *</label>
-                        <textarea asp-for="CourseForm.Description" class="form-control" rows="4" required></textarea>
-                        <span asp-validation-for="CourseForm.Description" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="CourseForm.ContentURL" class="form-label">URL Nội dung khóa học</label>
-                        <input asp-for="CourseForm.ContentURL" class="form-control" type="url" />
-                        <span asp-validation-for="CourseForm.ContentURL" class="text-danger"></span>
-                        <div class="form-text">Liên kết đến nội dung khóa học (video, tài liệu, etc.)</div>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <a href="/CourseDashboard" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-1"></i>
-                            Quay lại
-                        </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-1"></i>
-                            @(Model.CurrentAction == "add" ? "Thêm khóa học" : "Cập nhật khóa học")
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        }
     }
 </div>
 
@@ -444,7 +488,6 @@
     display: inline-block;
 }
 
-
 media (max-width: 768px) {
     .btn-group {
         flex-direction: column;
@@ -491,5 +534,37 @@ media (max-width: 768px) {
 .btn-outline-info:hover {
     background-color: #17a2b8;
     border-color: #17a2b8;
+}
+
+/* CSS cho cột duyệt */
+.approval-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 100px;
+}
+
+.approval-column .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.approval-column .btn {
+    width: 100%;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Mobile responsive */
+media (max-width: 768px) {
+    .approval-column {
+        min-width: 80px;
+    }
+    
+    .approval-column .btn {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
 }
 </style>
