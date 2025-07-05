@@ -181,7 +181,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
                         if (apiResponse?.Success == true)
                         {
-                            return RedirectToPage("/CourseDashboard", new { message = "Thêm khóa học thành công!", messageType = "success" });
+                            return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Thêm khóa học thành công!", messageType = "success" });
                         }
                         else
                         {
@@ -295,7 +295,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/CourseDashboard", new { message = "Cập nhật khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Cập nhật khóa học thành công!", messageType = "success" });
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -335,7 +335,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/CourseDashboard", new { message = "Xóa khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = "Xóa khóa học thành công!", messageType = "success" });
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -344,12 +344,12 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi xóa: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi xóa: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
         }
 
@@ -373,7 +373,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 if (response.IsSuccessStatusCode)
                 {
                     var statusText = isActive ? "kích hoạt" : "vô hiệu hóa";
-                    return RedirectToPage("/CourseDashboard", new { message = $"Đã {statusText} khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Đã {statusText} khóa học thành công!", messageType = "success" });
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -382,12 +382,12 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi cập nhật trạng thái: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi cập nhật trạng thái: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
         }
 
@@ -411,7 +411,7 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 if (response.IsSuccessStatusCode)
                 {
                     var approvalText = isAccept ? "duyệt" : "hủy duyệt";
-                    return RedirectToPage("/CourseDashboard", new { message = $"Đã {approvalText} khóa học thành công!", messageType = "success" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Đã {approvalText} khóa học thành công!", messageType = "success" });
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -420,12 +420,12 @@ namespace DrugUserPreventionUI.Pages.CourseDashboard
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/CourseDashboard", new { message = $"Lỗi khi duyệt khóa học: {errorContent}", messageType = "error" });
+                    return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi khi duyệt khóa học: {errorContent}", messageType = "error" });
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage("/CourseDashboard/CourseDashboard", new { message = $"Lỗi: {ex.Message}", messageType = "error" });
             }
         }
 
