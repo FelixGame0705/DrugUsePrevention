@@ -13,7 +13,6 @@ namespace Services.DTOs.Category
         public string CategoryName { get; set; }
         public string CategoryDescription { get; set; }
         public int? ParentCategoryID { get; set; } // Thêm ParentCategoryID vào DTO
-        public bool? IsActive { get; set; }
         public int NewsCount { get; set; }
 
         public ICollection<NewsArticle>? NewsArticles { get; set; }
