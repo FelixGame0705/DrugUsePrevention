@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -37,9 +36,13 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 // ✅ FIXED: Redirect to correct login page
-app.MapGet("/", context => {
-    context.Response.Redirect("/Login"); // Capital L
-    return Task.CompletedTask;
-});
+app.MapGet(
+    "/",
+    context =>
+    {
+        context.Response.Redirect("/Index"); // Capital L
+        return Task.CompletedTask;
+    }
+);
 
 app.Run();
