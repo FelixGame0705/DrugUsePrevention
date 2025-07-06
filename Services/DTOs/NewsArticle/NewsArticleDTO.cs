@@ -11,7 +11,7 @@ namespace Services.DTOs.NewArticle
 {
     public class NewsArticleDto : BasePaginationDto
     {
-        public Guid NewsArticleID { get; set; }
+        public int NewsArticleID { get; set; }
         public string NewsTitle { get; set; }
         public string Headline { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -7,14 +7,20 @@ using Repositories;
 using Repositories.IRepository;
 using Repositories.IRepository.Admins;
 using Repositories.IRepository.Appointments;
+using Repositories.IRepository.Categories;
 using Repositories.IRepository.Consultants;
 using Repositories.IRepository.Courses;
+using Repositories.IRepository.NewsArticles;
+using Repositories.IRepository.Tags;
 using Repositories.IRepository.Users;
 using Repositories.Repository;
 using Repositories.Repository.Admins;
 using Repositories.Repository.Appointments;
+using Repositories.Repository.Categories;
 using Repositories.Repository.Consultants;
 using Repositories.Repository.Courses;
+using Repositories.Repository.NewsArticles;
+using Repositories.Repository.Tags;
 using Repositories.Repository.Users;
 using Services.IService;
 using Services.MailUtils;
@@ -48,7 +54,10 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddTransient<ISendMailService, SendMailService>();
-            builder.Services.AddScoped<ICourseRegistrationRepository, CourseRegistrationRepository>();
+            builder.Services.AddScoped<
+                ICourseRegistrationRepository,
+                CourseRegistrationRepository
+            >();
             builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
@@ -56,6 +65,12 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IConsultantRepository, ConsultantRepository>();
             builder.Services.AddScoped<IConsultantService, ConsultantService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
+            builder.Services.AddScoped<INewsArticleService, NewsArticleService>();
+            builder.Services.AddScoped<ITagRepository, TagRepository>();
+            builder.Services.AddScoped<ITagService, TagService>();
 
             // Add Controllers
             builder.Services.AddControllers();
@@ -106,7 +121,8 @@ namespace DrugUsePrevention
             });
 
             // JWT Authentication
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            builder
+                .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -141,7 +157,7 @@ namespace DrugUsePrevention
             // Middleware pipeline
             app.UseHttpsRedirection();
             app.UseStaticFiles(); // Thêm dòng này để serve static files cho Razor Pages
-    
+
             app.UseRouting();
 
             app.UseAuthentication();

@@ -19,13 +19,11 @@ namespace Services.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITagRepository _tagRepository;
-        private readonly IMapper _mapper;
 
-        public TagService(IUnitOfWork unitOfWork, ITagRepository tagRepository, IMapper mapper)
+        public TagService(IUnitOfWork unitOfWork, ITagRepository tagRepository)
         {
             _unitOfWork = unitOfWork;
             _tagRepository = tagRepository;
-            _mapper = mapper;
         }
 
         public async Task<BasePaginatedList<TagDTO>> GetAllTagsAsync(PagingRequest pagingRequest)

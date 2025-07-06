@@ -23,19 +23,16 @@ namespace Services.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly INewsArticleRepository _newsArticleRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
         public NewsArticleService(
             IUnitOfWork unitOfWork,
             INewsArticleRepository newsArticleRepository,
-            IUserRepository userRepository,
-            IMapper mapper
+            IUserRepository userRepository
         )
         {
             _unitOfWork = unitOfWork;
             _newsArticleRepository = newsArticleRepository;
             _userRepository = userRepository;
-            _mapper = mapper;
         }
 
         public async Task<BasePaginatedList<NewsArticleDto>> GetAllNewsArticlesAsync(
@@ -46,7 +43,7 @@ namespace Services.Service
                 searchKeyword: filter.SearchKeyword,
                 categoryId: filter.CategoryID,
                 newsSource: filter.NewsSource,
-                newsStatus: filter.NewsStatus,
+                newsStatus: filter.NewsStatus ?? "Active",
                 createdBy: filter.CreatedByID,
                 fromDate: filter.FromDate,
                 toDate: filter.ToDate,
@@ -54,7 +51,69 @@ namespace Services.Service
                 pageSize: filter.PageSize
             );
 
-            var newsArticleDtos = pagedResult.Items.Select(MapToNewsArticleDto).ToList();
+            var newsArticleDtos = pagedResult
+                .Items.Select(newsArticle => new NewsArticleDto
+                {
+                    NewsArticleID = newsArticle.NewsArticleID,
+                    NewsTitle = newsArticle.NewsAticleName,
+                    Headline = newsArticle.Headline,
+                    CreatedDate = newsArticle.CreatedDate,
+                    NewsContent = newsArticle.NewsContent,
+                    NewsSource = newsArticle.NewsSource,
+                    CategoryID = newsArticle.CategoryID,
+                    NewsStatus = newsArticle.NewsStatus,
+                    CreatedByID = newsArticle.CreatedByID,
+                    UpdatedByID = newsArticle.UpdatedByID,
+                    ModifiedDate = newsArticle.ModifiedDate ?? DateTime.Now,
+                    CreatedBy =
+                        newsArticle.CreatedBy != null
+                            ? new UserDTO
+                            {
+                                UserID = newsArticle.CreatedBy.UserID,
+                                FullName = newsArticle.CreatedBy.FullName,
+                                Username = newsArticle.CreatedBy.Username,
+                                Email = newsArticle.CreatedBy.Email,
+                                Role = newsArticle.CreatedBy.Role,
+                            }
+                            : null,
+                    UpdatedBy =
+                        newsArticle.UpdatedBy != null
+                            ? new UserDTO
+                            {
+                                UserID = newsArticle.UpdatedBy.UserID,
+                                FullName = newsArticle.UpdatedBy.FullName,
+                                Username = newsArticle.UpdatedBy.Username,
+                                Email = newsArticle.UpdatedBy.Email,
+                                Role = newsArticle.UpdatedBy.Role,
+                            }
+                            : null,
+                    Category =
+                        newsArticle.Category != null
+                            ? new CategoryDTO
+                            {
+                                CategoryID = newsArticle.Category.CategoryID,
+                                CategoryName = newsArticle.Category.CategoryName,
+                                CategoryDescription = newsArticle.Category.CategoryDescription,
+                            }
+                            : null,
+                    NewsTags = newsArticle
+                        .NewsTags?.Select(nt => new NewsTagDTO
+                        {
+                            NewsArticleID = nt.NewsArticleID,
+                            TagID = nt.TagID,
+                            Tag =
+                                nt.Tag != null
+                                    ? new TagDTO
+                                    {
+                                        TagID = nt.Tag.TagID,
+                                        TagName = nt.Tag.TagName,
+                                        Note = nt.Tag.Note,
+                                    }
+                                    : null,
+                        })
+                        .ToList(),
+                })
+                .ToList();
 
             return new BasePaginatedList<NewsArticleDto>(
                 newsArticleDtos,
@@ -80,7 +139,67 @@ namespace Services.Service
             if (newsArticle == null)
                 throw new KeyNotFoundException($"Bài viết với ID {newsArticleId} không tồn tại");
 
-            return MapToNewsArticleDto(newsArticle);
+            return new NewsArticleDto
+            {
+                NewsArticleID = newsArticle.NewsArticleID,
+                NewsTitle = newsArticle.NewsAticleName,
+                Headline = newsArticle.Headline,
+                CreatedDate = newsArticle.CreatedDate,
+                NewsContent = newsArticle.NewsContent,
+                NewsSource = newsArticle.NewsSource,
+                CategoryID = newsArticle.CategoryID,
+                NewsStatus = newsArticle.NewsStatus,
+                CreatedByID = newsArticle.CreatedByID,
+                UpdatedByID = newsArticle.UpdatedByID,
+                ModifiedDate = newsArticle.ModifiedDate ?? DateTime.Now,
+                CreatedBy =
+                    newsArticle.CreatedBy != null
+                        ? new UserDTO
+                        {
+                            UserID = newsArticle.CreatedBy.UserID,
+                            FullName = newsArticle.CreatedBy.FullName,
+                            Username = newsArticle.CreatedBy.Username,
+                            Email = newsArticle.CreatedBy.Email,
+                            Role = newsArticle.CreatedBy.Role,
+                        }
+                        : null,
+                UpdatedBy =
+                    newsArticle.UpdatedBy != null
+                        ? new UserDTO
+                        {
+                            UserID = newsArticle.UpdatedBy.UserID,
+                            FullName = newsArticle.UpdatedBy.FullName,
+                            Username = newsArticle.UpdatedBy.Username,
+                            Email = newsArticle.UpdatedBy.Email,
+                            Role = newsArticle.UpdatedBy.Role,
+                        }
+                        : null,
+                Category =
+                    newsArticle.Category != null
+                        ? new CategoryDTO
+                        {
+                            CategoryID = newsArticle.Category.CategoryID,
+                            CategoryName = newsArticle.Category.CategoryName,
+                            CategoryDescription = newsArticle.Category.CategoryDescription,
+                        }
+                        : null,
+                NewsTags = newsArticle
+                    .NewsTags?.Select(nt => new NewsTagDTO
+                    {
+                        NewsArticleID = nt.NewsArticleID,
+                        TagID = nt.TagID,
+                        Tag =
+                            nt.Tag != null
+                                ? new TagDTO
+                                {
+                                    TagID = nt.Tag.TagID,
+                                    TagName = nt.Tag.TagName,
+                                    Note = nt.Tag.Note,
+                                }
+                                : null,
+                    })
+                    .ToList(),
+            };
         }
 
         public async Task<BasePaginatedList<NewsArticleDto>> GetNewsArticlesByCategoryAsync(
@@ -286,78 +405,69 @@ namespace Services.Service
                     .Where(n => n.NewsStatus == "Active")
                     .OrderByDescending(n => n.CreatedDate)
                     .Take(5)
-                    .Select(MapToNewsArticleDto)
-                    .ToList(),
-            };
-        }
-
-        #region Private Mapping Methods
-
-        private NewsArticleDto MapToNewsArticleDto(NewsArticle newsArticle)
-        {
-            return new NewsArticleDto
-            {
-                //NewsArticleID = newsArticle.NewsArticleID,
-                NewsTitle = newsArticle.NewsAticleName,
-                Headline = newsArticle.Headline,
-                CreatedDate = newsArticle.CreatedDate,
-                NewsContent = newsArticle.NewsContent,
-                NewsSource = newsArticle.NewsSource,
-                CategoryID = newsArticle.CategoryID,
-                NewsStatus = newsArticle.NewsStatus,
-                CreatedByID = newsArticle.CreatedByID,
-                UpdatedByID = newsArticle.UpdatedByID,
-                ModifiedDate = newsArticle.ModifiedDate ?? DateTime.Now,
-                CreatedBy =
-                    newsArticle.CreatedBy != null
-                        ? new UserDTO
-                        {
-                            UserID = newsArticle.CreatedBy.UserID,
-                            FullName = newsArticle.CreatedBy.FullName,
-                            Username = newsArticle.CreatedBy.Username,
-                            Email = newsArticle.CreatedBy.Email,
-                            Role = newsArticle.CreatedBy.Role,
-                        }
-                        : null,
-                UpdatedBy =
-                    newsArticle.UpdatedBy != null
-                        ? new UserDTO
-                        {
-                            UserID = newsArticle.UpdatedBy.UserID,
-                            FullName = newsArticle.UpdatedBy.FullName,
-                            Username = newsArticle.UpdatedBy.Username,
-                            Email = newsArticle.UpdatedBy.Email,
-                            Role = newsArticle.UpdatedBy.Role,
-                        }
-                        : null,
-                Category =
-                    newsArticle.Category != null
-                        ? new CategoryDTO
-                        {
-                            CategoryID = newsArticle.Category.CategoryID,
-                            CategoryName = newsArticle.Category.CategoryName,
-                            CategoryDescription = newsArticle.Category.CategoryDescription,
-                        }
-                        : null,
-                NewsTags = newsArticle
-                    .NewsTags?.Select(nt => new NewsTagDTO
+                    .Select(newsArticle => new NewsArticleDto
                     {
-                        NewsArticleID = nt.NewsArticleID,
-                        TagID = nt.TagID,
-                        Tag =
-                            nt.Tag != null
-                                ? new TagDTO
+                        NewsArticleID = newsArticle.NewsArticleID,
+                        NewsTitle = newsArticle.NewsAticleName,
+                        Headline = newsArticle.Headline,
+                        CreatedDate = newsArticle.CreatedDate,
+                        NewsContent = newsArticle.NewsContent,
+                        NewsSource = newsArticle.NewsSource,
+                        CategoryID = newsArticle.CategoryID,
+                        NewsStatus = newsArticle.NewsStatus,
+                        CreatedByID = newsArticle.CreatedByID,
+                        UpdatedByID = newsArticle.UpdatedByID,
+                        ModifiedDate = newsArticle.ModifiedDate ?? DateTime.Now,
+                        CreatedBy =
+                            newsArticle.CreatedBy != null
+                                ? new UserDTO
                                 {
-                                    TagID = nt.Tag.TagID,
-                                    TagName = nt.Tag.TagName,
-                                    Note = nt.Tag.Note,
+                                    UserID = newsArticle.CreatedBy.UserID,
+                                    FullName = newsArticle.CreatedBy.FullName,
+                                    Username = newsArticle.CreatedBy.Username,
+                                    Email = newsArticle.CreatedBy.Email,
+                                    Role = newsArticle.CreatedBy.Role,
                                 }
                                 : null,
+                        UpdatedBy =
+                            newsArticle.UpdatedBy != null
+                                ? new UserDTO
+                                {
+                                    UserID = newsArticle.UpdatedBy.UserID,
+                                    FullName = newsArticle.UpdatedBy.FullName,
+                                    Username = newsArticle.UpdatedBy.Username,
+                                    Email = newsArticle.UpdatedBy.Email,
+                                    Role = newsArticle.UpdatedBy.Role,
+                                }
+                                : null,
+                        Category =
+                            newsArticle.Category != null
+                                ? new CategoryDTO
+                                {
+                                    CategoryID = newsArticle.Category.CategoryID,
+                                    CategoryName = newsArticle.Category.CategoryName,
+                                    CategoryDescription = newsArticle.Category.CategoryDescription,
+                                }
+                                : null,
+                        NewsTags = newsArticle
+                            .NewsTags?.Select(nt => new NewsTagDTO
+                            {
+                                NewsArticleID = nt.NewsArticleID,
+                                TagID = nt.TagID,
+                                Tag =
+                                    nt.Tag != null
+                                        ? new TagDTO
+                                        {
+                                            TagID = nt.Tag.TagID,
+                                            TagName = nt.Tag.TagName,
+                                            Note = nt.Tag.Note,
+                                        }
+                                        : null,
+                            })
+                            .ToList(),
                     })
                     .ToList(),
             };
         }
-
-        #endregion
     }
 }

@@ -18,17 +18,11 @@ namespace Services.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IMapper _mapper;
 
-        public CategoryService(
-            IUnitOfWork unitOfWork,
-            ICategoryRepository categoryRepository,
-            IMapper mapper
-        )
+        public CategoryService(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository)
         {
             _unitOfWork = unitOfWork;
             _categoryRepository = categoryRepository;
-            _mapper = mapper;
         }
 
         public async Task<BasePaginatedList<CategoryDTO>> GetAllCategoriesAsync(
@@ -41,7 +35,15 @@ namespace Services.Service
                 pageSize: pagingRequest.pageSize
             );
 
-            var categoryDtos = pagedResult.Items.Select(MapToCategoryDto).ToList();
+            var categoryDtos = pagedResult
+                .Items.Select(c => new CategoryDTO
+                {
+                    CategoryID = c.CategoryID,
+                    CategoryName = c.CategoryName,
+                    CategoryDescription = c.CategoryDescription,
+                    NewsCount = c.NewsAticles?.Count ?? 0,
+                })
+                .ToList();
 
             return new BasePaginatedList<CategoryDTO>(
                 categoryDtos,
@@ -61,7 +63,15 @@ namespace Services.Service
                 pageSize: pagingRequest.pageSize
             );
 
-            var categoryDtos = pagedResult.Items.Select(MapToCategoryDto).ToList();
+            var categoryDtos = pagedResult
+                .Items.Select(c => new CategoryDTO
+                {
+                    CategoryID = c.CategoryID,
+                    CategoryName = c.CategoryName,
+                    CategoryDescription = c.CategoryDescription,
+                    NewsCount = c.NewsAticles?.Count ?? 0,
+                })
+                .ToList();
 
             return new BasePaginatedList<CategoryDTO>(
                 categoryDtos,
@@ -73,11 +83,17 @@ namespace Services.Service
 
         public async Task<CategoryDTO> GetCategoryByIdAsync(int categoryId)
         {
-            var category = await _categoryRepository.GetCategoryWithDetailsAsync(categoryId);
-            if (category == null)
+            var c = await _categoryRepository.GetCategoryWithDetailsAsync(categoryId);
+            if (c == null)
                 throw new KeyNotFoundException($"Category với ID {categoryId} không tồn tại");
 
-            return MapToCategoryDto(category);
+            return new CategoryDTO
+            {
+                CategoryID = c.CategoryID,
+                CategoryName = c.CategoryName,
+                CategoryDescription = c.CategoryDescription,
+                NewsCount = c.NewsAticles?.Count ?? 0,
+            };
         }
 
         public async Task<CategoryDTO> AddCategoryAsync(CreateCategoryDto createDto)
@@ -97,7 +113,13 @@ namespace Services.Service
             await _categoryRepository.InsertAsync(category);
             await _unitOfWork.SaveAsync();
 
-            return MapToCategoryDto(category);
+            return new CategoryDTO
+            {
+                CategoryID = category.CategoryID,
+                CategoryName = category.CategoryName,
+                CategoryDescription = category.CategoryDescription,
+                NewsCount = category.NewsAticles?.Count ?? 0,
+            };
         }
 
         public async Task<CategoryDTO> UpdateCategoryAsync(UpdateCategoryDto updateDto)
@@ -125,7 +147,13 @@ namespace Services.Service
             await _categoryRepository.UpdateAsync(existingCategory);
             await _unitOfWork.SaveAsync();
 
-            return MapToCategoryDto(existingCategory);
+            return new CategoryDTO
+            {
+                CategoryID = existingCategory.CategoryID,
+                CategoryName = existingCategory.CategoryName,
+                CategoryDescription = existingCategory.CategoryDescription,
+                NewsCount = existingCategory.NewsAticles?.Count ?? 0,
+            };
         }
 
         public async Task DeleteCategoryAsync(int categoryId)
@@ -162,7 +190,15 @@ namespace Services.Service
                 pageSize: pagingRequest.pageSize
             );
 
-            var categoryDtos = pagedResult.Items.Select(MapToCategoryDto).ToList();
+            var categoryDtos = pagedResult
+                .Items.Select(c => new CategoryDTO
+                {
+                    CategoryID = c.CategoryID,
+                    CategoryName = c.CategoryName,
+                    CategoryDescription = c.CategoryDescription,
+                    NewsCount = c.NewsAticles?.Count ?? 0,
+                })
+                .ToList();
 
             return new BasePaginatedList<CategoryDTO>(
                 categoryDtos,
@@ -184,23 +220,15 @@ namespace Services.Service
                 MostUsedCategories = allCategories
                     .OrderByDescending(c => c.NewsAticles?.Count ?? 0)
                     .Take(5)
-                    .Select(MapToCategoryDto)
+                    .Select(c => new CategoryDTO
+                    {
+                        CategoryID = c.CategoryID,
+                        CategoryName = c.CategoryName,
+                        CategoryDescription = c.CategoryDescription,
+                        NewsCount = c.NewsAticles?.Count ?? 0,
+                    })
                     .ToList(),
             };
         }
-
-        #region Private Mapping Methods
-
-        private CategoryDTO MapToCategoryDto(Category category)
-        {
-            return new CategoryDTO
-            {
-                CategoryID = category.CategoryID,
-                CategoryName = category.CategoryName,
-                CategoryDescription = category.CategoryDescription,
-            };
-        }
-
-        #endregion
     }
 }
