@@ -7,5 +7,10 @@
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? Role { get; set; }
+        public string? Phone { get; set; }
+        public string? AvatarUrl { get; set; } // URL đến ảnh đại diện của người dùng
+        public string? Status { get; set; } // Active, Inactive, Banned
+        public DateTime CreatedAt { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
