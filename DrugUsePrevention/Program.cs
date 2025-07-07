@@ -7,16 +7,28 @@ using Repositories;
 using Repositories.IRepository;
 using Repositories.IRepository.Admins;
 using Repositories.IRepository.Appointments;
+using Repositories.IRepository.Categories;
 using Repositories.IRepository.Consultants;
 using Repositories.IRepository.Courses;
+<<<<<<< HEAD
 using Repositories.IRepository.Programs;
+=======
+using Repositories.IRepository.NewsArticles;
+using Repositories.IRepository.Tags;
+>>>>>>> master
 using Repositories.IRepository.Users;
 using Repositories.Repository;
 using Repositories.Repository.Admins;
 using Repositories.Repository.Appointments;
+using Repositories.Repository.Categories;
 using Repositories.Repository.Consultants;
 using Repositories.Repository.Courses;
+<<<<<<< HEAD
 using Repositories.Repository.Programs;
+=======
+using Repositories.Repository.NewsArticles;
+using Repositories.Repository.Tags;
+>>>>>>> master
 using Repositories.Repository.Users;
 using Services.IService;
 using Services.MailUtils;
@@ -58,8 +70,17 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<IConsultantRepository, ConsultantRepository>();
             builder.Services.AddScoped<IConsultantService, ConsultantService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
+<<<<<<< HEAD
             builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             builder.Services.AddScoped<IProgramService, ProgramService>();
+=======
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<INewsArticleRepository, NewsArticleRepository>();
+            builder.Services.AddScoped<INewsArticleService, NewsArticleService>();
+            builder.Services.AddScoped<ITagRepository, TagRepository>();
+            builder.Services.AddScoped<ITagService, TagService>();
+>>>>>>> master
 
             // Add Controllers
             builder.Services.AddControllers();
