@@ -418,17 +418,15 @@ namespace DrugUserPreventionUI.Pages
 
             return normalizedRole.ToLower() switch
             {
-                "admin" => RedirectToPage("/Admin/Dashboard", messageParams),
-                "manager" => RedirectToPage("/CourseDashboard/CourseDashboard", messageParams),
-                "consultant" => RedirectToPage("/Consultant/Dashboard", messageParams),
-                "staff" => RedirectToPage("/Staff/Dashboard", messageParams),
-                //"member" => RedirectToPage("/Member/Dashboard", messageParams), // tạm thời
-                "member" => RedirectToPage("/Index", messageParams),
-                "guest" or _ => RedirectToPage(
-                    "/Courses",
-                    messageParams
-                ) // Default for Guest and unknown roles
-                ,
+                // Tất cả role quản lý đều về CourseDashboard
+                "admin" or "manager" or "consultant" or "staff" =>
+                    RedirectToPage("/CourseDashboard/CourseDashboard", messageParams),
+
+                // Member về trang khóa học cá nhân  
+                "member" => RedirectToPage("/MyCourses", messageParams),
+
+                // Guest về trang khóa học công khai
+                "guest" or _ => RedirectToPage("/Courses", messageParams)
             };
         }
 
