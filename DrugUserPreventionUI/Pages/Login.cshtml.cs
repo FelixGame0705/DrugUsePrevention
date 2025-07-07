@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Json;
+﻿using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DrugUserPreventionUI.Pages
 {
@@ -24,7 +24,10 @@ namespace DrugUserPreventionUI.Pages
         public string? Message { get; set; }
         public string? MessageType { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string? message = null, string? messageType = null)
+        public async Task<IActionResult> OnGetAsync(
+            string? message = null,
+            string? messageType = null
+        )
         {
             if (!string.IsNullOrEmpty(message))
             {
@@ -64,10 +67,10 @@ namespace DrugUserPreventionUI.Pages
             {
                 var client = _httpClientFactory.CreateClient();
 
-                var json = JsonSerializer.Serialize(LoginForm, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    LoginForm,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var loginUrl = $"{AUTH_API_URL}/login";
@@ -85,12 +88,15 @@ namespace DrugUserPreventionUI.Pages
                 {
                     try
                     {
-                        var loginResponse = JsonSerializer.Deserialize<TokenResponseDto>(responseContent, new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
+                        var loginResponse = JsonSerializer.Deserialize<TokenResponseDto>(
+                            responseContent,
+                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                        );
 
-                        if (loginResponse != null && !string.IsNullOrEmpty(loginResponse.AccessToken))
+                        if (
+                            loginResponse != null
+                            && !string.IsNullOrEmpty(loginResponse.AccessToken)
+                        )
                         {
                             // Decode JWT token to verify it contains user info
                             var userInfo = DecodeJwtToken(loginResponse.AccessToken);
@@ -103,24 +109,34 @@ namespace DrugUserPreventionUI.Pages
                                     HttpOnly = true,
                                     Secure = Request.IsHttps,
                                     SameSite = SameSiteMode.Lax,
-                                    Expires = userInfo.Expiration ?? DateTime.UtcNow.AddHours(8)
+                                    Expires = userInfo.Expiration ?? DateTime.UtcNow.AddHours(8),
                                 };
 
-                                Response.Cookies.Append("auth_token", loginResponse.AccessToken, cookieOptions);
+                                Response.Cookies.Append(
+                                    "auth_token",
+                                    loginResponse.AccessToken,
+                                    cookieOptions
+                                );
 
                                 Console.WriteLine($"=== LOGIN SUCCESS ===");
-                                Console.WriteLine($"Token: {loginResponse.AccessToken[..Math.Min(20, loginResponse.AccessToken.Length)]}...");
+                                Console.WriteLine(
+                                    $"Token: {loginResponse.AccessToken[..Math.Min(20, loginResponse.AccessToken.Length)]}..."
+                                );
                                 Console.WriteLine($"User: {userInfo.UserName} ({userInfo.Role})");
                                 Console.WriteLine($"Email: {userInfo.Email}");
                                 Console.WriteLine($"UserId: {userInfo.UserId}");
                                 Console.WriteLine($"Expires: {userInfo.Expiration}");
 
                                 // Redirect based on user role
-                                return RedirectToRoleBasedPage(userInfo.Role, $"Xin chào {userInfo.DisplayName}! Đăng nhập thành công.");
+                                return RedirectToRoleBasedPage(
+                                    userInfo.Role,
+                                    $"Xin chào {userInfo.DisplayName}! Đăng nhập thành công."
+                                );
                             }
                             else
                             {
-                                Message = "Đăng nhập thất bại: Token không hợp lệ hoặc không chứa thông tin người dùng";
+                                Message =
+                                    "Đăng nhập thất bại: Token không hợp lệ hoặc không chứa thông tin người dùng";
                                 MessageType = "error";
                             }
                         }
@@ -152,7 +168,8 @@ namespace DrugUserPreventionUI.Pages
                     }
                     else
                     {
-                        Message = $"Lỗi đăng nhập ({(int)response.StatusCode}): {response.ReasonPhrase}";
+                        Message =
+                            $"Lỗi đăng nhập ({(int)response.StatusCode}): {response.ReasonPhrase}";
                         if (!string.IsNullOrWhiteSpace(responseContent))
                         {
                             Message += $". Chi tiết: {responseContent}";
@@ -186,12 +203,18 @@ namespace DrugUserPreventionUI.Pages
 
                 Console.WriteLine("Auth token cleared - user logged out");
 
-                return RedirectToPage("/Login", new { message = "Đăng xuất thành công!", messageType = "success" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Đăng xuất thành công!", messageType = "success" }
+                );
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Logout error: {ex.Message}");
-                return RedirectToPage("/Login", new { message = "Đã đăng xuất", messageType = "info" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Đã đăng xuất", messageType = "info" }
+                );
             }
         }
 
@@ -201,10 +224,12 @@ namespace DrugUserPreventionUI.Pages
             try
             {
                 token ??= HttpContext.Request.Cookies["auth_token"];
-                if (string.IsNullOrEmpty(token)) return null;
+                if (string.IsNullOrEmpty(token))
+                    return null;
 
                 var handler = new JwtSecurityTokenHandler();
-                if (!handler.CanReadToken(token)) return null;
+                if (!handler.CanReadToken(token))
+                    return null;
 
                 var jsonToken = handler.ReadJwtToken(token);
                 var userInfo = new UserInfoDto();
@@ -263,7 +288,9 @@ namespace DrugUserPreventionUI.Pages
 
                 userInfo.Role ??= "Guest";
 
-                Console.WriteLine($"Decoded JWT - User: {userInfo.UserName}, Role: {userInfo.Role}, Expires: {userInfo.Expiration}");
+                Console.WriteLine(
+                    $"Decoded JWT - User: {userInfo.UserName}, Role: {userInfo.Role}, Expires: {userInfo.Expiration}"
+                );
 
                 return userInfo;
             }
@@ -301,7 +328,9 @@ namespace DrugUserPreventionUI.Pages
                 // Check if token is expired
                 var isExpired = jsonToken.ValidTo < DateTime.UtcNow;
 
-                Console.WriteLine($"Token valid until: {jsonToken.ValidTo}, Current time: {DateTime.UtcNow}, Is expired: {isExpired}");
+                Console.WriteLine(
+                    $"Token valid until: {jsonToken.ValidTo}, Current time: {DateTime.UtcNow}, Is expired: {isExpired}"
+                );
 
                 return !isExpired;
             }
@@ -328,14 +357,17 @@ namespace DrugUserPreventionUI.Pages
         public bool IsAuthenticated()
         {
             var token = HttpContext.Request.Cookies["auth_token"];
-            return !string.IsNullOrEmpty(token) && IsTokenValid(token) && DecodeJwtToken(token) != null;
+            return !string.IsNullOrEmpty(token)
+                && IsTokenValid(token)
+                && DecodeJwtToken(token) != null;
         }
 
         // Helper method to check if user has specific role or higher
         public bool HasRoleOrHigher(string requiredRole)
         {
             var userInfo = GetCurrentUser();
-            if (userInfo == null) return false;
+            if (userInfo == null)
+                return false;
 
             var roleHierarchy = new Dictionary<string, int>
             {
@@ -344,7 +376,7 @@ namespace DrugUserPreventionUI.Pages
                 { "Staff", 2 },
                 { "Consultant", 3 },
                 { "Manager", 4 },
-                { "Admin", 5 }
+                { "Admin", 5 },
             };
 
             var userRoleLevel = roleHierarchy.GetValueOrDefault(userInfo.Role, 0);
@@ -379,7 +411,7 @@ namespace DrugUserPreventionUI.Pages
             var messageParams = new
             {
                 message = message ?? "",
-                messageType = string.IsNullOrEmpty(message) ? "" : "success"
+                messageType = string.IsNullOrEmpty(message) ? "" : "success",
             };
 
             var normalizedRole = ValidateAndNormalizeRole(role);
@@ -413,7 +445,9 @@ namespace DrugUserPreventionUI.Pages
                 "consultant" or "chuyên viên tư vấn" or "tư vấn viên" => "Consultant",
                 "staff" or "nhân viên" => "Staff",
                 "member" or "thành viên" => "Member",
-                "guest" or "khách" or _ => "Guest" // Guest is default for unknown roles
+                "guest" or "khách" or _ =>
+                    "Guest" // Guest is default for unknown roles
+                ,
             };
         }
     }
