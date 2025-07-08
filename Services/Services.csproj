@@ -11,13 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapping\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.12.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
 	<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoMapping\" />
   </ItemGroup>
 
 </Project>
