@@ -72,7 +72,8 @@ namespace DrugUsePrevention
             builder.Services.AddScoped<INewsArticleService, NewsArticleService>();
             builder.Services.AddScoped<ITagRepository, TagRepository>();
             builder.Services.AddScoped<ITagService, TagService>();
-
+            builder.Services.AddScoped<IConsultantUserService, ConsultantUserService>();
+            builder.Services.AddScoped<IConsultantUserRepository, ConsultantUserRepository>();
             // Add Controllers
             builder.Services.AddControllers();
 

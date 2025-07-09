@@ -30,5 +30,6 @@ namespace Repositories.IRepository
         Task UpdateAsync(T obj);
         Task DeleteAsync(object id);
         Task SaveAsync();
+        Task<int> CountAsync();
     }
 }
