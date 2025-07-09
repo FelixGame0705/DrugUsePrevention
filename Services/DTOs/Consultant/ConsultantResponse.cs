@@ -9,8 +9,9 @@ namespace Services.DTOs.Consultant
     public class ConsultantResponse
     {
         public int ConsultantID { get; set; }
+        public string ConsultantName { get; set; } = string.Empty;
         public string Qualifications { get; set; }
         public string Specialty { get; set; }
-        public List<string> WorkingHours { get; set; }
+        public string WorkingHours { get; set; }
     }
 }

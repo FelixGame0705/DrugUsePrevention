@@ -1,0 +1,387 @@
+﻿@page "/Programs"
+@model DrugUserPreventionUI.Pages.Programs.IndexModel
+@{
+    ViewData["Title"] = "Chương Trình Cộng Đồng";
+    Layout = "~/Pages/Shared/_Layout.cshtml"; // Adjust if your layout is different
+
+    var currentPage = Model.FilterModel.PageIndex;
+    var totalPages = Model.ProgramsResponse?.Pagination.TotalPages ?? 1;
+    var totalItems = Model.ProgramsResponse?.Pagination.TotalItems ?? 0;
+    var hasPrevious = Model.ProgramsResponse?.Pagination.HasPreviousPage ?? false;
+    var hasNext = Model.ProgramsResponse?.Pagination.HasNextPage ?? false;
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Chương Trình Cộng Đồng</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
+            <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
+            @Model.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link @(Model.CurrentAction == "list" ? "active" : "")" asp-page="/Programs/Index" asp-route-action="list">
+                <i class="fas fa-list me-2"></i>Chương Trình
+            </a>
+        </li>
+        @if (Model.UserRole == "Consultant")
+        {
+            <li class="nav-item">
+                <a class="nav-link @(Model.CurrentAction == "create" ? "active" : "")" asp-page="/Programs/Index" asp-route-action="create">
+                    <i class="fas fa-plus-circle me-2"></i>Thêm Chương Trình
+                </a>
+            </li>
+        }
+
+        @if (Model.CurrentAction == "detail" && Model.ProgramDetail != null)
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-page="/Programs/Index" asp-route-action="detail" asp-route-id="@Model.ProgramDetail.ProgramID">
+                    <i class="fas fa-info-circle me-2"></i>Chi Tiết
+                </a>
+            </li>
+        }
+        
+        @if (Model.CurrentAction == "edit" && Model.EditProgram.ProgramID != 0)
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-page="/Programs/Index" asp-route-action="edit" asp-route-id="@Model.EditProgram.ProgramID">
+                    <i class="fas fa-edit me-2"></i>Sửa
+                </a>
+            </li>
+        }
+    </ul>
+
+    @if (Model.CurrentAction == "list")
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Filter Programs</h5>
+            </div>
+            <div class="card-body">
+                <form method="get" asp-page-handler="list" class="row g-3">
+                    <div class="col-md-5">
+                        <label asp-for="FilterModel.SearchTerm" class="form-label">Tìm Kiếm</label>
+                        <input type="text" asp-for="FilterModel.SearchTerm" class="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="FilterModel.IsActive" class="form-label">Trạng thái</label>
+                        <select asp-for="FilterModel.IsActive" class="form-select">
+                            <option value="">All</option>
+                            <option value="true">Đang mở</option>
+                            <option value="false">Đóng</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label asp-for="FilterModel.PageSize" class="form-label">Items per page</label>
+                        <select asp-for="FilterModel.PageSize" class="form-select">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 align-self-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-filter me-2"></i>Apply Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <h3>Chương Trình (@totalItems Tổng cộng)</h3>
+        @if (Model.ProgramsResponse != null && Model.ProgramsResponse.Data != null && Model.ProgramsResponse.Data.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Miêu tả</th>
+                            <th>Bắt đầu</th>
+                            <th>Kết thúc</th>
+                            <th>Vị trí</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var program in Model.ProgramsResponse.Data)
+                        {
+                            <tr>
+                                <td>@program.ProgramID</td>
+                                <td>@program.Title</td>
+                                <td>@(program.Description.Length > 50 ? program.Description.Substring(0, 50) + "..." : program.Description)</td>
+                                <td>@program.StartDate.ToString("yyyy-MM-dd")</td>
+                                <td>@program.EndDate.ToString("yyyy-MM-dd")</td>
+                                <td>@program.Location</td>
+                                <td>
+                                    <span class="badge @(program.IsActive ? "bg-success" : "bg-secondary")">
+                                        @(program.IsActive ? "Đang mở" : "Đóng")
+                                    </span>
+                                </td>
+                                <td>
+                                    <a asp-page="/Programs/Index" asp-route-id="@program.ProgramID" asp-route-action="detail" class="btn btn-info btn-sm me-1" title="Chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    @if (Model.UserRole == "Consultant")
+                                    {
+                                        <a asp-page="/Programs/Index" asp-route-id="@program.ProgramID" asp-route-action="edit" class="btn btn-warning btn-sm me-1" title="Sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    @if (Model.UserRole == "Consultant")
+                                    {
+                                        <form method="post" asp-page-handler="DeleteProgram" asp-route-id="@program.ProgramID" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <nav aria-label="Program pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(hasPrevious ? "" : "disabled")">
+                        <a class="page-link"
+                           asp-page="/Programs/Index"
+                           asp-route-pageIndex="@(currentPage - 1)"
+                           asp-route-pageSize="@Model.FilterModel.PageSize"
+                           asp-route-searchTerm="@Model.FilterModel.SearchTerm"
+                           asp-route-isActive="@Model.FilterModel.IsActive"
+                           asp-route-action="list"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link"
+                               asp-page="/Programs/Index"
+                               asp-route-pageIndex="@i"
+                               asp-route-pageSize="@Model.FilterModel.PageSize"
+                               asp-route-searchTerm="@Model.FilterModel.SearchTerm"
+                               asp-route-isActive="@Model.FilterModel.IsActive"
+                               asp-route-action="list">@i</a>
+                        </li>
+                    }
+                    <li class="page-item @(hasNext ? "" : "disabled")">
+                        <a class="page-link"
+                           asp-page="/Programs/Index"
+                           asp-route-pageIndex="@(currentPage + 1)"
+                           asp-route-pageSize="@Model.FilterModel.PageSize"
+                           asp-route-searchTerm="@Model.FilterModel.SearchTerm"
+                           asp-route-isActive="@Model.FilterModel.IsActive"
+                           asp-route-action="list"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Không tìm thấy.
+            </div>
+        }
+    }
+
+    @if (Model.CurrentAction == "create")
+    {
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Thêm Chương Trình</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-page-handler="CreateProgram">
+                    <div class="mb-3">
+                        <label asp-for="NewProgram.Title" class="form-label">Tên</label>
+                        <input asp-for="NewProgram.Title" class="form-control" />
+                        <span asp-validation-for="NewProgram.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewProgram.Description" class="form-label">Miêu tả</label>
+                        <textarea asp-for="NewProgram.Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="NewProgram.Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewProgram.ThumbnailURL" class="form-label">Ảnh</label>
+                        <input asp-for="NewProgram.ThumbnailURL" class="form-control" />
+                        <span asp-validation-for="NewProgram.ThumbnailURL" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="NewProgram.StartDate" class="form-label">Ngày bắt đầu</label>
+                            <input asp-for="NewProgram.StartDate" type="date" class="form-control" />
+                            <span asp-validation-for="NewProgram.StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="NewProgram.EndDate" class="form-label">Ngày kết thúc</label>
+                            <input asp-for="NewProgram.EndDate" type="date" class="form-control" />
+                            <span asp-validation-for="NewProgram.EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewProgram.Location" class="form-label">Vị trí</label>
+                        <input asp-for="NewProgram.Location" class="form-control" />
+                        <span asp-validation-for="NewProgram.Location" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" asp-for="NewProgram.IsActive" class="form-check-input" />
+                        <label asp-for="NewProgram.IsActive" class="form-check-label">Is Active</label>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-2"></i>Thêm mới
+                    </button>
+                    <a asp-page="/Programs/Index" asp-route-action="list" class="btn btn-secondary">
+                        <i class="fas fa-times-circle me-2"></i>Hủy
+                    </a>
+                </form>
+            </div>
+        </div>
+    }
+
+    @if (Model.CurrentAction == "edit" && Model.EditProgram.ProgramID != 0)
+    {
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">Edit Program (ID: @Model.EditProgram.ProgramID)</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-page-handler="UpdateProgram">
+                    <input type="hidden" asp-for="EditProgram.ProgramID" />
+                    <div class="mb-3">
+                        <label asp-for="EditProgram.Title" class="form-label">Tên</label>
+                        <input asp-for="EditProgram.Title" class="form-control" />
+                        <span asp-validation-for="EditProgram.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="EditProgram.Description" class="form-label">Miêu tả</label>
+                        <textarea asp-for="EditProgram.Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="EditProgram.Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="EditProgram.ThumbnailURL" class="form-label">Ảnh</label>
+                        <input asp-for="EditProgram.ThumbnailURL" class="form-control" />
+                        <span asp-validation-for="EditProgram.ThumbnailURL" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EditProgram.StartDate" class="form-label">Ngày bắt đầu</label>
+                            <input asp-for="EditProgram.StartDate" type="date" class="form-control" />
+                            <span asp-validation-for="EditProgram.StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EditProgram.EndDate" class="form-label">Ngày kết thúc</label>
+                            <input asp-for="EditProgram.EndDate" type="date" class="form-control" />
+                            <span asp-validation-for="EditProgram.EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="EditProgram.Location" class="form-label">Vị trí</label>
+                        <input asp-for="EditProgram.Location" class="form-control" />
+                        <span asp-validation-for="EditProgram.Location" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" asp-for="EditProgram.IsActive" class="form-check-input" />
+                        <label asp-for="EditProgram.IsActive" class="form-check-label">Is Active</label>
+                    </div>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-save me-2"></i>Sửa
+                    </button>
+                    <a asp-page="/Programs/Index" asp-route-action="list" class="btn btn-secondary">
+                        <i class="fas fa-times-circle me-2"></i>Hủy
+                    </a>
+                </form>
+            </div>
+        </div>
+    }
+
+    @if (Model.CurrentAction == "detail" && Model.ProgramDetail != null)
+    {
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Program Details (ID: @Model.ProgramDetail.ProgramID)</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Tên</dt>
+                    <dd class="col-sm-9">@Model.ProgramDetail.Title</dd>
+
+                    <dt class="col-sm-3">Miêu tả</dt>
+                    <dd class="col-sm-9">@Model.ProgramDetail.Description</dd>
+
+                    <dt class="col-sm-3">Ảnh</dt>
+                    <dd class="col-sm-9">
+                        @if (!string.IsNullOrEmpty(Model.ProgramDetail.ThumbnailURL))
+                        {
+                            <img src="@Model.ProgramDetail.ThumbnailURL" alt="Thumbnail" class="img-thumbnail" style="max-width: 200px;" />
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-3">Ngày bắt đầu</dt>
+                    <dd class="col-sm-9">@Model.ProgramDetail.StartDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-3">Ngày kết thúc</dt>
+                    <dd class="col-sm-9">@Model.ProgramDetail.EndDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-3">Vị trí</dt>
+                    <dd class="col-sm-9">@Model.ProgramDetail.Location</dd>
+
+                    <dt class="col-sm-3">ID Người tạo</dt>
+                    <dd class="col-sm-9">@(Model.ProgramDetail.CreatorName ?? "N/A") (ID: @Model.ProgramDetail.CreatedBy)</dd>
+
+                    <dt class="col-sm-3">Trạng thái</dt>
+                    <dd class="col-sm-9">
+                        <span class="badge @(Model.ProgramDetail.IsActive ? "bg-success" : "bg-secondary")">
+                            @(Model.ProgramDetail.IsActive ? "Đang mở" : "Đóng")
+                        </span>
+                    </dd>
+                </dl>
+                <div class="mt-3">
+                    @if (Model.UserRole == "Consultant")
+                    {
+                        <a asp-page="/Programs/Index" asp-route-id="@Model.ProgramDetail.ProgramID" asp-route-action="edit" class="btn btn-warning me-2">
+                            <i class="fas fa-edit me-2"></i>Sửa
+                        </a>
+                    }
+                    @if (Model.UserRole == "Consultant")
+                    {
+                        <form method="post" asp-page-handler="DeleteProgram" asp-route-id="@Model.ProgramDetail.ProgramID" onsubmit="return confirm('Are you sure you want to delete this program?');" class="d-inline">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt me-2"></i>Xóa
+                            </button>
+                        </form>
+                    }
+                    <a asp-page="/Programs/Index" asp-route-action="list" class="btn btn-secondary ms-2">
+                        <i class="fas fa-arrow-circle-left me-2"></i>Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

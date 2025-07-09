@@ -1,4 +1,5 @@
 ﻿using BussinessObjects;
+using Microsoft.EntityFrameworkCore;
 using Repositories.IRepository;
 using Repositories.IRepository.Appointments;
 using Repositories.IRepository.Consultants;
@@ -60,13 +61,21 @@ namespace Services.Service
 
         public async Task<List<ApppointmentResponse>> GetAllAppointment()
         {
-            var appointments = await _apointmentRepository.GetAllAsync();
+            var appointments = await _apointmentRepository.Entities
+                .Include(a => a.User)
+                .Include(a => a.Consultant)       
+                .ThenInclude(c => c.User)
+                .ToListAsync();
+
             List<ApppointmentResponse> apppointmentResponses = new List<ApppointmentResponse>();
             foreach (var appointment in appointments)
             {
                 var appointmentResponse = new ApppointmentResponse();
                 appointmentResponse.AppointmentID = appointment.AppointmentID;
+                appointmentResponse.UserID = appointment.UserID;
+                appointmentResponse.Username = appointment.User.Username;
                 appointmentResponse.ConsultantID = appointment.ConsultantID;
+                appointmentResponse.ConsultantName = appointment.Consultant.User.Username;
                 appointmentResponse.ScheduledAt = appointment.ScheduledAt;
                 appointmentResponse.Status = appointment.Status;
                 appointmentResponse.Notes = appointment.Notes;
@@ -74,6 +83,32 @@ namespace Services.Service
                 apppointmentResponses.Add(appointmentResponse);
             }
             return apppointmentResponses;
+        }
+
+        public async Task<ApppointmentResponse?> GetAppointmentById(int id)
+        {
+            var appointment = await _apointmentRepository.Entities
+                .Include(p => p.User)
+                .Include(p => p.Consultant)
+                .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(p => p.AppointmentID == id);
+            if (appointment == null)
+            {
+                return null;
+            }
+            var response = new ApppointmentResponse
+            {
+                AppointmentID = appointment.AppointmentID,
+                UserID = appointment.UserID,
+                Username = appointment.User.Username,
+                ConsultantID = appointment.ConsultantID,
+                ConsultantName = appointment.Consultant.User.Username,
+                ScheduledAt = appointment.ScheduledAt,
+                Status = appointment.Status,
+                Notes = appointment.Notes,
+                CreatedAt = appointment.CreatedAt,
+            };
+            return response;
         }
     }
 }

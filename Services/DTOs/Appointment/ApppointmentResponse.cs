@@ -11,7 +11,10 @@ namespace Services.DTOs.Appointment
     {
         public int AppointmentID { get; set; }
         public int? UserID { get; set; }
+        public string Username { get; set; }
         public int? ConsultantID { get; set; }
+        public string ConsultantName { get; set; }
+
         public DateTime ScheduledAt { get; set; }
         public string Status { get; set; } 
         public string Notes { get; set; }

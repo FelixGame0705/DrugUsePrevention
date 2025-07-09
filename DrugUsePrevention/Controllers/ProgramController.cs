@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BussinessObjects;
+using Microsoft.AspNetCore.Mvc;
 using Repositories.Paging;
+using Services.DTOs.Common;
+using Services.DTOs.NewArticle;
 using Services.DTOs.Program;
 using Services.IService;
 
@@ -22,7 +25,7 @@ namespace DrugUsePrevention.Controllers
         /// Get all programs with pagination and filtering
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult<BasePaginatedList<ProgramResponse>>> GetPrograms(
+        public async Task<ActionResult<PaginatedApiResponse<ProgramResponse>>> GetPrograms(
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? searchTerm = null,
@@ -31,7 +34,7 @@ namespace DrugUsePrevention.Controllers
             try
             {
                 var result = await _programService.GetAllProgramsAsync(pageIndex, pageSize, searchTerm, isActive);
-                return Ok(result);
+                return Ok(PaginatedApiResponse<ProgramResponse>.SuccessResult(result));
             }
             catch (Exception ex)
             {
@@ -51,7 +54,7 @@ namespace DrugUsePrevention.Controllers
                 if (program == null)
                     return NotFound(new { message = $"Program with ID {id} not found" });
 
-                return Ok(program);
+                return Ok(ApiResponse<ProgramResponse>.SuccessResult(program));
             }
             catch (Exception ex)
             {
@@ -75,7 +78,7 @@ namespace DrugUsePrevention.Controllers
                     return BadRequest(new { message = "Start date must be before end date" });
 
                 var createdProgram = await _programService.CreateProgramAsync(dto);
-                return CreatedAtAction(nameof(GetProgram), new { id = createdProgram.ProgramID }, createdProgram);
+                return CreatedAtAction(nameof(GetProgram), new { id = createdProgram.ProgramID }, ApiResponse<ProgramResponse>.SuccessResult(createdProgram));
             }
             catch (Exception ex)
             {
@@ -103,7 +106,7 @@ namespace DrugUsePrevention.Controllers
                 if (updatedProgram == null)
                     return NotFound(new { message = $"Program with ID {dto.ProgramID} not found" });
 
-                return Ok(updatedProgram);
+                return Ok(ApiResponse<ProgramResponse>.SuccessResult(updatedProgram));
             }
             catch (Exception ex)
             {

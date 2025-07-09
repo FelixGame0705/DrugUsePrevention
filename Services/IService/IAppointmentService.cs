@@ -12,5 +12,7 @@ namespace Services.IService
     {
         Task<ApppointmentResponse> CreateAppointment(AppointmentRequest request, int id);
         Task<List<ApppointmentResponse>> GetAllAppointment();
+        Task<ApppointmentResponse?> GetAppointmentById(int id);
+
     }
 }

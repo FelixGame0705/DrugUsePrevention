@@ -13,6 +13,13 @@ namespace Services.DTOs.Consultant
         public int UserId { get; set; }
         public string Qualifications { get; set; }
         public string Specialty { get; set; }
-        public List<string> WorkingHours { get; set; }
+        [Range(2, 7, ErrorMessage = "Start Date must be between 2 and 7.")]
+        public int StartDate { get; set; }
+        [Range(2, 7, ErrorMessage = "End Date must be between 2 and 7.")]
+        public int EndDate { get; set; }
+        public TimeOnly StartHour { get; set; }
+        public TimeOnly EndHour { get; set; }
+
+        //public string WorkingHours { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace BussinessObjects
         public int ConsultantID { get; set; }
         public string Qualifications { get; set; }
         public string Specialty { get; set; }
-        public List<string> WorkingHours { get; set; }
+        public string WorkingHours { get; set; }
 
         public virtual User User { get; set; }
     }

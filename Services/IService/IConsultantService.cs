@@ -11,8 +11,10 @@ namespace Services.IService
 {
     public interface IConsultantService
     {
-        Task<List<string>> GetWorkingHour(int id);
+        Task<string> GetWorkingHour(int id);
         Task<ConsultantResponse> CreateConsultant(ConsultantRequest consultantRequest);
         Task<ApppointmentResponse> ApppointmentApprove(string status, int appointmentId);
+        Task<List<ConsultantResponse>> GetAllConSultant();
+        Task<ConsultantResponse?> GetConsultantById(int id);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using BussinessObjects;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services.DTOs.Appointment;
 using Services.DTOs.User;
 using Services.IService;
 using Services.MailUtils;
+using Services.Service;
 using System.Security.Claims;
 
 namespace DrugUsePrevention.Controllers
@@ -19,8 +21,8 @@ namespace DrugUsePrevention.Controllers
             _appointmentService = appointmentService;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateAppointment([FromForm] AppointmentRequest appointmentRequest)
+        [HttpPost]
+        public async Task<IActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
         {
             try
             {
@@ -30,7 +32,7 @@ namespace DrugUsePrevention.Controllers
                 {
                     return BadRequest(new { message = "Please Login" });
                 }
-                return Ok(new { message = "Success", data = result });
+                return Ok(result );
             }
             catch (Exception ex)
             {
@@ -45,12 +47,29 @@ namespace DrugUsePrevention.Controllers
             {
                 var result = await _appointmentService.GetAllAppointment();
                 
-                return Ok(new { message = "Success", data = result });
+                return Ok( result );
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, new { message = "An error occurred" });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApppointmentResponse>> GetAppointment(int id)
+        {
+            try
+            {
+                var appointment = await _appointmentService.GetAppointmentById(id);
+                if (appointment == null)
+                    return NotFound(new { message = $"Appointment with ID {id} not found" });
+
+                return Ok(appointment);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving the program", error = ex.Message });
             }
         }
     }

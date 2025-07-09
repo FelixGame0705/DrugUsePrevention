@@ -1,0 +1,161 @@
+﻿@page "/Appointments"
+@model DrugUserPreventionUI.Pages.Appointment.IndexModel
+@{
+    ViewData["Title"] = "Lịch Hẹn";
+    Layout = "~/Pages/Shared/_Layout.cshtml"; // Adjust if your layout is different
+
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Lịch Hẹn</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
+            <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
+            @Model.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link @(Model.CurrentAction == "list" ? "active" : "")" asp-page="/Appointment/Index" asp-route-action="list">
+                <i class="fas fa-list me-2"></i>Lịch Hẹn
+            </a>
+        </li>
+
+        @if (Model.CurrentAction == "detail" && Model.ApppointmentDetail != null)
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-page="/Appointment/Index" asp-route-action="detail" asp-route-id="@Model.ApppointmentDetail.AppointmentID">
+                    <i class="fas fa-info-circle me-2"></i>Chi Tiết
+                </a>
+            </li>
+        }
+    </ul>
+    @if (Model.CurrentAction == "list")
+    {
+        <h3>Lịch Hẹn </h3>
+        @if (Model.ApppointmentResponse != null)
+        {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Người Đặt</th>
+                            <th>Tư Vấn Viên</th>
+                            <th>Lịch Đặt</th>
+                            <th>Trạng Thái</th>
+                            <th>Ghi chú</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var program in Model.ApppointmentResponse)
+                        {
+                            <tr>
+                                <td>@program.AppointmentID</td>
+                                <td>@program.Username</td>
+                                <td>@program.ConsultantName</td>
+                                <td>@program.ScheduledAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@program.Status</td>
+                                <td>@program.Notes</td>
+                                <td>
+                                    <a asp-page="/Appointment/Index" asp-route-id="@program.AppointmentID" asp-route-action="detail" class="btn btn-info btn-sm me-1" title="Chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    @if (Model.UserRole == "Consultant")
+                                    {
+                                        <form method="post" asp-page-handler="Update" asp-route-id="@program.AppointmentID" class="d-inline">
+                                            <input type="hidden" name="status" value="Confirmed" />
+                                            <button type="submit" class="btn btn-warning" title="Confirmed">
+                                                Confirmed
+                                            </button>
+                                        </form>
+                                        <form method="post" asp-page-handler="Update" asp-route-id="@program.AppointmentID" class="d-inline">
+                                            <input type="hidden" name="status" value="Pending" />
+                                            <button type="submit" class="btn btn-warning" title="Pending">
+                                                Pending
+                                            </button>
+                                        </form>
+
+                                        <form method="post" asp-page-handler="Update" asp-route-id="@program.AppointmentID" class="d-inline">
+                                            <input type="hidden" name="status" value="Completed" />
+                                            <button type="submit" class="btn btn-warning" title="Completed">
+                                                Completed
+                                            </button>
+                                        </form>
+
+                                        <form method="post" asp-page-handler="Update" asp-route-id="@program.AppointmentID" class="d-inline">
+                                            <input type="hidden" name="status" value="Cancelled" />
+                                            <button type="submit" class="btn btn-warning" title="Cancelled">
+                                                Cancelled
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Không tìm thấy.
+            </div>
+        }
+    }
+    
+    @if (Model.CurrentAction == "detail" && Model.ApppointmentDetail != null)
+    {
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Program Details (ID: @Model.ApppointmentDetail.AppointmentID)</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.AppointmentID</dd>
+
+                    <dt class="col-sm-3">UserId</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.UserID</dd>
+
+                    <dt class="col-sm-3">User Name</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.Username</dd>
+
+                    <dt class="col-sm-3">ConsultantId</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.ConsultantID</dd>
+
+                    <dt class="col-sm-3">Consultant Name</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.ConsultantName</dd>
+
+                    <dt class="col-sm-3">Lịch Đặt</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.ScheduledAt.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                    <dt class="col-sm-3">Trạng Thái</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.Status</dd>
+
+                    <dt class="col-sm-3">Ngày Tạo</dt>
+                    <dd class="col-sm-9">@Model.ApppointmentDetail.CreatedAt.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                </dl>
+                <div class="mt-3">
+                    <a asp-page="/Appointment/Index" asp-route-action="list" class="btn btn-secondary ms-2">
+                        <i class="fas fa-arrow-circle-left me-2"></i>Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

@@ -1,0 +1,187 @@
+﻿@page "/Consultant"
+@model DrugUserPreventionUI.Pages.Consultant.IndexModel
+@{
+    ViewData["Title"] = "Tư Vấn";
+    Layout = "~/Pages/Shared/_Layout.cshtml"; // Adjust if your layout is different
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Tư Vấn</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-@(Model.MessageType == "success" ? "success" : Model.MessageType == "error" ? "danger" : "info") alert-dismissible fade show" role="alert">
+            <i class="fas fa-@(Model.MessageType == "success" ? "check-circle" : Model.MessageType == "error" ? "exclamation-triangle" : "info-circle") me-2"></i>
+            @Model.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link @(Model.CurrentAction == "list" ? "active" : "")" asp-page="/Consultant/Index" asp-route-action="list">
+                <i class="fas fa-list me-2"></i>Tư Vấn
+            </a>
+        </li>
+
+        @if (Model.CurrentAction == "detail" && Model.ConsultantDetail != null)
+        {
+            <li class="nav-item">
+                <a class="nav-link active" asp-page="/Consultant/Index" asp-route-action="detail" asp-route-id="@Model.ConsultantDetail.ConsultantID">
+                    <i class="fas fa-info-circle me-2"></i>Chi Tiết
+                </a>
+            </li>
+        }
+    </ul>
+    @if (Model.CurrentAction == "list")
+    {
+        <h3>Các nhân viên tư vấn </h3>
+        @if (Model.ConsultantResponse != null && Model.ConsultantResponse.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên</th>
+                            <th>Trình Độ</th>
+                            <th>Chuyên môn</th>
+                            <th>Ngày làm việc</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var consultant in Model.ConsultantResponse)
+                        {
+                            <tr>
+                                <td>@consultant.ConsultantName</td>
+                                <td>@consultant.Qualifications</td>
+                                <td>@consultant.Specialty</td>
+                                <td>@consultant.WorkingHours</td>
+                                <td>
+                                    <a asp-page="/Consultant/Index" asp-route-id="@consultant.ConsultantID" asp-route-action="detail" class="btn btn-info btn-sm me-1" title="Chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Không tìm thấy.
+            </div>
+        }
+    }
+
+    @if (Model.CurrentAction == "detail" && Model.ConsultantDetail != null)
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Thông tin chi tiết (ID: @Model.ConsultantDetail.ConsultantID)</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9">@Model.ConsultantDetail.ConsultantID</dd>
+
+                    <dt class="col-sm-3">Tên</dt>
+                    <dd class="col-sm-9">@Model.ConsultantDetail.ConsultantName</dd>
+
+                    <dt class="col-sm-3">Trình Độ</dt>
+                    <dd class="col-sm-9">@Model.ConsultantDetail.Qualifications</dd>
+
+                    <dt class="col-sm-3">Chuyên Môn</dt>
+                    <dd class="col-sm-9">@Model.ConsultantDetail.Specialty</dd>
+
+                    <dt class="col-sm-3">Ngày Làm Việc</dt>
+                    <dd class="col-sm-9">@Model.ConsultantDetail.WorkingHours</dd>
+                </dl>
+                <div class="mt-3">
+                    <a asp-page="/Consultant/Index" asp-route-action="list" class="btn btn-secondary ms-2">
+                        <i class="fas fa-arrow-circle-left me-2"></i>Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @* Appointment Booking Section *@
+        @if (Model.UserRole == "Member" || Model.UserRole == "Guest") // Only show booking for users
+        {
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Đặt Lịch Tư Vấn</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="CreateAppointment">
+                        <input type="hidden" asp-for="ApppointmentDetail.ConsultantID" value="@Model.ConsultantDetail.ConsultantID" />
+
+                        <div class="mb-3">
+                            <label for="scheduledAt" class="form-label">Chọn Ngày và Giờ Tư Vấn:</label>
+                            <select class="form-select" id="scheduledAt" asp-for="ApppointmentDetail.ScheduledAt" required>
+                                <option value="">-- Chọn ngày và giờ --</option>
+                                @foreach (var slot in Model.AvailableAppointmentSlots)
+                                {
+                                    <option value="@slot.ToString("yyyy-MM-ddTHH:mm:ss")">@slot.ToString("dd/MM/yyyy HH:mm")</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ApppointmentDetail.ScheduledAt" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Ghi chú (Tùy chọn):</label>
+                            <textarea class="form-control" id="notes" asp-for="ApppointmentDetail.Notes" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-calendar-plus me-2"></i>Đặt Lịch
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // No specific JavaScript needed for combining date/time now,
+        // as the C# model already provides full DateTime objects.
+        // You would typically use a JavaScript date/time picker library
+        // to enhance the <select> element or replace it with a more
+        // interactive calendar component.
+
+        // Example using a hypothetical JS datepicker to populate the select.
+        // For a true calendar integration, you'd bind the datepicker's
+        // selected date/time directly to the hidden input or a visible text input,
+        // rather than using a <select> for every single slot.
+
+        /*
+        document.addEventListener('DOMContentLoaded', function () {
+            // Example of how you might enhance the 'scheduledAt' select with a datepicker
+            // using a library like Flatpickr.
+            // This would likely involve fetching slots dynamically or generating them
+            // on the client-side based on selected date.
+            // For now, the dropdown is pre-populated from the server.
+
+            // If you use a real calendar, you might change the <select> to an <input type="text">
+            // and use the datepicker to set its value to the desired DateTime string (ISO 8601 format).
+
+            // Flatpickr example (requires Flatpickr CSS and JS files to be linked):
+            // flatpickr("#scheduledAt", {
+            //     enableTime: true,
+            //     dateFormat: "Y-m-dTH:i:S", // ISO 8601 format for easy C# parsing
+            //     minDate: "today",
+            //     // You would likely populate options dynamically or restrict based on working hours
+            //     // For demonstration, let's assume it directly sets the input value
+            // });
+        });
+        */
+    </script>
+}
