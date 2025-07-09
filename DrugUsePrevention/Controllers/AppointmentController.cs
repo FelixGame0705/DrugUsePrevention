@@ -7,11 +7,7 @@ using Services.DTOs.Appointment;
 using Services.DTOs.User;
 using Services.IService;
 using Services.MailUtils;
-<<<<<<< HEAD
 using Services.Service;
-using System.Security.Claims;
-=======
->>>>>>> origin/Bao2
 
 namespace DrugUsePrevention.Controllers
 {
@@ -26,15 +22,8 @@ namespace DrugUsePrevention.Controllers
             _appointmentService = appointmentService;
         }
 
-<<<<<<< HEAD
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] AppointmentRequest appointmentRequest)
-=======
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateAppointment(
-            [FromForm] AppointmentRequest appointmentRequest
-        )
->>>>>>> origin/Bao2
         {
             try
             {
@@ -62,13 +51,7 @@ namespace DrugUsePrevention.Controllers
             try
             {
                 var result = await _appointmentService.GetAllAppointment();
-<<<<<<< HEAD
-                
                 return Ok( result );
-=======
-
-                return Ok(new { message = "Success", data = result });
->>>>>>> origin/Bao2
             }
             catch (Exception ex)
             {

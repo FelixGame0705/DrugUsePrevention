@@ -8,7 +8,7 @@ namespace Services.DTOs.ConsultantUser
         public int ConsultantID { get; set; }
         public string Qualifications { get; set; }
         public string Specialty { get; set; }
-        public List<DateTime> WorkingHours { get; set; }
+        public string WorkingHours { get; set; }
 
         // User information
         public virtual UserDTO User { get; set; }

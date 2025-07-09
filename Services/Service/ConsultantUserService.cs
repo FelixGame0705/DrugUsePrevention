@@ -51,7 +51,7 @@ namespace Services.Service
                     ConsultantID = consultant.ConsultantID,
                     Qualifications = consultant.Qualifications,
                     Specialty = consultant.Specialty,
-                    WorkingHours = consultant.WorkingHours ?? new List<DateTime>(),
+                    WorkingHours = consultant.WorkingHours ?? "",
                     User =
                         consultant.User != null
                             ? new UserDTO
@@ -113,7 +113,7 @@ namespace Services.Service
                 ConsultantID = consultant.ConsultantID,
                 Qualifications = consultant.Qualifications,
                 Specialty = consultant.Specialty,
-                WorkingHours = consultant.WorkingHours ?? new List<DateTime>(),
+                WorkingHours = consultant.WorkingHours ?? "",
                 User =
                     consultant.User != null
                         ? new UserDTO
@@ -281,7 +281,7 @@ namespace Services.Service
                         ConsultantID = consultant.ConsultantID,
                         Qualifications = consultant.Qualifications,
                         Specialty = consultant.Specialty,
-                        WorkingHours = consultant.WorkingHours ?? new List<DateTime>(),
+                        WorkingHours = consultant.WorkingHours ?? "",
                         User =
                             consultant.User != null
                                 ? new UserDTO
