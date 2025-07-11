@@ -39,10 +39,35 @@ button.accept-policy {
   line-height: inherit;
 }
 
+/* ✅ THAY BẰNG ĐOẠN NÀY */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    width: 100%;
+    margin-top: auto;
+    padding: 2rem 0 1rem;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+    border-top: 3px solid #10b981;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout Structure */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-fluid {
+    flex: 1;
 }

@@ -512,7 +512,7 @@
         }
 
         /* ✅ Responsive Design */
-        media (max-width: 768px) {
+        @@media (max-width: 768px) {
             .container-fluid {
                 padding: 0 1rem;
             }
@@ -525,10 +525,10 @@
                 flex-direction: column;
             }
 
-            .btn-group .btn {
-                margin: 2px 0;
-                width: 100%;
-            }
+                .btn-group .btn {
+                    margin: 2px 0;
+                    width: 100%;
+                }
 
             .user-info {
                 margin-top: 0.5rem;
@@ -543,11 +543,11 @@
             }
         }
 
-        media (min-width: 769px) {
+        @@media (min-width: 769px) {
             .dashboard-sidebar {
                 transform: translateX(0);
             }
-            
+
             .sidebar-toggle {
                 display: none;
             }
