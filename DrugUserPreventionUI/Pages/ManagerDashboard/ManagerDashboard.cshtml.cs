@@ -1,9 +1,9 @@
 ﻿// Pages/ManagerDashboard/ManagerDashboard.cshtml.cs
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DrugUserPreventionUI.Pages.ManagerDashboard
 {
@@ -66,23 +66,41 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         private int GetCurrentUserId()
         {
             var user = GetCurrentUser();
-            return user?.UserID ?? 0;
+            return user?.UserId ?? 0;
         }
 
-        public async Task<IActionResult> OnGetAsync(string? action = null, int? id = null,
-            string? message = null, string? messageType = null)
+        public async Task<IActionResult> OnGetAsync(
+            string? action = null,
+            int? id = null,
+            string? message = null,
+            string? messageType = null
+        )
         {
             // Check authentication first
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Vui lòng đăng nhập để truy cập trang này.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new
+                    {
+                        message = "Vui lòng đăng nhập để truy cập trang này.",
+                        messageType = "warning",
+                    }
+                );
             }
 
             // Check if user is Manager
             var userRole = GetUserRole();
             if (userRole != "Manager")
             {
-                return RedirectToPage("/CourseDashboard", new { message = "Bạn không có quyền truy cập trang này.", messageType = "error" });
+                return RedirectToPage(
+                    "/CourseDashboard",
+                    new
+                    {
+                        message = "Bạn không có quyền truy cập trang này.",
+                        messageType = "error",
+                    }
+                );
             }
 
             CurrentAction = action?.ToLower();
@@ -138,12 +156,18 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         {
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                );
             }
 
             if (GetUserRole() != "Manager")
             {
-                return RedirectToPage("/ManagerDashboard", new { message = "Bạn không có quyền duyệt khóa học.", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new { message = "Bạn không có quyền duyệt khóa học.", messageType = "error" }
+                );
             }
 
             try
@@ -157,24 +181,48 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 if (response.IsSuccessStatusCode)
                 {
                     var approvalText = isAccept ? "duyệt" : "từ chối";
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "pending-courses", message = $"Đã {approvalText} khóa học thành công!", messageType = "success" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "pending-courses",
+                            message = $"Đã {approvalText} khóa học thành công!",
+                            messageType = "success",
+                        }
+                    );
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                    return RedirectToPage(
+                        "/Login",
+                        new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                    );
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "pending-courses", message = $"Lỗi khi duyệt khóa học: {errorContent}", messageType = "error" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "pending-courses",
+                            message = $"Lỗi khi duyệt khóa học: {errorContent}",
+                            messageType = "error",
+                        }
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/ManagerDashboard",
-                    new { action = "pending-courses", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new
+                    {
+                        action = "pending-courses",
+                        message = $"Lỗi: {ex.Message}",
+                        messageType = "error",
+                    }
+                );
             }
         }
 
@@ -182,12 +230,18 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         {
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                );
             }
 
             if (GetUserRole() != "Manager")
             {
-                return RedirectToPage("/ManagerDashboard", new { message = "Bạn không có quyền cấm tài khoản.", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new { message = "Bạn không có quyền cấm tài khoản.", messageType = "error" }
+                );
             }
 
             try
@@ -197,24 +251,48 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "consultants", message = "Đã cấm tài khoản Consultant thành công!", messageType = "success" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "consultants",
+                            message = "Đã cấm tài khoản Consultant thành công!",
+                            messageType = "success",
+                        }
+                    );
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                    return RedirectToPage(
+                        "/Login",
+                        new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                    );
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "consultants", message = $"Lỗi khi cấm tài khoản: {errorContent}", messageType = "error" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "consultants",
+                            message = $"Lỗi khi cấm tài khoản: {errorContent}",
+                            messageType = "error",
+                        }
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/ManagerDashboard",
-                    new { action = "consultants", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new
+                    {
+                        action = "consultants",
+                        message = $"Lỗi: {ex.Message}",
+                        messageType = "error",
+                    }
+                );
             }
         }
 
@@ -222,12 +300,18 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         {
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                );
             }
 
             if (GetUserRole() != "Manager")
             {
-                return RedirectToPage("/ManagerDashboard", new { message = "Bạn không có quyền bỏ cấm tài khoản.", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new { message = "Bạn không có quyền bỏ cấm tài khoản.", messageType = "error" }
+                );
             }
 
             try
@@ -237,24 +321,48 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "consultants", message = "Đã bỏ cấm tài khoản Consultant thành công!", messageType = "success" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "consultants",
+                            message = "Đã bỏ cấm tài khoản Consultant thành công!",
+                            messageType = "success",
+                        }
+                    );
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                    return RedirectToPage(
+                        "/Login",
+                        new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                    );
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "consultants", message = $"Lỗi khi bỏ cấm tài khoản: {errorContent}", messageType = "error" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "consultants",
+                            message = $"Lỗi khi bỏ cấm tài khoản: {errorContent}",
+                            messageType = "error",
+                        }
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/ManagerDashboard",
-                    new { action = "consultants", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return RedirectToPage(
+                    "/ManagerDashboard",
+                    new
+                    {
+                        action = "consultants",
+                        message = $"Lỗi: {ex.Message}",
+                        messageType = "error",
+                    }
+                );
             }
         }
 
@@ -262,7 +370,10 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         {
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                );
             }
 
             if (!ModelState.IsValid)
@@ -288,21 +399,30 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                     Phone = ProfileForm.Phone,
                     Role = "Manager", // Keep current role
                     Status = "Active", // Keep active
-                    IsEmailVerified = true // Assume verified
+                    IsEmailVerified =
+                        true // Assume verified
+                    ,
                 };
 
-                var json = JsonSerializer.Serialize(updateRequest, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    updateRequest,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client.PutAsync($"{ADMIN_API_URL}/update", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "profile", message = "Cập nhật thông tin thành công!", messageType = "success" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "profile",
+                            message = "Cập nhật thông tin thành công!",
+                            messageType = "success",
+                        }
+                    );
                 }
                 else
                 {
@@ -326,7 +446,10 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         {
             if (!IsAuthenticated())
             {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
+                return RedirectToPage(
+                    "/Login",
+                    new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" }
+                );
             }
 
             if (!ModelState.IsValid)
@@ -347,21 +470,28 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 {
                     UserID = currentUserId,
                     OldPassword = PasswordForm.OldPassword,
-                    NewPassword = PasswordForm.NewPassword
+                    NewPassword = PasswordForm.NewPassword,
                 };
 
-                var json = JsonSerializer.Serialize(changePasswordRequest, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    changePasswordRequest,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client.PostAsync($"{ADMIN_API_URL}/change-password", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/ManagerDashboard",
-                        new { action = "profile", message = "Đổi mật khẩu thành công!", messageType = "success" });
+                    return RedirectToPage(
+                        "/ManagerDashboard",
+                        new
+                        {
+                            action = "profile",
+                            message = "Đổi mật khẩu thành công!",
+                            messageType = "success",
+                        }
+                    );
                 }
                 else
                 {
@@ -429,7 +559,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{ADMIN_API_URL}/statistics");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserStatisticsResponse>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<UserStatisticsResponse>
+                    >();
                     UserStatistics = apiResponse?.Data;
                 }
             }
@@ -447,7 +579,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{COURSES_API_URL}/statistics");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<SimpleCourseStats>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<SimpleCourseStats>
+                    >();
                     CourseStatistics = apiResponse?.Data;
                 }
             }
@@ -467,7 +601,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{COURSES_API_URL}{queryString}");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<PaginatedApiResponse<CourseListDto>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        PaginatedApiResponse<CourseListDto>
+                    >();
                     PendingCourses = apiResponse?.Data?.ToList() ?? new List<CourseListDto>();
                 }
             }
@@ -484,7 +620,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{ADMIN_API_URL}/role/Consultant");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserResponse>>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<List<UserResponse>>
+                    >();
                     var allConsultants = apiResponse?.Data ?? new List<UserResponse>();
 
                     Consultants = maxItems.HasValue
@@ -505,7 +643,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{ADMIN_API_URL}/{id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserResponse>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<UserResponse>
+                    >();
                     ConsultantDetail = apiResponse?.Data;
                 }
             }
@@ -523,7 +663,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{COURSES_API_URL}/{id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseResponseDto>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<CourseResponseDto>
+                    >();
                     if (apiResponse?.Data != null)
                     {
                         var course = apiResponse.Data;
@@ -538,7 +680,7 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                             CreatedAt = course.CreatedAt,
                             IsActive = course.IsActive,
                             IsAccept = course.IsAccept,
-                            ThumbnailURL = course.ThumbnailURL
+                            ThumbnailURL = course.ThumbnailURL,
                         };
                     }
                 }
@@ -558,7 +700,9 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                 var response = await client.GetAsync($"{ADMIN_API_URL}/{currentUserId}");
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserResponse>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<
+                        ApiResponse<UserResponse>
+                    >();
                     if (apiResponse?.Data != null)
                     {
                         var user = apiResponse.Data;
@@ -566,7 +710,7 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
                         {
                             FullName = user.FullName,
                             Email = user.Email,
-                            Phone = user.Phone
+                            Phone = user.Phone,
                         };
                     }
                 }
@@ -732,51 +876,5 @@ namespace DrugUserPreventionUI.Pages.ManagerDashboard
         public int TotalItems { get; set; }
         public bool HasPreviousPage { get; set; }
         public bool HasNextPage { get; set; }
-    }
-
-    // Import common DTOs if available in your project
-    public class UserInfoDto
-    {
-        public int UserID { get; set; }
-        public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
-    }
-
-    // You'll need to add reference to your LoginModel
-    public class LoginModel
-    {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public PageContext PageContext { get; set; } = null!;
-
-        public LoginModel(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
-
-        public UserInfoDto? GetCurrentUser()
-        {
-            // Implementation to get current user from JWT token
-            // This should match your existing LoginModel implementation
-            return null;
-        }
-
-        public bool IsAuthenticated()
-        {
-            // Implementation to check if user is authenticated
-            return false;
-        }
-
-        public string GetUserRole()
-        {
-            // Implementation to get user role from token
-            return string.Empty;
-        }
-
-        public string GetDisplayName()
-        {
-            // Implementation to get display name from token  
-            return string.Empty;
-        }
     }
 }

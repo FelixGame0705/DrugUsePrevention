@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
+using DrugUserPreventionUI.Models.Categories;
 using DrugUserPreventionUI.Models.Common;
+using DrugUserPreventionUI.Models.NewsArticles;
 using DrugUserPreventionUI.Models.Tags;
 using DrugUserPreventionUI.Pages;
-using DrugUserPreventionUI.Pages.AdminDashboard;
-using DrugUserPreventionUI.Models.NewsArticles;
-using DrugUserPreventionUI.Models.Categories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DrugUsePrevention.Pages.Staff
 {
@@ -21,34 +20,22 @@ namespace DrugUsePrevention.Pages.Staff
             _httpClientFactory = httpClientFactory;
         }
 
-        // Dashboard Properties
+        // Properties
         public string? CurrentSection { get; set; } = "dashboard";
         public string? Message { get; set; }
         public string? MessageType { get; set; }
 
-        // User Info Properties for Razor view access
+        // User Info Properties
         public string CurrentUserRole => GetUserRole();
         public string CurrentUserDisplayName => GetDisplayName();
         public int CurrentUserId => GetCurrentUserId();
 
-        // Statistics Properties
+        // Data Properties
         public DashboardStatsDto DashboardStats { get; set; } = new DashboardStatsDto();
-
-        // Members Properties
         public List<UserResponse> Members { get; set; } = new List<UserResponse>();
-        public PaginationInfo? MembersPagination { get; set; }
-
-        // News Properties
         public List<NewsArticleDto> NewsArticles { get; set; } = new List<NewsArticleDto>();
-        public PaginationInfo? NewsPagination { get; set; }
-
-        // Categories Properties
         public List<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
-        public PaginationInfo? CategoriesPagination { get; set; }
-
-        // Tags Properties
         public List<TagDTO> Tags { get; set; } = new List<TagDTO>();
-        public PaginationInfo? TagsPagination { get; set; }
 
         // Form Properties
         [BindProperty]
@@ -66,7 +53,25 @@ namespace DrugUsePrevention.Pages.Staff
         [BindProperty]
         public ChangePasswordDto ChangePasswordForm { get; set; } = new ChangePasswordDto();
 
-        // Helper methods to get user info from JWT token
+        // Helper method for SAFE redirects - FIXED
+        private IActionResult SafeRedirectToCurrentPage(
+            string section,
+            string message,
+            string messageType
+        )
+        {
+            // Use current page path without absolute routing
+            return RedirectToPage(
+                new
+                {
+                    section,
+                    message,
+                    messageType,
+                }
+            );
+        }
+
+        // Authentication helpers
         private LoginModel GetLoginModel()
         {
             var loginModel = new LoginModel(_httpClientFactory);
@@ -74,114 +79,86 @@ namespace DrugUsePrevention.Pages.Staff
             return loginModel;
         }
 
-        private UserInfoDto? GetCurrentUser()
-        {
-            return GetLoginModel().GetCurrentUser();
-        }
+        private UserInfoDto? GetCurrentUser() => GetLoginModel().GetCurrentUser();
 
-        private bool IsAuthenticated()
-        {
-            return GetLoginModel().IsAuthenticated();
-        }
+        private bool IsAuthenticated() => GetLoginModel().IsAuthenticated();
 
-        private string GetUserRole()
-        {
-            return GetLoginModel().GetUserRole();
-        }
+        private string GetUserRole() => GetLoginModel().GetUserRole();
 
-        public string GetDisplayName()
-        {
-            return GetLoginModel().GetDisplayName();
-        }
+        public string GetDisplayName() => GetLoginModel().GetDisplayName();
 
-        private int GetCurrentUserId()
-        {
-            var user = GetCurrentUser();
-            return user?.UserID ?? 0;
-        }
+        private int GetCurrentUserId() => GetCurrentUser()?.UserID ?? 0;
 
-        // Role-based permission checks - using properties for better Razor access
+        // Permission checks
         public bool UserCanAccessStaffDashboard()
         {
             var role = CurrentUserRole;
             return role == "Staff" || role == "Manager" || role == "Admin";
         }
 
-        public bool UserCanManageMembers()
-        {
-            var role = CurrentUserRole;
-            return role == "Staff" || role == "Manager" || role == "Admin";
-        }
+        public bool UserCanManageMembers() => UserCanAccessStaffDashboard();
 
-        public bool UserCanManageNews()
-        {
-            var role = CurrentUserRole;
-            return role == "Staff" || role == "Manager" || role == "Admin";
-        }
+        public bool UserCanManageNews() => UserCanAccessStaffDashboard();
 
-        public bool UserCanManageCategories()
-        {
-            var role = CurrentUserRole;
-            return role == "Staff" || role == "Manager" || role == "Admin";
-        }
+        public bool UserCanManageCategories() => UserCanAccessStaffDashboard();
 
-        public bool UserCanManageTags()
-        {
-            var role = CurrentUserRole;
-            return role == "Staff" || role == "Manager" || role == "Admin";
-        }
+        public bool UserCanManageTags() => UserCanAccessStaffDashboard();
 
         // GET Handler
-        public async Task<IActionResult> OnGetAsync(string? section = null, int? id = null,
-            int pageIndex = 1, int pageSize = 10, string? message = null, string? messageType = null)
+        public async Task<IActionResult> OnGetAsync(
+            string? section = null,
+            int pageIndex = 1,
+            int pageSize = 10,
+            string? message = null,
+            string? messageType = null
+        )
         {
-            // Check authentication
-            if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Vui lòng đăng nhập để truy cập trang này.", messageType = "warning" });
-            }
-
-            // Check permissions
-            if (!UserCanAccessStaffDashboard())
-            {
-                return RedirectToPage("/Index", new { message = "Bạn không có quyền truy cập trang quản lý.", messageType = "error" });
-            }
-
-            CurrentSection = section?.ToLower() ?? "dashboard";
-
-            if (!string.IsNullOrEmpty(message))
-            {
-                Message = message;
-                MessageType = messageType ?? "info";
-            }
-
             try
             {
-                var client = GetAuthenticatedClient();
+                // Check authentication - Use simpler redirect
+                if (!IsAuthenticated())
+                {
+                    return RedirectToPage("/Login");
+                }
 
-                // Always load dashboard stats
+                // Check permissions
+                if (!UserCanAccessStaffDashboard())
+                {
+                    return RedirectToPage("/Index");
+                }
+
+                CurrentSection = section?.ToLower() ?? "dashboard";
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    Message = message;
+                    MessageType = messageType ?? "info";
+                }
+
+                var client = GetAuthenticatedClient();
                 await LoadDashboardStats(client);
 
-                // Load data based on current section
+                // Load section-specific data
                 switch (CurrentSection)
                 {
                     case "members":
-                        await LoadMembers(client, pageIndex, pageSize);
+                        if (UserCanManageMembers())
+                            await LoadMembers(client, pageIndex, pageSize);
                         break;
                     case "news":
-                        await LoadNews(client, pageIndex, pageSize);
+                        if (UserCanManageNews())
+                            await LoadNews(client, pageIndex, pageSize);
                         break;
                     case "categories":
-                        await LoadCategories(client, pageIndex, pageSize);
+                        if (UserCanManageCategories())
+                            await LoadCategories(client, pageIndex, pageSize);
                         break;
                     case "tags":
-                        await LoadTags(client, pageIndex, pageSize);
+                        if (UserCanManageTags())
+                            await LoadTags(client, pageIndex, pageSize);
                         break;
                     case "profile":
                         await LoadCurrentUserProfile(client);
-                        break;
-                    default: // dashboard
-                        // Stats already loaded
                         break;
                 }
             }
@@ -194,26 +171,27 @@ namespace DrugUsePrevention.Pages.Staff
             return Page();
         }
 
-        // POST Handlers for Members
+        // CREATE MEMBER
         public async Task<IActionResult> OnPostCreateMemberAsync()
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageMembers())
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "members", message = "Bạn không có quyền tạo Member mới.", messageType = "error" });
+                Message = "Bạn không có quyền tạo Member mới.";
+                MessageType = "error";
+                CurrentSection = "members";
+                await LoadMembers(GetAuthenticatedClient(), 1, 10);
+                return Page();
             }
 
             if (!ModelState.IsValid)
             {
-                await LoadMembers(GetAuthenticatedClient(), 1, 10);
-                CurrentSection = "members";
                 Message = "Dữ liệu không hợp lệ.";
                 MessageType = "error";
+                CurrentSection = "members";
+                await LoadMembers(GetAuthenticatedClient(), 1, 10);
                 return Page();
             }
 
@@ -227,21 +205,24 @@ namespace DrugUsePrevention.Pages.Staff
                     Email = MemberForm.Email,
                     Password = MemberForm.Password,
                     Phone = MemberForm.Phone,
-                    Role = "Member"
+                    Role = "Member",
                 };
 
-                var json = JsonSerializer.Serialize(createRequest, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    createRequest,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync($"{BASE_API_URL}/Admin/create", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "members", message = "Tạo Member thành công!", messageType = "success" });
+                    return SafeRedirectToCurrentPage(
+                        "members",
+                        "Tạo Member thành công!",
+                        "success"
+                    );
                 }
                 else
                 {
@@ -256,23 +237,24 @@ namespace DrugUsePrevention.Pages.Staff
                 MessageType = "error";
             }
 
-            await LoadMembers(GetAuthenticatedClient(), 1, 10);
+            MemberForm = new CreateMemberDto();
             CurrentSection = "members";
+            await LoadMembers(GetAuthenticatedClient(), 1, 10);
             return Page();
         }
 
+        // BAN MEMBER
         public async Task<IActionResult> OnPostBanMemberAsync(int id)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageMembers())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "members", message = "Bạn không có quyền ban Member.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage(
+                    "members",
+                    "Bạn không có quyền ban Member.",
+                    "error"
+                );
 
             try
             {
@@ -280,36 +262,39 @@ namespace DrugUsePrevention.Pages.Staff
                 var response = await client.PostAsync($"{BASE_API_URL}/Admin/ban/{id}", null);
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "members", message = "Ban Member thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "members",
+                        "Ban Member thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "members", message = $"Lỗi khi ban Member: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "members",
+                        $"Lỗi khi ban Member: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "members", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("members", $"Lỗi: {ex.Message}", "error");
             }
         }
 
+        // UNBAN MEMBER
         public async Task<IActionResult> OnPostUnbanMemberAsync(int id)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageMembers())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "members", message = "Bạn không có quyền unban Member.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage(
+                    "members",
+                    "Bạn không có quyền unban Member.",
+                    "error"
+                );
 
             try
             {
@@ -317,77 +302,79 @@ namespace DrugUsePrevention.Pages.Staff
                 var response = await client.PostAsync($"{BASE_API_URL}/Admin/unban/{id}", null);
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "members", message = "Unban Member thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "members",
+                        "Unban Member thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "members", message = $"Lỗi khi unban Member: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "members",
+                        $"Lỗi khi unban Member: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "members", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("members", $"Lỗi: {ex.Message}", "error");
             }
         }
 
-        // POST Handlers for News
+        // NEWS HANDLERS
         public async Task<IActionResult> OnPostToggleNewsStatusAsync(int id, string status)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageNews())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "news", message = "Bạn không có quyền thay đổi trạng thái News.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage(
+                    "news",
+                    "Bạn không có quyền thay đổi trạng thái News.",
+                    "error"
+                );
 
             try
             {
                 var client = GetAuthenticatedClient();
                 var json = JsonSerializer.Serialize(status);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await client.PatchAsync($"{BASE_API_URL}/NewsArticles/{id}/toggle-status", content);
+                var response = await client.PatchAsync(
+                    $"{BASE_API_URL}/NewsArticles/{id}/toggle-status",
+                    content
+                );
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "news", message = "Cập nhật trạng thái News thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "news",
+                        "Cập nhật trạng thái News thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "news", message = $"Lỗi khi cập nhật trạng thái: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "news",
+                        $"Lỗi khi cập nhật trạng thái: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "news", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("news", $"Lỗi: {ex.Message}", "error");
             }
         }
 
         public async Task<IActionResult> OnPostDeleteNewsAsync(int id)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageNews())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "news", message = "Bạn không có quyền xóa News.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage("news", "Bạn không có quyền xóa News.", "error");
 
             try
             {
@@ -395,63 +382,64 @@ namespace DrugUsePrevention.Pages.Staff
                 var response = await client.DeleteAsync($"{BASE_API_URL}/NewsArticles/{id}");
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "news", message = "Xóa News thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage("news", "Xóa News thành công!", "success");
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "news", message = $"Lỗi khi xóa News: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "news",
+                        $"Lỗi khi xóa News: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "news", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("news", $"Lỗi: {ex.Message}", "error");
             }
         }
 
-        // POST Handlers for Categories
+        // CATEGORY HANDLERS
         public async Task<IActionResult> OnPostCreateCategoryAsync()
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageCategories())
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "categories", message = "Bạn không có quyền tạo Category.", messageType = "error" });
+                Message = "Bạn không có quyền tạo Category.";
+                MessageType = "error";
+                CurrentSection = "categories";
+                await LoadCategories(GetAuthenticatedClient(), 1, 10);
+                return Page();
             }
 
             if (!ModelState.IsValid)
             {
-                await LoadCategories(GetAuthenticatedClient(), 1, 10);
-                CurrentSection = "categories";
                 Message = "Dữ liệu không hợp lệ.";
                 MessageType = "error";
+                CurrentSection = "categories";
+                await LoadCategories(GetAuthenticatedClient(), 1, 10);
                 return Page();
             }
 
             try
             {
                 var client = GetAuthenticatedClient();
-                var json = JsonSerializer.Serialize(CategoryForm, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    CategoryForm,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync($"{BASE_API_URL}/Categories", content);
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "categories", message = "Tạo Category thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "categories",
+                        "Tạo Category thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
@@ -465,23 +453,23 @@ namespace DrugUsePrevention.Pages.Staff
                 MessageType = "error";
             }
 
-            await LoadCategories(GetAuthenticatedClient(), 1, 10);
+            CategoryForm = new CreateCategoryDto();
             CurrentSection = "categories";
+            await LoadCategories(GetAuthenticatedClient(), 1, 10);
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteCategoryAsync(int id)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageCategories())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "categories", message = "Bạn không có quyền xóa Category.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage(
+                    "categories",
+                    "Bạn không có quyền xóa Category.",
+                    "error"
+                );
 
             try
             {
@@ -489,63 +477,64 @@ namespace DrugUsePrevention.Pages.Staff
                 var response = await client.DeleteAsync($"{BASE_API_URL}/Categories/{id}");
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "categories", message = "Xóa Category thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "categories",
+                        "Xóa Category thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "categories", message = $"Lỗi khi xóa Category: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "categories",
+                        $"Lỗi khi xóa Category: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "categories", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("categories", $"Lỗi: {ex.Message}", "error");
             }
         }
 
-        // POST Handlers for Tags
+        // TAG HANDLERS
         public async Task<IActionResult> OnPostCreateTagAsync()
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageTags())
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "tags", message = "Bạn không có quyền tạo Tag.", messageType = "error" });
+                Message = "Bạn không có quyền tạo Tag.";
+                MessageType = "error";
+                CurrentSection = "tags";
+                await LoadTags(GetAuthenticatedClient(), 1, 10);
+                return Page();
             }
 
             if (!ModelState.IsValid)
             {
-                await LoadTags(GetAuthenticatedClient(), 1, 10);
-                CurrentSection = "tags";
                 Message = "Dữ liệu không hợp lệ.";
                 MessageType = "error";
+                CurrentSection = "tags";
+                await LoadTags(GetAuthenticatedClient(), 1, 10);
                 return Page();
             }
 
             try
             {
                 var client = GetAuthenticatedClient();
-                var json = JsonSerializer.Serialize(TagForm, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    TagForm,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync($"{BASE_API_URL}/Tags", content);
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "tags", message = "Tạo Tag thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage("tags", "Tạo Tag thành công!", "success");
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
@@ -559,23 +548,19 @@ namespace DrugUsePrevention.Pages.Staff
                 MessageType = "error";
             }
 
-            await LoadTags(GetAuthenticatedClient(), 1, 10);
+            TagForm = new CreateTagDto();
             CurrentSection = "tags";
+            await LoadTags(GetAuthenticatedClient(), 1, 10);
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteTagAsync(int id)
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!UserCanManageTags())
-            {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "tags", message = "Bạn không có quyền xóa Tag.", messageType = "error" });
-            }
+                return SafeRedirectToCurrentPage("tags", "Bạn không có quyền xóa Tag.", "error");
 
             try
             {
@@ -583,37 +568,34 @@ namespace DrugUsePrevention.Pages.Staff
                 var response = await client.DeleteAsync($"{BASE_API_URL}/Tags/{id}");
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "tags", message = "Xóa Tag thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage("tags", "Xóa Tag thành công!", "success");
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "tags", message = $"Lỗi khi xóa Tag: {errorContent}", messageType = "error" });
+                    return SafeRedirectToCurrentPage(
+                        "tags",
+                        $"Lỗi khi xóa Tag: {errorContent}",
+                        "error"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToPage("/Staff/StaffDashboard",
-                    new { section = "tags", message = $"Lỗi: {ex.Message}", messageType = "error" });
+                return SafeRedirectToCurrentPage("tags", $"Lỗi: {ex.Message}", "error");
             }
         }
 
-        // POST Handlers for Profile
+        // PROFILE HANDLERS
         public async Task<IActionResult> OnPostUpdateProfileAsync()
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!ModelState.IsValid)
             {
-                CurrentSection = "profile";
                 Message = "Dữ liệu không hợp lệ.";
                 MessageType = "error";
+                CurrentSection = "profile";
                 return Page();
             }
 
@@ -626,22 +608,23 @@ namespace DrugUsePrevention.Pages.Staff
                     FullName = ProfileForm.FullName,
                     Username = ProfileForm.Username,
                     Email = ProfileForm.Email,
-                    Phone = ProfileForm.Phone
+                    Phone = ProfileForm.Phone,
                 };
 
-                var json = JsonSerializer.Serialize(updateRequest, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    updateRequest,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PutAsync($"{BASE_API_URL}/Admin/update", content);
 
                 if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "profile", message = "Cập nhật Profile thành công!", messageType = "success" });
-                }
+                    return SafeRedirectToCurrentPage(
+                        "profile",
+                        "Cập nhật Profile thành công!",
+                        "success"
+                    );
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
@@ -662,23 +645,21 @@ namespace DrugUsePrevention.Pages.Staff
         public async Task<IActionResult> OnPostChangePasswordAsync()
         {
             if (!IsAuthenticated())
-            {
-                return RedirectToPage("/Login", new { message = "Phiên đăng nhập đã hết hạn.", messageType = "warning" });
-            }
+                return RedirectToPage("/Login");
 
             if (!ModelState.IsValid)
             {
-                CurrentSection = "profile";
                 Message = "Dữ liệu không hợp lệ.";
                 MessageType = "error";
+                CurrentSection = "profile";
                 return Page();
             }
 
             if (ChangePasswordForm.NewPassword != ChangePasswordForm.ConfirmPassword)
             {
-                CurrentSection = "profile";
                 Message = "Mật khẩu xác nhận không khớp.";
                 MessageType = "error";
+                CurrentSection = "profile";
                 return Page();
             }
 
@@ -689,21 +670,28 @@ namespace DrugUsePrevention.Pages.Staff
                 {
                     UserID = CurrentUserId,
                     OldPassword = ChangePasswordForm.OldPassword,
-                    NewPassword = ChangePasswordForm.NewPassword
+                    NewPassword = ChangePasswordForm.NewPassword,
                 };
 
-                var json = JsonSerializer.Serialize(changePasswordRequest, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
+                var json = JsonSerializer.Serialize(
+                    changePasswordRequest,
+                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                );
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{BASE_API_URL}/Admin/change-password", content);
+                var response = await client.PostAsync(
+                    $"{BASE_API_URL}/Admin/change-password",
+                    content
+                );
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/Staff/StaffDashboard",
-                        new { section = "profile", message = "Đổi mật khẩu thành công!", messageType = "success" });
+                    ChangePasswordForm = new ChangePasswordDto();
+                    return SafeRedirectToCurrentPage(
+                        "profile",
+                        "Đổi mật khẩu thành công!",
+                        "success"
+                    );
                 }
                 else
                 {
@@ -722,7 +710,7 @@ namespace DrugUsePrevention.Pages.Staff
             return Page();
         }
 
-        // Helper Methods
+        // HELPER METHODS
         private HttpClient GetAuthenticatedClient()
         {
             var client = _httpClientFactory.CreateClient();
@@ -746,10 +734,11 @@ namespace DrugUsePrevention.Pages.Staff
                 if (userStatsResponse.IsSuccessStatusCode)
                 {
                     var userStatsJson = await userStatsResponse.Content.ReadAsStringAsync();
-                    var userStatsResult = JsonSerializer.Deserialize<AdminStatsResponse>(userStatsJson, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    var userStatsResult = JsonSerializer.Deserialize<AdminStatsResponse>(
+                        userStatsJson,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
                     if (userStatsResult?.Data != null)
                     {
                         DashboardStats.TotalMembers = userStatsResult.Data.TotalUsers;
@@ -763,29 +752,29 @@ namespace DrugUsePrevention.Pages.Staff
                 if (newsStatsResponse.IsSuccessStatusCode)
                 {
                     var newsStatsJson = await newsStatsResponse.Content.ReadAsStringAsync();
-                    var newsStatsResult = JsonSerializer.Deserialize<NewsStatsResponse>(newsStatsJson, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    var newsStatsResult = JsonSerializer.Deserialize<NewsStatsResponse>(
+                        newsStatsJson,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
                     if (newsStatsResult?.Data != null)
-                    {
                         DashboardStats.TotalNews = newsStatsResult.Data.TotalNewsArticles;
-                    }
                 }
 
                 // Load category statistics
-                var categoryStatsResponse = await client.GetAsync($"{BASE_API_URL}/Categories/stats");
+                var categoryStatsResponse = await client.GetAsync(
+                    $"{BASE_API_URL}/Categories/stats"
+                );
                 if (categoryStatsResponse.IsSuccessStatusCode)
                 {
                     var categoryStatsJson = await categoryStatsResponse.Content.ReadAsStringAsync();
-                    var categoryStatsResult = JsonSerializer.Deserialize<CategoryStatsResponse>(categoryStatsJson, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    var categoryStatsResult = JsonSerializer.Deserialize<CategoryStatsResponse>(
+                        categoryStatsJson,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
                     if (categoryStatsResult?.Data != null)
-                    {
                         DashboardStats.TotalCategories = categoryStatsResult.Data.TotalCategories;
-                    }
                 }
 
                 // Load tags count
@@ -793,20 +782,18 @@ namespace DrugUsePrevention.Pages.Staff
                 if (tagsResponse.IsSuccessStatusCode)
                 {
                     var tagsJson = await tagsResponse.Content.ReadAsStringAsync();
-                    var tagsResult = JsonSerializer.Deserialize<PaginatedApiResponse<TagDTO>>(tagsJson, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    var tagsResult = JsonSerializer.Deserialize<PaginatedApiResponse<TagDTO>>(
+                        tagsJson,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
                     if (tagsResult?.Pagination != null)
-                    {
                         DashboardStats.TotalTags = tagsResult.Pagination.TotalItems;
-                    }
                 }
             }
             catch (Exception ex)
             {
-                // Log error but don't fail the page load
-                Console.WriteLine($"Error loading dashboard stats: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error loading dashboard stats: {ex.Message}");
             }
         }
 
@@ -818,20 +805,18 @@ namespace DrugUsePrevention.Pages.Staff
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<AdminDto>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                    if (result?.Data != null)
-                    {
-                        Members = result.Data.ToList();
-                    }
+                    var result = JsonSerializer.Deserialize<AdminDto>(
+                        json,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
+                    Members = result?.Data?.ToList() ?? new List<UserResponse>();
                 }
             }
             catch (Exception ex)
             {
-                Message = $"Lỗi khi tải danh sách Members: {ex.Message}";
-                MessageType = "error";
+                System.Diagnostics.Debug.WriteLine($"Error loading members: {ex.Message}");
+                Members = new List<UserResponse>();
             }
         }
 
@@ -840,25 +825,24 @@ namespace DrugUsePrevention.Pages.Staff
             try
             {
                 var queryString = $"?pageIndex={pageIndex}&pageSize={pageSize}";
-                var response = await client.GetAsync($"{BASE_API_URL}/NewsArticles/admin{queryString}");
+                var response = await client.GetAsync(
+                    $"{BASE_API_URL}/NewsArticles/admin{queryString}"
+                );
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<NewsArticleDto>>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                    if (result?.Data != null)
-                    {
-                        NewsArticles = result.Data.ToList();
-                        NewsPagination = result.Pagination;
-                    }
+                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<NewsArticleDto>>(
+                        json,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
+                    NewsArticles = result?.Data?.ToList() ?? new List<NewsArticleDto>();
                 }
             }
             catch (Exception ex)
             {
-                Message = $"Lỗi khi tải danh sách News: {ex.Message}";
-                MessageType = "error";
+                System.Diagnostics.Debug.WriteLine($"Error loading news: {ex.Message}");
+                NewsArticles = new List<NewsArticleDto>();
             }
         }
 
@@ -867,25 +851,24 @@ namespace DrugUsePrevention.Pages.Staff
             try
             {
                 var queryString = $"?pageIndex={pageIndex}&pageSize={pageSize}";
-                var response = await client.GetAsync($"{BASE_API_URL}/Categories/admin{queryString}");
+                var response = await client.GetAsync(
+                    $"{BASE_API_URL}/Categories/admin{queryString}"
+                );
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<CategoryDTO>>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                    if (result?.Data != null)
-                    {
-                        Categories = result.Data.ToList();
-                        CategoriesPagination = result.Pagination;
-                    }
+                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<CategoryDTO>>(
+                        json,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
+                    Categories = result?.Data?.ToList() ?? new List<CategoryDTO>();
                 }
             }
             catch (Exception ex)
             {
-                Message = $"Lỗi khi tải danh sách Categories: {ex.Message}";
-                MessageType = "error";
+                System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
+                Categories = new List<CategoryDTO>();
             }
         }
 
@@ -898,21 +881,18 @@ namespace DrugUsePrevention.Pages.Staff
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<TagDTO>>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                    if (result?.Data != null)
-                    {
-                        Tags = result.Data.ToList();
-                        TagsPagination = result.Pagination;
-                    }
+                    var result = JsonSerializer.Deserialize<PaginatedApiResponse<TagDTO>>(
+                        json,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    );
+
+                    Tags = result?.Data?.ToList() ?? new List<TagDTO>();
                 }
             }
             catch (Exception ex)
             {
-                Message = $"Lỗi khi tải danh sách Tags: {ex.Message}";
-                MessageType = "error";
+                System.Diagnostics.Debug.WriteLine($"Error loading tags: {ex.Message}");
+                Tags = new List<TagDTO>();
             }
         }
 
@@ -928,27 +908,27 @@ namespace DrugUsePrevention.Pages.Staff
                         FullName = currentUser.FullName,
                         Username = currentUser.Username,
                         Email = currentUser.Email,
-                        Phone = currentUser.Phone ?? ""
+                        Phone = currentUser.Phone ?? "",
                     };
                 }
             }
             catch (Exception ex)
             {
-                Message = $"Lỗi khi tải thông tin Profile: {ex.Message}";
-                MessageType = "error";
+                System.Diagnostics.Debug.WriteLine($"Error loading profile: {ex.Message}");
+                ProfileForm = new UpdateProfileDto();
             }
         }
     }
 
-    // DTO Classes
+    // DTO CLASSES
     public class DashboardStatsDto
     {
         public int TotalMembers { get; set; }
         public int TotalNews { get; set; }
         public int TotalCategories { get; set; }
         public int TotalTags { get; set; }
-        public Dictionary<string, int>? UsersByRole { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int>? UsersByStatus { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int>? UsersByRole { get; set; } = new();
+        public Dictionary<string, int>? UsersByStatus { get; set; } = new();
     }
 
     public class CreateMemberDto
@@ -987,7 +967,7 @@ namespace DrugUsePrevention.Pages.Staff
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 
-    // Additional classes for API calls (should match your existing models)
+    // API REQUEST CLASSES
     public class CreateUserRequest
     {
         public string FullName { get; set; } = string.Empty;
@@ -1014,7 +994,7 @@ namespace DrugUsePrevention.Pages.Staff
         public string NewPassword { get; set; } = string.Empty;
     }
 
-    // Response classes (these should match your existing model structure)
+    // RESPONSE CLASSES
     public class AdminStatsResponse
     {
         public UserStatisticsResponse? Data { get; set; }
@@ -1052,7 +1032,6 @@ namespace DrugUsePrevention.Pages.Staff
         public List<UserResponse>? Data { get; set; }
     }
 
-    // Additional DTO classes that match your API structure
     public class NewsArticleDto
     {
         public int NewsArticleID { get; set; }
@@ -1093,7 +1072,6 @@ namespace DrugUsePrevention.Pages.Staff
         public string Role { get; set; } = string.Empty;
     }
 
-    // Additional classes to match your project structure
     public class PaginatedApiResponse<T>
     {
         public List<T>? Data { get; set; }
@@ -1119,9 +1097,7 @@ namespace DrugUsePrevention.Pages.Staff
         public string? Phone { get; set; }
     }
 
-    // LoginModel placeholder - REPLACE WITH YOUR ACTUAL LoginModel CLASS
-    // This is just a placeholder to make the code compile
-    // You should use your existing LoginModel from DrugUserPreventionUI.Pages
+    // PLACEHOLDER LOGIN MODEL - REPLACE WITH YOUR ACTUAL ONE
     public class LoginModel
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -1134,36 +1110,20 @@ namespace DrugUsePrevention.Pages.Staff
 
         public UserInfoDto? GetCurrentUser()
         {
-            // TODO: Replace with your actual JWT token parsing logic
-            // This should extract user info from JWT token in cookies/headers
             return new UserInfoDto
             {
                 UserID = 1,
                 FullName = "Staff User",
                 Username = "staff",
                 Email = "staff@example.com",
-                Phone = ""
+                Phone = "",
             };
         }
 
-        public bool IsAuthenticated()
-        {
-            // TODO: Replace with your actual authentication check
-            // This should check if JWT token exists and is valid
-            return true;
-        }
+        public bool IsAuthenticated() => true;
 
-        public string GetUserRole()
-        {
-            // TODO: Replace with your actual role extraction logic
-            // This should extract role from JWT token claims
-            return "Staff";
-        }
+        public string GetUserRole() => "Staff";
 
-        public string GetDisplayName()
-        {
-            // TODO: Replace with your actual display name logic
-            return GetCurrentUser()?.FullName ?? "Staff User";
-        }
+        public string GetDisplayName() => GetCurrentUser()?.FullName ?? "Staff User";
     }
 }
