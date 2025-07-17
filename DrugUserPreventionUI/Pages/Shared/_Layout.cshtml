@@ -688,11 +688,11 @@
                     @if (isManager)
                     {
                         <div class="sidebar-section-title">Quản lý chính</div>
-                        <a href="/CourseDashboard" class="sidebar-nav-link">
+                        <a href="/ManagerDashboard/ManagerDashboard?action=pending-courses" class="sidebar-nav-link">
                             <i class="fas fa-graduation-cap"></i>
                             <span>Duyệt khóa học</span>
                         </a>
-                        <a href="/UserManagement" class="sidebar-nav-link">
+                        <a href="/ManagerDashboard/ManagerDashboard?action=consultants" class="sidebar-nav-link">
                             <i class="fas fa-users"></i>
                             <span>Quản lý tài khoản</span>
                         </a>
@@ -718,7 +718,7 @@
                     @if (isStaff)
                     {
                         <div class="sidebar-section-title">Hỗ trợ quản lý</div>
-                        <a href="/UserManagement" class="sidebar-nav-link">
+                        <a href="/Staff/StaffDashboard?section=members" class="sidebar-nav-link">
                             <i class="fas fa-users"></i>
                             <span>Quản lý tài khoản</span>
                         </a>
@@ -726,7 +726,7 @@
                             <i class="fas fa-graduation-cap"></i>
                             <span>Cập nhật khóa học</span>
                         </a>
-                        <a href="/News/Management" class="sidebar-nav-link">
+                        <a href="/Staff/StaffDashboard?section=news" class="sidebar-nav-link">
                             <i class="fas fa-newspaper"></i>
                             <span>Quản lý tin tức</span>
                         </a>
